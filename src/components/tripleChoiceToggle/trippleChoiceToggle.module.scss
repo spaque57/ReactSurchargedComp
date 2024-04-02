@@ -1,0 +1,15 @@
+@import '../../layout/mainLayout/styleVariables.module.scss';
+
+.trippleToggle > button {
+  color: $fullBlack;
+  font-weight: bold;
+}
+
+.yesBgColor {
+  background-color: #22913c !important;
+  color: $fullWhite !important;
+}
+.noBgColor {
+  background-color: #c52e3d !important;
+  color: $fullWhite !important;
+}
