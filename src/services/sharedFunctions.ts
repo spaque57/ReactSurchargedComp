@@ -38,8 +38,9 @@ export function round(value: number, precision: number): number {
 // }
 
 // Return date in string with right format
-export function dateFormatToDisplay(date: Date): string {
-  return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+export function dateFormatToDisplay(date?: Date): string {
+  if (date == null || date == undefined) return '';
+  else return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 }
 
 // Return date and time in string with right format
