@@ -1,0 +1,75 @@
+@import '../styleVariables.module.scss';
+
+.topcorner {
+  z-index: 1;
+  position: absolute;
+  top: 170px;
+  right: 50px;
+  cursor: pointer;
+  width: 250px;
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  //box-shadow: 3px 3px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.popupTitle {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+  font-size: medium;
+  border-bottom: solid;
+}
+
+.popupMessage {
+  margin-top: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-bottom: 10px;
+}
+
+.popupIcon {
+  font-size: smaller;
+}
+
+.dangerNotification {
+  background-color: $bDanger;
+  color: $fullWhite;
+}
+.dangerNotification:hover {
+  background-color: $bDanger;
+  filter: brightness(85%);
+  color: $fullWhite;
+}
+
+.successNotification {
+  background-color: $bSuccess;
+  color: $fullWhite;
+}
+.successNotification:hover {
+  background-color: $bSuccess;
+  filter: brightness(85%);
+  color: $fullWhite;
+}
+
+.warningNotification {
+  background-color: $bWarning;
+  color: $fullBlack;
+}
+.warningNotification:hover {
+  background-color: $bWarning;
+  filter: brightness(85%);
+  color: $fullBlack;
+}
+
+.infoNotification {
+  background-color: $bInfo;
+  color: $fullBlack;
+}
+.infoNotification:hover {
+  background-color: $bInfo;
+  filter: brightness(85%);
+  color: $fullBlack;
+}
