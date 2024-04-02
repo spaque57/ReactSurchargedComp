@@ -116,6 +116,19 @@ This component display a input box for number with arrow to add or remove the am
         />
 
 
+### OneLineDatePicker
+This component display a datepicker input box in one line. You can change datepicker language (currently in french).
+
+        <OneLineDatePicker
+          label='Star date'
+          isReadOnly={false}
+          date={new Date()}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertyName={'startDate'}
+        />
+
+
 
 # Using
 Feel free to use this library !
