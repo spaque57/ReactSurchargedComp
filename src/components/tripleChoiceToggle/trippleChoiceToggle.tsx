@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { ITrippleChoiceToggleInputProps } from './ITrippleChoiceToggleProps';
+import { ETripleToogleColor, ITrippleChoiceToggleInputProps } from './ITrippleChoiceToggleProps';
 import styles from './trippleChoiceToggle.module.scss';
 import { updateBoolInputData } from '../../services/inputService';
 
@@ -21,11 +21,17 @@ const TrippleChoiceToggle = <T,>(props: ITrippleChoiceToggleInputProps<T>) => {
       onChange={(ev: React.MouseEvent<HTMLElement, MouseEvent>, value: boolean) => {
         setNewValue(ev, value);
       }}>
-      <ToggleButton value={true} disabled={props.isReadOnly} className={`${props.defaultValue != null && props.defaultValue ? styles.yesBgColor : ''}`}>
+      <ToggleButton
+        value={true}
+        disabled={props.isReadOnly}
+        className={`${props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles.defaultBgColor : styles.yesBgColor) : ''}`}>
         {'Oui'}
       </ToggleButton>
       <ToggleButton value={null} disabled={true}></ToggleButton>
-      <ToggleButton value={false} disabled={props.isReadOnly} className={`${props.defaultValue != null && !props.defaultValue ? styles.noBgColor : ''}`}>
+      <ToggleButton
+        value={false}
+        disabled={props.isReadOnly}
+        className={`${props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles.defaultBgColor : styles.noBgColor) : ''}`}>
         {'Non'}
       </ToggleButton>
     </ToggleButtonGroup>

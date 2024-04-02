@@ -2835,6 +2835,46 @@ function assertNever(x) {
     throw new Error('Unexpected object: ' + x);
 }
 
+/**
+ * Autobind is a utility for binding methods in a class. This simplifies tagging methods as being "bound" to the this pointer
+ * so that they can be used in scenarios that simply require a function callback.
+ * @deprecated This has been deprecated in favor of using arrow function properties
+ */
+function autobind(
+// tslint:disable-next-line:no-any
+target, key, descriptor) {
+    var fn = descriptor.value;
+    var defining = false;
+    return {
+        configurable: true,
+        get: function () {
+            if (defining || (fn && this === fn.prototype) || this.hasOwnProperty(key)) {
+                return fn;
+            }
+            // Bind method only once, and update the property to return the bound value from now on
+            var fnBound = fn && fn.bind(this);
+            defining = true;
+            Object.defineProperty(this, key, {
+                configurable: true,
+                writable: true,
+                enumerable: true,
+                value: fnBound
+            });
+            defining = false;
+            return fnBound;
+        },
+        // tslint:disable-next-line:no-any
+        set: function (newValue) {
+            Object.defineProperty(this, key, {
+                configurable: true,
+                writable: true,
+                enumerable: true,
+                value: newValue
+            });
+        }
+    };
+}
+
 var MAX_CACHE_COUNT = 50;
 var _memoizedClassNames = 0;
 var stylesheet$2 = Stylesheet.getInstance();
@@ -6512,7 +6552,7 @@ var ANIMATIONS = (_a$2 = {},
     _a$2[RectangleEdge.left] = AnimationClassNames.slideLeftIn10,
     _a$2[RectangleEdge.right] = AnimationClassNames.slideRightIn10,
     _a$2);
-var getClassNames$k = classNamesFunction({
+var getClassNames$l = classNamesFunction({
     disableCaching: true
 });
 var BORDER_WIDTH = 1;
@@ -6657,7 +6697,7 @@ var CalloutContentBase = /** @class */ (function (_super) {
         var contentMaxHeight = calloutMaxHeight && getContentMaxHeight && calloutMaxHeight < getContentMaxHeight ? calloutMaxHeight : getContentMaxHeight;
         var overflowYHidden = hideOverflow;
         var beakVisible = isBeakVisible && !!target;
-        this._classNames = getClassNames$k(styles, {
+        this._classNames = getClassNames$l(styles, {
             theme: this.props.theme,
             className: className,
             overflowYHidden: overflowYHidden,
@@ -6904,7 +6944,7 @@ var GlobalClassNames$b = {
     beakCurtain: 'ms-Callout-beakCurtain',
     calloutMain: 'ms-Callout-main'
 };
-var getStyles$m = function (props) {
+var getStyles$n = function (props) {
     var theme = props.theme, className = props.className, overflowYHidden = props.overflowYHidden, calloutWidth = props.calloutWidth, beakWidth = props.beakWidth, backgroundColor = props.backgroundColor, calloutMaxWidth = props.calloutMaxWidth;
     var classNames = getGlobalClassNames(GlobalClassNames$b, theme);
     var palette = theme.palette;
@@ -6983,13 +7023,13 @@ var getStyles$m = function (props) {
     var _a;
 };
 
-var CalloutContent = styled(CalloutContentBase, getStyles$m, undefined, { scope: 'CalloutContent' });
+var CalloutContent = styled(CalloutContentBase, getStyles$n, undefined, { scope: 'CalloutContent' });
 
 var inheritFont = { fontFamily: 'inherit' };
 var GlobalClassNames$a = {
     root: 'ms-Fabric'
 };
-var getStyles$l = function (props) {
+var getStyles$m = function (props) {
     var theme = props.theme, className = props.className, isFocusVisible = props.isFocusVisible;
     var classNames = getGlobalClassNames(GlobalClassNames$a, theme);
     return {
@@ -7010,7 +7050,7 @@ var getStyles$l = function (props) {
     };
 };
 
-var getClassNames$j = classNamesFunction();
+var getClassNames$k = classNamesFunction();
 var FabricBase = /** @class */ (function (_super) {
     __extends(FabricBase, _super);
     function FabricBase(props) {
@@ -7030,7 +7070,7 @@ var FabricBase = /** @class */ (function (_super) {
     }
     FabricBase.prototype.render = function () {
         var _a = this.props, className = _a.className, rest = __rest(_a, ["className"]);
-        var classNames = getClassNames$j(getStyles$l, {
+        var classNames = getClassNames$k(getStyles$m, {
             theme: this.props.theme,
             className: className,
             isFocusVisible: this.state.isFocusVisible
@@ -7050,7 +7090,7 @@ var FabricBase = /** @class */ (function (_super) {
     return FabricBase;
 }(React.Component));
 
-var Fabric = styled(FabricBase, getStyles$l, undefined, {
+var Fabric = styled(FabricBase, getStyles$m, undefined, {
     scope: 'Fabric'
 });
 
@@ -7090,7 +7130,7 @@ function getDefaultTarget() {
     return _defaultHostSelector;
 }
 
-var getClassNames$i = classNamesFunction();
+var getClassNames$j = classNamesFunction();
 var LayerBase = /** @class */ (function (_super) {
     __extends(LayerBase, _super);
     function LayerBase(props) {
@@ -7173,7 +7213,7 @@ var LayerBase = /** @class */ (function (_super) {
     };
     LayerBase.prototype._getClassNames = function () {
         var _a = this.props, className = _a.className, styles = _a.styles, theme = _a.theme;
-        var classNames = getClassNames$i(styles, {
+        var classNames = getClassNames$j(styles, {
             theme: theme,
             className: className,
             isNotHost: !this.props.hostId
@@ -7252,7 +7292,7 @@ var GlobalClassNames$9 = {
     rootNoHost: 'ms-Layer--fixed',
     content: 'ms-Layer-content'
 };
-var getStyles$k = function (props) {
+var getStyles$l = function (props) {
     var className = props.className, isNotHost = props.isNotHost, theme = props.theme;
     var classNames = getGlobalClassNames(GlobalClassNames$9, theme);
     return {
@@ -7282,7 +7322,7 @@ var getStyles$k = function (props) {
     };
 };
 
-var Layer = styled(LayerBase, getStyles$k, undefined, {
+var Layer = styled(LayerBase, getStyles$l, undefined, {
     scope: 'Layer',
     fields: ['hostId', 'theme', 'styles']
 });
@@ -7529,7 +7569,7 @@ var FocusTrapZone = /** @class */ (function (_super) {
     return FocusTrapZone;
 }(React.Component));
 
-var getClassNames$h = classNamesFunction();
+var getClassNames$i = classNamesFunction();
 var TooltipBase = /** @class */ (function (_super) {
     __extends(TooltipBase, _super);
     function TooltipBase() {
@@ -7541,7 +7581,7 @@ var TooltipBase = /** @class */ (function (_super) {
     }
     TooltipBase.prototype.render = function () {
         var _a = this.props, className = _a.className, calloutProps = _a.calloutProps, delay = _a.delay, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, styles = _a.styles, id = _a.id, maxWidth = _a.maxWidth, _b = _a.onRenderContent, onRenderContent = _b === void 0 ? this._onRenderContent : _b, targetElement = _a.targetElement, theme = _a.theme;
-        this._classNames = getClassNames$h(styles, {
+        this._classNames = getClassNames$i(styles, {
             theme: theme,
             className: className || (calloutProps && calloutProps.className),
             delay: delay,
@@ -7568,7 +7608,7 @@ var TooltipBase = /** @class */ (function (_super) {
     return TooltipBase;
 }(React.Component));
 
-var getStyles$j = function (props) {
+var getStyles$k = function (props) {
     var className = props.className, delay = props.delay, _a = props.beakWidth, beakWidth = _a === void 0 ? 16 : _a, _b = props.gapSpace, gapSpace = _b === void 0 ? 0 : _b, maxWidth = props.maxWidth, theme = props.theme;
     var palette = theme.palette, fonts = theme.fonts;
     // The math here is done to account for the 45 degree rotation of the beak
@@ -7628,7 +7668,7 @@ var getStyles$j = function (props) {
     };
 };
 
-var Tooltip = styled(TooltipBase, getStyles$j, undefined, {
+var Tooltip = styled(TooltipBase, getStyles$k, undefined, {
     scope: 'Tooltip'
 });
 
@@ -7643,7 +7683,7 @@ var TooltipOverflowMode;
     TooltipOverflowMode[TooltipOverflowMode["Self"] = 1] = "Self";
 })(TooltipOverflowMode || (TooltipOverflowMode = {}));
 
-var getClassNames$g = classNamesFunction();
+var getClassNames$h = classNamesFunction();
 var TooltipHostBase = /** @class */ (function (_super) {
     __extends(TooltipHostBase, _super);
     // Constructor
@@ -7715,7 +7755,7 @@ var TooltipHostBase = /** @class */ (function (_super) {
     // Render
     TooltipHostBase.prototype.render = function () {
         var _a = this.props, calloutProps = _a.calloutProps, children = _a.children, content = _a.content, delay = _a.delay, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, className = _a.hostClassName, id = _a.id, _b = _a.setAriaDescribedBy, setAriaDescribedBy = _b === void 0 ? true : _b, tooltipProps = _a.tooltipProps, styles = _a.styles, theme = _a.theme;
-        this._classNames = getClassNames$g(styles, {
+        this._classNames = getClassNames$h(styles, {
             theme: theme,
             className: className
         });
@@ -7768,7 +7808,7 @@ var TooltipHostBase = /** @class */ (function (_super) {
 var GlobalClassNames$8 = {
     root: 'ms-TooltipHost'
 };
-var getStyles$i = function (props) {
+var getStyles$j = function (props) {
     var className = props.className, theme = props.theme;
     var classNames = getGlobalClassNames(GlobalClassNames$8, theme);
     return {
@@ -7782,7 +7822,7 @@ var getStyles$i = function (props) {
     };
 };
 
-var TooltipHost = styled(TooltipHostBase, getStyles$i, undefined, {
+var TooltipHost = styled(TooltipHostBase, getStyles$j, undefined, {
     scope: 'TooltipHost'
 });
 
@@ -7893,7 +7933,7 @@ var ImageLoadState;
     ImageLoadState[ImageLoadState["errorLoaded"] = 3] = "errorLoaded";
 })(ImageLoadState || (ImageLoadState = {}));
 
-var getClassNames$f = classNamesFunction();
+var getClassNames$g = classNamesFunction();
 var KEY_PREFIX = 'fabricImage';
 var ImageBase = /** @class */ (function (_super) {
     __extends(ImageBase, _super);
@@ -7951,7 +7991,7 @@ var ImageBase = /** @class */ (function (_super) {
         var _a = this.props, src = _a.src, alt = _a.alt, width = _a.width, height = _a.height, shouldFadeIn = _a.shouldFadeIn, shouldStartVisible = _a.shouldStartVisible, className = _a.className, imageFit = _a.imageFit, role = _a.role, maximizeFrame = _a.maximizeFrame, styles = _a.styles, theme = _a.theme;
         var loadState = this.state.loadState;
         var coverStyle = this.props.coverStyle !== undefined ? this.props.coverStyle : this._coverStyle;
-        var classNames = getClassNames$f(styles, {
+        var classNames = getClassNames$g(styles, {
             theme: theme,
             className: className,
             width: width,
@@ -8044,7 +8084,7 @@ var GlobalClassNames$7 = {
     imageLandscape: 'ms-Image-image--landscape',
     imagePortrait: 'ms-Image-image--portrait'
 };
-var getStyles$h = function (props) {
+var getStyles$i = function (props) {
     var className = props.className, width = props.width, height = props.height, maximizeFrame = props.maximizeFrame, isLoaded = props.isLoaded, shouldFadeIn = props.shouldFadeIn, shouldStartVisible = props.shouldStartVisible, isLandscape = props.isLandscape, isCenter = props.isCenter, isContain = props.isContain, isCover = props.isCover, isCenterContain = props.isCenterContain, isCenterCover = props.isCenterCover, isNone = props.isNone, isError = props.isError, isNotImageFit = props.isNotImageFit, theme = props.theme;
     var classNames = getGlobalClassNames(GlobalClassNames$7, theme);
     var ImageFitStyles = {
@@ -8163,7 +8203,7 @@ var getStyles$h = function (props) {
     };
 };
 
-var Image = styled(ImageBase, getStyles$h, undefined, {
+var Image = styled(ImageBase, getStyles$i, undefined, {
     scope: 'Image'
 }, true);
 
@@ -8187,7 +8227,7 @@ var classNames = mergeStyleSets({
 });
 /** Class name used only in non-themeable Icon components */
 var MS_ICON = 'ms-Icon';
-var getStyles$g = function (props) {
+var getStyles$h = function (props) {
     var className = props.className, iconClassName = props.iconClassName, isPlaceholder = props.isPlaceholder, isImage = props.isImage, styles = props.styles;
     return {
         root: [
@@ -8240,7 +8280,7 @@ memoizeFunction(function (iconName, className, ariaLabel) {
     return FontIcon({ iconName: iconName, className: className, 'aria-label': ariaLabel });
 });
 
-var getClassNames$e = classNamesFunction({
+var getClassNames$f = classNamesFunction({
     disableCaching: true
 });
 var IconBase = /** @class */ (function (_super) {
@@ -8265,7 +8305,7 @@ var IconBase = /** @class */ (function (_super) {
         var isPlaceholder = typeof iconName === 'string' && iconName.length === 0;
         var isImage = this.props.iconType === IconType.image || this.props.iconType === IconType.Image || !!this.props.imageProps;
         var _b = getIconContent(iconName), iconClassName = _b.iconClassName, children = _b.children;
-        var classNames = getClassNames$e(styles, {
+        var classNames = getClassNames$f(styles, {
             theme: theme,
             className: className,
             iconClassName: iconClassName,
@@ -8295,7 +8335,7 @@ var IconBase = /** @class */ (function (_super) {
  * Icons are used for rendering an individual's avatar, presence and details.
  * They are used within the PeoplePicker components.
  */
-var Icon = styled(IconBase, getStyles$g, undefined, {
+var Icon = styled(IconBase, getStyles$h, undefined, {
     scope: 'Icon'
 }, true);
 
@@ -10526,7 +10566,7 @@ var ContextualMenuButton = /** @class */ (function (_super) {
     return ContextualMenuButton;
 }(ContextualMenuItemWrapper));
 
-var getStyles$f = function (props) {
+var getStyles$g = function (props) {
     var theme = props.theme, getClassNames = props.getClassNames, className = props.className;
     if (!theme) {
         throw new Error('Theme is undefined or null.');
@@ -10557,15 +10597,15 @@ var getStyles$f = function (props) {
     };
 };
 
-var getClassNames$d = classNamesFunction();
+var getClassNames$e = classNamesFunction();
 var VerticalDividerBase = function (props) {
     var styles = props.styles, theme = props.theme, deprecatedGetClassNames = props.getClassNames, className = props.className;
-    var classNames = getClassNames$d(styles, { theme: theme, getClassNames: deprecatedGetClassNames, className: className });
+    var classNames = getClassNames$e(styles, { theme: theme, getClassNames: deprecatedGetClassNames, className: className });
     return (React.createElement("span", { className: classNames.wrapper },
         React.createElement("span", { className: classNames.divider })));
 };
 
-var VerticalDivider = styled(VerticalDividerBase, getStyles$f, undefined, {
+var VerticalDivider = styled(VerticalDividerBase, getStyles$g, undefined, {
     scope: 'VerticalDivider'
 });
 
@@ -10730,7 +10770,7 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
     return ContextualMenuSplitButton;
 }(ContextualMenuItemWrapper));
 
-var getClassNames$c = classNamesFunction({
+var getClassNames$d = classNamesFunction({
     disableCaching: true
 });
 var getContextualMenuItemClassNames = classNamesFunction({
@@ -11115,7 +11155,7 @@ var ContextualMenuBase = /** @class */ (function (_super) {
         var _a = this.props, items = _a.items, labelElementId = _a.labelElementId, id = _a.id, className = _a.className, beakWidth = _a.beakWidth, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, alignTargetEdge = _a.alignTargetEdge, gapSpace = _a.gapSpace, coverTarget = _a.coverTarget, ariaLabel = _a.ariaLabel, doNotLayer = _a.doNotLayer, target = _a.target, bounds = _a.bounds, useTargetWidth = _a.useTargetWidth, useTargetAsMinWidth = _a.useTargetAsMinWidth, directionalHintFixed = _a.directionalHintFixed, shouldFocusOnMount = _a.shouldFocusOnMount, shouldFocusOnContainer = _a.shouldFocusOnContainer, title = _a.title, styles = _a.styles, theme = _a.theme, calloutProps = _a.calloutProps, _b = _a.onRenderSubMenu, onRenderSubMenu = _b === void 0 ? this._onRenderSubMenu : _b, _c = _a.onRenderMenuList, onRenderMenuList = _c === void 0 ? this._onRenderMenuList : _c, focusZoneProps = _a.focusZoneProps, getMenuClassNames = _a.getMenuClassNames;
         this._classNames = getMenuClassNames
             ? getMenuClassNames(theme, className)
-            : getClassNames$c(styles, {
+            : getClassNames$d(styles, {
                 theme: theme,
                 className: className
             });
@@ -11504,7 +11544,7 @@ var GlobalClassNames$5 = {
     title: 'ms-ContextualMenu-title',
     isopen: 'is-open'
 };
-var getStyles$e = function (props) {
+var getStyles$f = function (props) {
     var className = props.className, theme = props.theme;
     var classNames = getGlobalClassNames(GlobalClassNames$5, theme);
     var palette = theme.palette, fonts = theme.fonts, semanticColors = theme.semanticColors;
@@ -11573,7 +11613,7 @@ var LocalContextualMenu;
 function onRenderSubMenu(subMenuProps) {
     return React.createElement(LocalContextualMenu, __assign$2({}, subMenuProps));
 }
-LocalContextualMenu = styled(ContextualMenuBase, getStyles$e, function () {
+LocalContextualMenu = styled(ContextualMenuBase, getStyles$f, function () {
     return {
         onRenderSubMenu: onRenderSubMenu
     };
@@ -11680,7 +11720,7 @@ var getBaseButtonClassNames = memoizeFunction(function (theme, styles, className
     var _a, _b;
 });
 
-var getClassNames$b = memoizeFunction(function (styles, disabled, expanded, checked, primaryDisabled) {
+var getClassNames$c = memoizeFunction(function (styles, disabled, expanded, checked, primaryDisabled) {
     return {
         root: mergeStyles(styles.splitButtonMenuButton, expanded && [styles.splitButtonMenuButtonExpanded], disabled && [styles.splitButtonMenuButtonDisabled], checked && !disabled && [styles.splitButtonMenuButtonChecked]),
         splitButtonContainer: mergeStyles(styles.splitButtonContainer, checked &&
@@ -12132,7 +12172,7 @@ var BaseButton = /** @class */ (function (_super) {
         var keytipProps = this.props.keytipProps;
         var classNames = getSplitButtonClassNames
             ? getSplitButtonClassNames(!!disabled, this._isExpanded, !!checked, !!allowDisabledFocus)
-            : styles && getClassNames$b(styles, !!disabled, this._isExpanded, !!checked, !!primaryDisabled);
+            : styles && getClassNames$c(styles, !!disabled, this._isExpanded, !!checked, !!primaryDisabled);
         assign$1(buttonProps, {
             onClick: undefined,
             tabIndex: -1,
@@ -12242,7 +12282,7 @@ var iconStyle = {
  * helper, it should have values for all class names in the interface. This let `mergeRules` optimize
  * mixing class names together.
  */
-var getStyles$d = memoizeFunction(function (theme) {
+var getStyles$e = memoizeFunction(function (theme) {
     var semanticColors = theme.semanticColors;
     var border = semanticColors.buttonBorder;
     var disabledBackground = semanticColors.disabledBackground;
@@ -12331,7 +12371,7 @@ var getStyles$d = memoizeFunction(function (theme) {
     var _a;
 });
 
-var getStyles$c = memoizeFunction(function (theme, customStyles) {
+var getStyles$d = memoizeFunction(function (theme, customStyles) {
     var buttonHighContrastFocus = {
         left: -2,
         top: -2,
@@ -12432,8 +12472,8 @@ var getStyles$c = memoizeFunction(function (theme, customStyles) {
 
 var DEFAULT_BUTTON_HEIGHT = '40px';
 var DEFAULT_PADDING = '0 4px';
-var getStyles$b = memoizeFunction(function (theme, customStyles) {
-    var baseButtonStyles = getStyles$d(theme);
+var getStyles$c = memoizeFunction(function (theme, customStyles) {
+    var baseButtonStyles = getStyles$e(theme);
     var actionButtonStyles = {
         root: {
             padding: DEFAULT_PADDING,
@@ -12508,7 +12548,7 @@ var ActionButton = /** @class */ (function (_super) {
     }
     ActionButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$b(theme, styles), onRenderDescription: nullRender })));
+        return (React.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$c(theme, styles), onRenderDescription: nullRender })));
     };
     ActionButton = __decorate([
         customizable('ActionButton', ['theme', 'styles'], true)
@@ -12516,9 +12556,9 @@ var ActionButton = /** @class */ (function (_super) {
     return ActionButton;
 }(BaseComponent));
 
-var getStyles$a = memoizeFunction(function (theme, customStyles) {
-    var baseButtonStyles = getStyles$d(theme);
-    var splitButtonStyles = getStyles$c(theme);
+var getStyles$b = memoizeFunction(function (theme, customStyles) {
+    var baseButtonStyles = getStyles$e(theme);
+    var splitButtonStyles = getStyles$d(theme);
     var palette = theme.palette, semanticColors = theme.semanticColors;
     var iconButtonStyles = {
         root: {
@@ -12573,7 +12613,7 @@ var IconButton = /** @class */ (function (_super) {
     }
     IconButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$a(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
+        return (React.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$b(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
     };
     IconButton = __decorate([
         customizable('IconButton', ['theme', 'styles'], true)
@@ -15495,7 +15535,7 @@ var Calendar = /** @class */ (function (_super) {
     return Calendar;
 }(BaseComponent));
 
-var getClassNames$a = classNamesFunction();
+var getClassNames$b = classNamesFunction();
 var CheckboxBase = /** @class */ (function (_super) {
     __extends(CheckboxBase, _super);
     /**
@@ -15562,7 +15602,7 @@ var CheckboxBase = /** @class */ (function (_super) {
         var _a = this.props, checked = _a.checked, className = _a.className, defaultChecked = _a.defaultChecked, disabled = _a.disabled, inputProps = _a.inputProps, name = _a.name, boxSide = _a.boxSide, theme = _a.theme, ariaLabel = _a.ariaLabel, ariaLabelledBy = _a.ariaLabelledBy, ariaDescribedBy = _a.ariaDescribedBy, styles = _a.styles, _b = _a.onRenderLabel, onRenderLabel = _b === void 0 ? this._onRenderLabel : _b, checkmarkIconProps = _a.checkmarkIconProps, ariaPositionInSet = _a.ariaPositionInSet, ariaSetSize = _a.ariaSetSize, keytipProps = _a.keytipProps, title = _a.title, label = _a.label;
         var isChecked = checked === undefined ? this.state.isChecked : checked;
         var isReversed = boxSide !== 'start' ? true : false;
-        this._classNames = getClassNames$a(styles, {
+        this._classNames = getClassNames$b(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -15598,7 +15638,7 @@ var CheckboxBase = /** @class */ (function (_super) {
 var MS_CHECKBOX_LABEL_SIZE = '20px';
 var MS_CHECKBOX_TRANSITION_DURATION = '200ms';
 var MS_CHECKBOX_TRANSITION_TIMING = 'cubic-bezier(.4, 0, .23, 1)';
-var getStyles$9 = function (props) {
+var getStyles$a = function (props) {
     var className = props.className, theme = props.theme, reversed = props.reversed, checked = props.checked, disabled = props.disabled, isUsingCustomLabelRender = props.isUsingCustomLabelRender;
     var semanticColors = theme.semanticColors;
     var checkmarkFontColor = semanticColors.inputForegroundChecked;
@@ -15821,9 +15861,9 @@ var getStyles$9 = function (props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 };
 
-var Checkbox = styled(CheckboxBase, getStyles$9, undefined, { scope: 'Checkbox' });
+var Checkbox = styled(CheckboxBase, getStyles$a, undefined, { scope: 'Checkbox' });
 
-var getClassNames$9 = classNamesFunction({
+var getClassNames$a = classNamesFunction({
     disableCaching: true
 });
 var LabelBase = /** @class */ (function (_super) {
@@ -15833,7 +15873,7 @@ var LabelBase = /** @class */ (function (_super) {
     }
     LabelBase.prototype.render = function () {
         var _a = this.props, _b = _a.as, RootType = _b === void 0 ? 'label' : _b, children = _a.children, className = _a.className, disabled = _a.disabled, styles = _a.styles, required = _a.required, theme = _a.theme;
-        var classNames = getClassNames$9(styles, {
+        var classNames = getClassNames$a(styles, {
             className: className,
             disabled: disabled,
             required: required,
@@ -15844,7 +15884,7 @@ var LabelBase = /** @class */ (function (_super) {
     return LabelBase;
 }(React.Component));
 
-var getStyles$8 = function (props) {
+var getStyles$9 = function (props) {
     var theme = props.theme, className = props.className, disabled = props.disabled, required = props.required;
     return {
         root: [
@@ -15883,11 +15923,11 @@ var getStyles$8 = function (props) {
     var _a;
 };
 
-var Label = styled(LabelBase, getStyles$8, undefined, {
+var Label = styled(LabelBase, getStyles$9, undefined, {
     scope: 'Label'
 });
 
-var getClassNames$8 = classNamesFunction();
+var getClassNames$9 = classNamesFunction();
 var DEFAULT_STATE_VALUE = '';
 var TextFieldBase = /** @class */ (function (_super) {
     __extends(TextFieldBase, _super);
@@ -16055,7 +16095,7 @@ var TextFieldBase = /** @class */ (function (_super) {
         onRenderPrefix = _c === void 0 ? this._onRenderPrefix : _c, _d = _a.onRenderSuffix, onRenderSuffix = _d === void 0 ? this._onRenderSuffix : _d, _e = _a.onRenderLabel, onRenderLabel = _e === void 0 ? this._onRenderLabel : _e, _f = _a.onRenderDescription, onRenderDescription = _f === void 0 ? this._onRenderDescription : _f;
         var isFocused = this.state.isFocused;
         var errorMessage = this._errorMessage;
-        this._classNames = getClassNames$8(styles, {
+        this._classNames = getClassNames$9(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -16332,7 +16372,7 @@ function getLabelStyles(props) {
         var _a;
     };
 }
-function getStyles$7(props) {
+function getStyles$8(props) {
     var theme = props.theme, className = props.className, disabled = props.disabled, focused = props.focused, required = props.required, multiline = props.multiline, hasLabel = props.hasLabel, borderless = props.borderless, underlined = props.underlined, hasIcon = props.hasIcon, resizable = props.resizable, hasErrorMessage = props.hasErrorMessage, iconClass = props.iconClass, inputClassName = props.inputClassName, autoAdjustHeight = props.autoAdjustHeight;
     var semanticColors = theme.semanticColors;
     var classNames = getGlobalClassNames(globalClassNames, theme);
@@ -16658,9 +16698,544 @@ function getStyles$7(props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }
 
-var TextField = styled(TextFieldBase, getStyles$7, undefined, {
+var TextField = styled(TextFieldBase, getStyles$8, undefined, {
     scope: 'TextField'
 });
+
+var DEFAULT_MASK_FORMAT_CHARS = {
+    '9': /[0-9]/,
+    a: /[a-zA-Z]/,
+    '*': /[a-zA-Z0-9]/
+};
+/**
+ * Takes in the mask string and the formatCharacters and returns an array of MaskValues
+ * Example:
+ * mask = 'Phone Number: (999) - 9999'
+ * return = [
+ *    { value: undefined, displayIndex: 16, format: /[0-9]/ },
+ *    { value: undefined, displayIndex: 17, format: /[0-9]/ },
+ *    { value: undefined, displayIndex: 18, format: /[0-9]/ },
+ *    { value: undefined, displayIndex: 22, format: /[0-9]/ },
+ * ]
+ *
+ * @param mask The string use to define the format of the displayed maskedValue.
+ * @param formatChars An object defining how certain characters in the mask should accept input.
+ */
+function parseMask(mask, formatChars) {
+    if (formatChars === void 0) { formatChars = DEFAULT_MASK_FORMAT_CHARS; }
+    if (!mask) {
+        return [];
+    }
+    var maskCharData = [];
+    // Count the escape characters in the mask string.
+    var escapedChars = 0;
+    for (var i = 0; i + escapedChars < mask.length; i++) {
+        var maskChar = mask.charAt(i + escapedChars);
+        if (maskChar === '\\') {
+            escapedChars++;
+        }
+        else {
+            // Check if the maskChar is a format character.
+            var maskFormat = formatChars[maskChar];
+            if (maskFormat) {
+                maskCharData.push({
+                    /**
+                     * Do not add escapedChars to the displayIndex.
+                     * The index refers to a position in the mask's displayValue.
+                     * Since the backslashes don't appear in the displayValue,
+                     * we do not add them to the charData displayIndex.
+                     */
+                    displayIndex: i,
+                    format: maskFormat
+                });
+            }
+        }
+    }
+    return maskCharData;
+}
+/**
+ * Takes in the mask string, an array of MaskValues, and the maskCharacter
+ * returns the mask string formatted with the input values and maskCharacter.
+ * If the maskChar is undefined, the maskDisplay is truncated to the last filled format character.
+ * Example:
+ * mask = 'Phone Number: (999) 999 - 9999'
+ * maskCharData = '12345'
+ * maskChar = '_'
+ * return = 'Phone Number: (123) 45_ - ___'
+ *
+ * Example:
+ * mask = 'Phone Number: (999) 999 - 9999'
+ * value = '12345'
+ * maskChar = undefined
+ * return = 'Phone Number: (123) 45'
+ *
+ * @param mask The string use to define the format of the displayed maskedValue.
+ * @param maskCharData The input values to insert into the mask string for displaying.
+ * @param maskChar? A character to display in place of unfilled mask format characters.
+ */
+function getMaskDisplay(mask, maskCharData, maskChar) {
+    var maskDisplay = mask;
+    if (!maskDisplay) {
+        return '';
+    }
+    // Remove all backslashes
+    maskDisplay = maskDisplay.replace(/\\/g, '');
+    // lastDisplayIndex is is used to truncate the string if necessary.
+    var lastDisplayIndex = 0;
+    if (maskCharData.length > 0) {
+        lastDisplayIndex = maskCharData[0].displayIndex - 1;
+    }
+    /**
+     * For each input value, replace the character in the maskDisplay with the value.
+     * If there is no value set for the format character, use the maskChar.
+     */
+    for (var _i = 0, maskCharData_1 = maskCharData; _i < maskCharData_1.length; _i++) {
+        var charData = maskCharData_1[_i];
+        var nextChar = ' ';
+        if (charData.value) {
+            nextChar = charData.value;
+            if (charData.displayIndex > lastDisplayIndex) {
+                lastDisplayIndex = charData.displayIndex;
+            }
+        }
+        else {
+            if (maskChar) {
+                nextChar = maskChar;
+            }
+        }
+        // Insert the character into the maskdisplay at its corresponding index
+        maskDisplay = maskDisplay.slice(0, charData.displayIndex) + nextChar + maskDisplay.slice(charData.displayIndex + 1);
+    }
+    // Cut off all mask characters after the last filled format value
+    if (!maskChar) {
+        maskDisplay = maskDisplay.slice(0, lastDisplayIndex + 1);
+    }
+    return maskDisplay;
+}
+/**
+ * Get the next format index right of or at a specified index.
+ * If no index exists, returns the rightmost index.
+ * @param maskCharData
+ * @param index
+ */
+function getRightFormatIndex(maskCharData, index) {
+    for (var i = 0; i < maskCharData.length; i++) {
+        if (maskCharData[i].displayIndex >= index) {
+            return maskCharData[i].displayIndex;
+        }
+    }
+    return maskCharData[maskCharData.length - 1].displayIndex;
+}
+/**
+ * Get the next format index left of a specified index.
+ * If no index exists, returns the leftmost index.
+ * @param maskCharData
+ * @param index
+ */
+function getLeftFormatIndex(maskCharData, index) {
+    for (var i = maskCharData.length - 1; i >= 0; i--) {
+        if (maskCharData[i].displayIndex < index) {
+            return maskCharData[i].displayIndex;
+        }
+    }
+    return maskCharData[0].displayIndex;
+}
+/**
+ * Deletes all values in maskCharData with a displayIndex that falls inside the specified range.
+ * maskCharData is modified inline and also returned.
+ * @param maskCharData
+ * @param selectionStart
+ * @param selectionCount
+ */
+function clearRange(maskCharData, selectionStart, selectionCount) {
+    for (var i = 0; i < maskCharData.length; i++) {
+        if (maskCharData[i].displayIndex >= selectionStart) {
+            if (maskCharData[i].displayIndex >= selectionStart + selectionCount) {
+                break;
+            }
+            maskCharData[i].value = undefined;
+        }
+    }
+    return maskCharData;
+}
+/**
+ * Deletes the input character at or after a specified index and returns the new array of charData
+ * maskCharData is modified inline and also returned.
+ * @param maskCharData
+ * @param selectionStart
+ */
+function clearNext(maskCharData, selectionStart) {
+    for (var i = 0; i < maskCharData.length; i++) {
+        if (maskCharData[i].displayIndex >= selectionStart) {
+            maskCharData[i].value = undefined;
+            break;
+        }
+    }
+    return maskCharData;
+}
+/**
+ * Deletes the input character before a specified index and returns the new array of charData
+ * maskCharData is modified inline and also returned.
+ * @param maskCharData
+ * @param selectionStart
+ */
+function clearPrev(maskCharData, selectionStart) {
+    for (var i = maskCharData.length - 1; i >= 0; i--) {
+        if (maskCharData[i].displayIndex < selectionStart) {
+            maskCharData[i].value = undefined;
+            break;
+        }
+    }
+    return maskCharData;
+}
+/**
+ * Deletes all values in maskCharData with a displayIndex that falls inside the specified range.
+ * Modifies the maskCharData inplace with the passed string and returns the display index of the
+ * next format character after the inserted string.
+ * @param maskCharData
+ * @param selectionStart
+ * @param selectionCount
+ * @return The displayIndex of the next format character
+ */
+function insertString(maskCharData, selectionStart, newString) {
+    var stringIndex = 0;
+    var nextIndex = 0;
+    var isStringInserted = false;
+    // Iterate through _maskCharData finding values with a displayIndex after the specified range start
+    for (var i = 0; i < maskCharData.length && stringIndex < newString.length; i++) {
+        if (maskCharData[i].displayIndex >= selectionStart) {
+            isStringInserted = true;
+            nextIndex = maskCharData[i].displayIndex;
+            // Find the next character in the newString that matches the format
+            while (stringIndex < newString.length) {
+                // If the character matches the format regexp, set the maskCharData to the new character
+                if (maskCharData[i].format.test(newString.charAt(stringIndex))) {
+                    maskCharData[i].value = newString.charAt(stringIndex++);
+                    // Set the nextIndex to the display index of the next mask format character.
+                    if (i + 1 < maskCharData.length) {
+                        nextIndex = maskCharData[i + 1].displayIndex;
+                    }
+                    else {
+                        nextIndex++;
+                    }
+                    break;
+                }
+                stringIndex++;
+            }
+        }
+    }
+    return isStringInserted ? nextIndex : selectionStart;
+}
+
+var DEFAULT_MASK_CHAR = '_';
+var MaskedTextField = /** @class */ (function (_super) {
+    __extends(MaskedTextField, _super);
+    function MaskedTextField(props) {
+        var _this = _super.call(this, props) || this;
+        /**
+         * Tell BaseComponent to bypass resolution of componentRef.
+         */
+        _this._skipComponentRefResolution = true;
+        _this._textField = React.createRef();
+        initializeComponentRef(_this);
+        // Translate mask into charData
+        _this._maskCharData = parseMask(props.mask, props.maskFormat);
+        // If an initial value is provided, use it to populate the format chars
+        props.value !== undefined && _this.setValue(props.value);
+        _this._isFocused = false;
+        _this._moveCursorOnMouseUp = false;
+        _this.state = {
+            displayValue: getMaskDisplay(props.mask, _this._maskCharData, props.maskChar)
+        };
+        return _this;
+    }
+    MaskedTextField.prototype.componentWillReceiveProps = function (newProps) {
+        if (newProps.mask !== this.props.mask || newProps.value !== this.props.value) {
+            this._maskCharData = parseMask(newProps.mask, newProps.maskFormat);
+            newProps.value !== undefined && this.setValue(newProps.value);
+            this.setState({
+                displayValue: getMaskDisplay(newProps.mask, this._maskCharData, newProps.maskChar)
+            });
+        }
+    };
+    MaskedTextField.prototype.componentDidUpdate = function () {
+        // Move the cursor to the start of the mask format on update
+        if (this._isFocused && this.state.maskCursorPosition !== undefined && this._textField.current) {
+            this._textField.current.setSelectionRange(this.state.maskCursorPosition, this.state.maskCursorPosition);
+        }
+    };
+    MaskedTextField.prototype.render = function () {
+        return (React.createElement(TextField, __assign$2({}, this.props, { onFocus: this._onFocus, onBlur: this._onBlur, onMouseDown: this._onMouseDown, onMouseUp: this._onMouseUp, onChange: this._onInputChange, onBeforeChange: this._onBeforeChange, onKeyDown: this._onKeyDown, onPaste: this._onPaste, value: this.state.displayValue, componentRef: this._textField })));
+    };
+    Object.defineProperty(MaskedTextField.prototype, "value", {
+        /**
+         * @returns The value of all filled format characters or undefined if not all format characters are filled
+         */
+        get: function () {
+            var value = '';
+            for (var i = 0; i < this._maskCharData.length; i++) {
+                if (!this._maskCharData[i].value) {
+                    return undefined;
+                }
+                value += this._maskCharData[i].value;
+            }
+            return value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     *
+     */
+    MaskedTextField.prototype.setValue = function (newValue) {
+        var valueIndex = 0, charDataIndex = 0;
+        while (valueIndex < newValue.length && charDataIndex < this._maskCharData.length) {
+            // Test if the next character in the new value fits the next format character
+            var testVal = newValue[valueIndex];
+            if (this._maskCharData[charDataIndex].format.test(testVal)) {
+                this._maskCharData[charDataIndex].value = testVal;
+                charDataIndex++;
+            }
+            valueIndex++;
+        }
+    };
+    MaskedTextField.prototype.focus = function () {
+        var current = this._textField.current;
+        current && current.focus();
+    };
+    MaskedTextField.prototype.blur = function () {
+        var current = this._textField.current;
+        current && current.blur();
+    };
+    MaskedTextField.prototype.select = function () {
+        var current = this._textField.current;
+        current && current.select();
+    };
+    MaskedTextField.prototype.setSelectionStart = function (value) {
+        var current = this._textField.current;
+        current && current.setSelectionStart(value);
+    };
+    MaskedTextField.prototype.setSelectionEnd = function (value) {
+        var current = this._textField.current;
+        current && current.setSelectionEnd(value);
+    };
+    MaskedTextField.prototype.setSelectionRange = function (start, end) {
+        var current = this._textField.current;
+        current && current.setSelectionRange(start, end);
+    };
+    Object.defineProperty(MaskedTextField.prototype, "selectionStart", {
+        get: function () {
+            var current = this._textField.current;
+            return current && current.selectionStart !== null ? current.selectionStart : -1;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MaskedTextField.prototype, "selectionEnd", {
+        get: function () {
+            var current = this._textField.current;
+            return current && current.selectionEnd ? current.selectionEnd : -1;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MaskedTextField.prototype._onFocus = function (event) {
+        if (this.props.onFocus) {
+            this.props.onFocus(event);
+        }
+        this._isFocused = true;
+        // Move the cursor position to the leftmost unfilled position
+        for (var i = 0; i < this._maskCharData.length; i++) {
+            if (!this._maskCharData[i].value) {
+                this.setState({
+                    maskCursorPosition: this._maskCharData[i].displayIndex
+                });
+                break;
+            }
+        }
+    };
+    MaskedTextField.prototype._onBlur = function (event) {
+        if (this.props.onBlur) {
+            this.props.onBlur(event);
+        }
+        this._isFocused = false;
+        this._moveCursorOnMouseUp = true;
+    };
+    MaskedTextField.prototype._onMouseDown = function (event) {
+        if (this.props.onMouseDown) {
+            this.props.onMouseDown(event);
+        }
+        if (!this._isFocused) {
+            this._moveCursorOnMouseUp = true;
+        }
+    };
+    MaskedTextField.prototype._onMouseUp = function (event) {
+        if (this.props.onMouseUp) {
+            this.props.onMouseUp(event);
+        }
+        // Move the cursor on mouseUp after focusing the textField
+        if (this._moveCursorOnMouseUp) {
+            this._moveCursorOnMouseUp = false;
+            // Move the cursor position to the rightmost unfilled position
+            for (var i = 0; i < this._maskCharData.length; i++) {
+                if (!this._maskCharData[i].value) {
+                    this.setState({
+                        maskCursorPosition: this._maskCharData[i].displayIndex
+                    });
+                    break;
+                }
+            }
+        }
+    };
+    MaskedTextField.prototype._onBeforeChange = function (value) {
+        var current = this._textField.current;
+        if (this.props.onBeforeChange) {
+            this.props.onBeforeChange(value);
+        }
+        if (this._changeSelectionData === null && current) {
+            this._changeSelectionData = {
+                changeType: 'default',
+                selectionStart: current.selectionStart !== null ? current.selectionStart : -1,
+                selectionEnd: current.selectionEnd !== null ? current.selectionEnd : -1
+            };
+        }
+    };
+    MaskedTextField.prototype._onInputChange = function (ev, value) {
+        if (!this._changeSelectionData) {
+            return;
+        }
+        var displayValue = this.state.displayValue;
+        // The initial value of cursorPos does not matter
+        var cursorPos = 0;
+        var _a = this._changeSelectionData, changeType = _a.changeType, selectionStart = _a.selectionStart, selectionEnd = _a.selectionEnd;
+        if (changeType === 'textPasted') {
+            var charsSelected = selectionEnd - selectionStart, charCount = value.length + charsSelected - displayValue.length, startPos = selectionStart, pastedString = value.substr(startPos, charCount);
+            // Clear any selected characters
+            if (charsSelected) {
+                this._maskCharData = clearRange(this._maskCharData, selectionStart, charsSelected);
+            }
+            cursorPos = insertString(this._maskCharData, startPos, pastedString);
+        }
+        else if (changeType === 'delete' || changeType === 'backspace') {
+            // isDel is true If the characters are removed LTR, otherwise RTL
+            var isDel = changeType === 'delete', charCount = selectionEnd - selectionStart;
+            if (charCount) {
+                // charCount is > 0 if range was deleted
+                this._maskCharData = clearRange(this._maskCharData, selectionStart, charCount);
+                cursorPos = getRightFormatIndex(this._maskCharData, selectionStart);
+            }
+            else {
+                // If charCount === 0, there was no selection and a single character was deleted
+                if (isDel) {
+                    this._maskCharData = clearNext(this._maskCharData, selectionStart);
+                    cursorPos = getRightFormatIndex(this._maskCharData, selectionStart);
+                }
+                else {
+                    this._maskCharData = clearPrev(this._maskCharData, selectionStart);
+                    cursorPos = getLeftFormatIndex(this._maskCharData, selectionStart);
+                }
+            }
+        }
+        else if (value.length > displayValue.length) {
+            // This case is if the user added characters
+            var charCount = value.length - displayValue.length, startPos = selectionEnd - charCount, enteredString = value.substr(startPos, charCount);
+            cursorPos = insertString(this._maskCharData, startPos, enteredString);
+        }
+        else if (value.length <= displayValue.length) {
+            /**
+             * This case is reached only if the user has selected a block of 1 or more
+             * characters and input a character replacing the characters they've selected.
+             */
+            var charCount = 1, selectCount = displayValue.length + charCount - value.length, startPos = selectionEnd - charCount, enteredString = value.substr(startPos, charCount);
+            // Clear the selected range
+            this._maskCharData = clearRange(this._maskCharData, startPos, selectCount);
+            // Insert the printed character
+            cursorPos = insertString(this._maskCharData, startPos, enteredString);
+        }
+        this._changeSelectionData = null;
+        var newValue = getMaskDisplay(this.props.mask, this._maskCharData, this.props.maskChar);
+        this.setState({
+            displayValue: newValue,
+            maskCursorPosition: cursorPos
+        });
+        // Perform onChange/d after input has been processed. Return value is expected to be the displayed text
+        if (this.props.onChange) {
+            this.props.onChange(ev, newValue);
+        }
+        if (this.props.onChanged) {
+            this.props.onChanged(newValue);
+        }
+    };
+    MaskedTextField.prototype._onKeyDown = function (event) {
+        var current = this._textField.current;
+        if (this.props.onKeyDown) {
+            this.props.onKeyDown(event);
+        }
+        this._changeSelectionData = null;
+        if (current && current.value) {
+            var keyCode = event.keyCode, ctrlKey = event.ctrlKey, metaKey = event.metaKey;
+            // Ignore ctrl and meta keydown
+            if (ctrlKey || metaKey) {
+                return;
+            }
+            // On backspace or delete, store the selection and the keyCode
+            if (keyCode === KeyCodes.backspace || keyCode === KeyCodes.del) {
+                var selectionStart = event.target.selectionStart, selectionEnd = event.target.selectionEnd;
+                // Check if backspace or delete press is valid.
+                if (!(keyCode === KeyCodes.backspace && selectionEnd && selectionEnd > 0) &&
+                    !(keyCode === KeyCodes.del && selectionStart !== null && selectionStart < current.value.length)) {
+                    return;
+                }
+                this._changeSelectionData = {
+                    changeType: keyCode === KeyCodes.backspace ? 'backspace' : 'delete',
+                    selectionStart: selectionStart !== null ? selectionStart : -1,
+                    selectionEnd: selectionEnd !== null ? selectionEnd : -1
+                };
+            }
+        }
+    };
+    MaskedTextField.prototype._onPaste = function (event) {
+        if (this.props.onPaste) {
+            this.props.onPaste(event);
+        }
+        var selectionStart = event.target.selectionStart, selectionEnd = event.target.selectionEnd;
+        // Store the paste selection range
+        this._changeSelectionData = {
+            changeType: 'textPasted',
+            selectionStart: selectionStart !== null ? selectionStart : -1,
+            selectionEnd: selectionEnd !== null ? selectionEnd : -1
+        };
+    };
+    MaskedTextField.defaultProps = {
+        maskChar: DEFAULT_MASK_CHAR,
+        maskFormat: DEFAULT_MASK_FORMAT_CHARS
+    };
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onFocus", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onBlur", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onMouseDown", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onMouseUp", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onBeforeChange", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onInputChange", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onKeyDown", null);
+    __decorate([
+        autobind
+    ], MaskedTextField.prototype, "_onPaste", null);
+    return MaskedTextField;
+}(React.Component));
 
 var SelectableOptionMenuItemType;
 (function (SelectableOptionMenuItemType) {
@@ -16833,7 +17408,7 @@ var getCaretDownButtonStyles = memoizeFunction(function (theme, customStyles) {
     return concatStyleSets(styles, customStyles);
     var _a;
 });
-var getStyles$6 = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
+var getStyles$7 = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
     var semanticColors = theme.semanticColors, fonts = theme.fonts, palette = theme.palette;
     var ComboBoxRootBackground = semanticColors.bodyBackground;
     var ComboBoxRootTextColor = semanticColors.bodyText;
@@ -17005,7 +17580,7 @@ var getStyles$6 = memoizeFunction(function (theme, customStyles, comboBoxOptionW
     var _a, _b, _c, _d;
 });
 
-var getClassNames$7 = memoizeFunction(function (styles, className, isOpen, disabled, required, focused, allowFreeForm, hasErrorMessage) {
+var getClassNames$8 = memoizeFunction(function (styles, className, isOpen, disabled, required, focused, allowFreeForm, hasErrorMessage) {
     return {
         container: mergeStyles('ms-ComboBox-container', className, styles.container),
         label: mergeStyles(styles.label, disabled && styles.labelDisabled),
@@ -17811,7 +18386,7 @@ var ComboBox = /** @class */ (function (_super) {
         var hasErrorMessage = errorMessage && errorMessage.length > 0 ? true : false;
         this._classNames = this.props.getClassNames
             ? this.props.getClassNames(theme, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage, className)
-            : getClassNames$7(getStyles$6(theme, customStyles), className, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage);
+            : getClassNames$8(getStyles$7(theme, customStyles), className, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage);
         return (React.createElement("div", __assign$2({}, divProps, { ref: this._root, className: this._classNames.container }),
             label && (React.createElement(Label, { id: id + '-label', disabled: disabled, required: required, htmlFor: id + '-input', className: this._classNames.label }, label)),
             React.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: _this._comboBoxWrapper, id: id + 'wrapper', className: _this._classNames.root },
@@ -18580,7 +19155,7 @@ var ComboBox = /** @class */ (function (_super) {
     return ComboBox;
 }(BaseComponent));
 
-var getClassNames$6 = classNamesFunction();
+var getClassNames$7 = classNamesFunction();
 var DEFAULT_STRINGS = {
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -18837,7 +19412,7 @@ var DatePickerBase = /** @class */ (function (_super) {
     DatePickerBase.prototype.render = function () {
         var _a = this.props, firstDayOfWeek = _a.firstDayOfWeek, strings = _a.strings, label = _a.label, theme = _a.theme, className = _a.className, styles = _a.styles, initialPickerDate = _a.initialPickerDate, isRequired = _a.isRequired, disabled = _a.disabled, ariaLabel = _a.ariaLabel, pickerAriaLabel = _a.pickerAriaLabel, placeholder = _a.placeholder, allowTextInput = _a.allowTextInput, borderless = _a.borderless, minDate = _a.minDate, maxDate = _a.maxDate, showCloseButton = _a.showCloseButton, calendarProps = _a.calendarProps, calloutProps = _a.calloutProps, textFieldProps = _a.textField, underlined = _a.underlined, allFocusable = _a.allFocusable, _b = _a.calendarAs, CalendarType = _b === void 0 ? Calendar : _b, tabIndex = _a.tabIndex;
         var _c = this.state, isDatePickerShown = _c.isDatePickerShown, formattedDate = _c.formattedDate, selectedDate = _c.selectedDate;
-        var classNames = getClassNames$6(styles, {
+        var classNames = getClassNames$7(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -19009,7 +19584,7 @@ var DatePicker = styled(DatePickerBase, styles$8, undefined, {
     scope: 'DatePicker'
 });
 
-var getClassNames$5 = classNamesFunction();
+var getClassNames$6 = classNamesFunction();
 var OverlayBase = /** @class */ (function (_super) {
     __extends(OverlayBase, _super);
     function OverlayBase() {
@@ -19024,7 +19599,7 @@ var OverlayBase = /** @class */ (function (_super) {
     OverlayBase.prototype.render = function () {
         var _a = this.props, isDark = _a.isDarkThemed, className = _a.className, theme = _a.theme, styles = _a.styles;
         var divProps = getNativeProps(this.props, divProperties);
-        var classNames = getClassNames$5(styles, {
+        var classNames = getClassNames$6(styles, {
             theme: theme,
             className: className,
             isDark: isDark
@@ -19038,7 +19613,7 @@ var GlobalClassNames$3 = {
     root: 'ms-Overlay',
     rootDark: 'ms-Overlay--dark'
 };
-var getStyles$5 = function (props) {
+var getStyles$6 = function (props) {
     var className = props.className, theme = props.theme, isNone = props.isNone, isDark = props.isDark;
     var palette = theme.palette;
     var classNames = getGlobalClassNames(GlobalClassNames$3, theme);
@@ -19075,7 +19650,7 @@ var getStyles$5 = function (props) {
     var _a;
 };
 
-var Overlay = styled(OverlayBase, getStyles$5, undefined, {
+var Overlay = styled(OverlayBase, getStyles$6, undefined, {
     scope: 'Overlay'
 });
 
@@ -19229,7 +19804,7 @@ var PanelType;
     PanelType[PanelType["customNear"] = 8] = "customNear";
 })(PanelType || (PanelType = {}));
 
-var getClassNames$4 = classNamesFunction();
+var getClassNames$5 = classNamesFunction();
 var PanelBase = /** @class */ (function (_super) {
     __extends(PanelBase, _super);
     function PanelBase(props) {
@@ -19384,7 +19959,7 @@ var PanelBase = /** @class */ (function (_super) {
         if (!isOpen && !isAnimating && !isHiddenOnDismiss) {
             return null;
         }
-        this._classNames = getClassNames$4(styles, {
+        this._classNames = getClassNames$5(styles, {
             theme: theme,
             className: className,
             focusTrapZoneClassName: focusTrapZoneProps ? focusTrapZoneProps.className : undefined,
@@ -19601,7 +20176,7 @@ var sharedPaddingStyles = {
 //     }
 //   });
 // }
-var getStyles$4 = function (props) {
+var getStyles$5 = function (props) {
     var className = props.className, focusTrapZoneClassName = props.focusTrapZoneClassName, hasCloseButton = props.hasCloseButton, headerClassName = props.headerClassName, isAnimating = props.isAnimating, isFooterSticky = props.isFooterSticky, isFooterAtBottom = props.isFooterAtBottom, isOnRightSide = props.isOnRightSide, isOpen = props.isOpen, isHiddenOnDismiss = props.isHiddenOnDismiss, theme = props.theme, _a = props.type, type = _a === void 0 ? PanelType.smallFixedFar : _a;
     var palette = theme.palette;
     var classNames = getGlobalClassNames(GlobalClassNames$2, theme);
@@ -19776,11 +20351,11 @@ var _a$1, _b$1, _c$1, _d, _e, _f;
 /**
  * Panel description
  */
-var Panel = styled(PanelBase, getStyles$4, undefined, {
+var Panel = styled(PanelBase, getStyles$5, undefined, {
     scope: 'Panel'
 });
 
-var getClassNames$3 = classNamesFunction();
+var getClassNames$4 = classNamesFunction();
 var DropdownBase = /** @class */ (function (_super) {
     __extends(DropdownBase, _super);
     function DropdownBase(props) {
@@ -20310,7 +20885,7 @@ var DropdownBase = /** @class */ (function (_super) {
                     ariaPosInSet: this._sizePosCache.positionInSet(selectedIndices[0]),
                     ariaSelected: selectedIndices[0] === undefined ? undefined : true
                 };
-        this._classNames = getClassNames$3(propStyles, {
+        this._classNames = getClassNames$4(propStyles, {
             theme: theme,
             className: className,
             hasError: !!(errorMessage && errorMessage.length > 0),
@@ -20603,7 +21178,7 @@ var highContrastBorderState = {
         _c)
 };
 var MinimumScreenSelector = getScreenSelector(0, ScreenWidthMinMedium);
-var getStyles$3 = function (props) {
+var getStyles$4 = function (props) {
     var theme = props.theme, hasError = props.hasError, hasLabel = props.hasLabel, className = props.className, isOpen = props.isOpen, disabled = props.disabled, required = props.required, isRenderingPlaceholder = props.isRenderingPlaceholder, panelClassName = props.panelClassName, calloutClassName = props.calloutClassName;
     if (!theme) {
         throw new Error('theme is undefined or null in base Dropdown getStyles function.');
@@ -20834,7 +21409,7 @@ var getStyles$3 = function (props) {
 };
 var _a, _b, _c;
 
-var Dropdown = styled(DropdownBase, getStyles$3, undefined, {
+var Dropdown = styled(DropdownBase, getStyles$4, undefined, {
     scope: 'Dropdown'
 });
 
@@ -20862,7 +21437,7 @@ var MessageBarType;
     MessageBarType[MessageBarType["remove"] = 90000] = "remove";
 })(MessageBarType || (MessageBarType = {}));
 
-var getClassNames$2 = classNamesFunction();
+var getClassNames$3 = classNamesFunction();
 var MessageBarBase = /** @class */ (function (_super) {
     __extends(MessageBarBase, _super);
     function MessageBarBase(props) {
@@ -20952,7 +21527,7 @@ var MessageBarBase = /** @class */ (function (_super) {
     MessageBarBase.prototype._getClassNames = function () {
         var _a = this.props, theme = _a.theme, className = _a.className, messageBarType = _a.messageBarType, onDismiss = _a.onDismiss, actions = _a.actions, truncated = _a.truncated, isMultiline = _a.isMultiline;
         var expandSingleLine = this.state.expandSingleLine;
-        return getClassNames$2(this.props.styles, {
+        return getClassNames$3(this.props.styles, {
             theme: theme,
             messageBarType: messageBarType || MessageBarType.info,
             onDismiss: onDismiss !== undefined,
@@ -21031,7 +21606,7 @@ var getIconColor = function (messageBarType, palette, semanticColors) {
     }
     return palette.neutralSecondary;
 };
-var getStyles$2 = function (props) {
+var getStyles$3 = function (props) {
     var theme = props.theme, className = props.className, messageBarType = props.messageBarType, onDismiss = props.onDismiss, actions = props.actions, truncated = props.truncated, isMultiline = props.isMultiline, expandSingleLine = props.expandSingleLine;
     var semanticColors = theme.semanticColors, palette = theme.palette, fonts = theme.fonts;
     var SmallScreenSelector = getScreenSelector(0, ScreenWidthMaxSmall);
@@ -21277,11 +21852,11 @@ var getStyles$2 = function (props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 };
 
-var MessageBar = styled(MessageBarBase, getStyles$2, undefined, {
+var MessageBar = styled(MessageBarBase, getStyles$3, undefined, {
     scope: 'MessageBar'
 });
 
-var getClassNames$1 = classNamesFunction();
+var getClassNames$2 = classNamesFunction();
 var SearchBoxBase = /** @class */ (function (_super) {
     __extends(SearchBoxBase, _super);
     function SearchBoxBase(props) {
@@ -21383,7 +21958,7 @@ var SearchBoxBase = /** @class */ (function (_super) {
         var _a = this.props, ariaLabel = _a.ariaLabel, placeholder = _a.placeholder, className = _a.className, disabled = _a.disabled, underlined = _a.underlined, styles = _a.styles, labelText = _a.labelText, theme = _a.theme, clearButtonProps = _a.clearButtonProps, disableAnimation = _a.disableAnimation, iconProps = _a.iconProps;
         var _b = this.state, value = _b.value, hasFocus = _b.hasFocus, id = _b.id;
         var placeholderValue = labelText === undefined ? placeholder : labelText;
-        var classNames = getClassNames$1(styles, {
+        var classNames = getClassNames$2(styles, {
             theme: theme,
             className: className,
             underlined: underlined,
@@ -21444,7 +22019,7 @@ var SearchBoxBase = /** @class */ (function (_super) {
     return SearchBoxBase;
 }(BaseComponent));
 
-function getStyles$1(props) {
+function getStyles$2(props) {
     var theme = props.theme, underlined = props.underlined, disabled = props.disabled, hasFocus = props.hasFocus, className = props.className, hasInput = props.hasInput, disableAnimation = props.disableAnimation;
     var palette = theme.palette, fonts = theme.fonts, semanticColors = theme.semanticColors;
     // placeholder style constants
@@ -21607,7 +22182,7 @@ function getStyles$1(props) {
     var _a, _b, _c;
 }
 
-var SearchBox = styled(SearchBoxBase, getStyles$1, undefined, { scope: 'SearchBox' });
+var SearchBox = styled(SearchBoxBase, getStyles$2, undefined, { scope: 'SearchBox' });
 
 var _getDisabledStyles = memoizeFunction(function (theme) {
     var semanticColors = theme.semanticColors;
@@ -21693,7 +22268,7 @@ var getArrowButtonStyles = memoizeFunction(function (theme, isUpArrow, customSpe
     return concatStyleSets(defaultArrowButtonStyles, isUpArrow ? defaultUpArrowButtonStyles : defaultDownArrowButtonStyles, customSpecificArrowStyles);
     var _a, _b, _c;
 });
-var getStyles = memoizeFunction(function (theme, customStyles) {
+var getStyles$1 = memoizeFunction(function (theme, customStyles) {
     var palette = theme.palette, semanticColors = theme.semanticColors;
     var SpinButtonRootBorderColor = semanticColors.inputBorder;
     var SpinButtonRootBorderColorHovered = semanticColors.inputBorderHovered;
@@ -21830,7 +22405,7 @@ var getStyles = memoizeFunction(function (theme, customStyles) {
     var _a, _b, _c, _d;
 });
 
-var getClassNames = memoizeFunction(function (styles, disabled, isFocused, keyboardSpinDirection, labelPosition, className) {
+var getClassNames$1 = memoizeFunction(function (styles, disabled, isFocused, keyboardSpinDirection, labelPosition, className) {
     if (labelPosition === void 0) { labelPosition = Position.start; }
     if (className === void 0) { className = undefined; }
     return {
@@ -22140,7 +22715,7 @@ var SpinButton = /** @class */ (function (_super) {
         var _b = this.state, isFocused = _b.isFocused, value = _b.value, keyboardSpinDirection = _b.keyboardSpinDirection;
         var classNames = this.props.getClassNames
             ? this.props.getClassNames(theme, !!disabled, !!isFocused, keyboardSpinDirection, labelPosition, className)
-            : getClassNames(getStyles(theme, customStyles), !!disabled, !!isFocused, keyboardSpinDirection, labelPosition, className);
+            : getClassNames$1(getStyles$1(theme, customStyles), !!disabled, !!isFocused, keyboardSpinDirection, labelPosition, className);
         return (React.createElement("div", { className: classNames.root },
             labelPosition !== Position.bottom && (React.createElement("div", { className: classNames.labelWrapper },
                 iconProps && React.createElement(Icon, __assign$2({}, iconProps, { className: classNames.icon, "aria-hidden": "true" })),
@@ -22194,6 +22769,336 @@ var SpinButton = /** @class */ (function (_super) {
     return SpinButton;
 }(BaseComponent));
 
+var getClassNames = classNamesFunction();
+var ToggleBase = /** @class */ (function (_super) {
+    __extends(ToggleBase, _super);
+    function ToggleBase(props) {
+        var _this = _super.call(this, props) || this;
+        _this._toggleButton = React.createRef();
+        _this._onClick = function (ev) {
+            var _a = _this.props, disabled = _a.disabled, checkedProp = _a.checked, onChange = _a.onChange, onChanged = _a.onChanged, onClick = _a.onClick;
+            var checked = _this.state.checked;
+            if (!disabled) {
+                // Only update the state if the user hasn't provided it.
+                if (checkedProp === undefined) {
+                    _this.setState({
+                        checked: !checked
+                    });
+                }
+                if (onChange) {
+                    onChange(ev, !checked);
+                }
+                if (onChanged) {
+                    onChanged(!checked);
+                }
+                if (onClick) {
+                    onClick(ev);
+                }
+            }
+        };
+        _this._warnMutuallyExclusive({
+            checked: 'defaultChecked'
+        });
+        _this._warnDeprecations({
+            onAriaLabel: 'ariaLabel',
+            offAriaLabel: undefined,
+            onChanged: 'onChange'
+        });
+        _this.state = {
+            checked: !!(props.checked || props.defaultChecked)
+        };
+        _this._id = props.id || getId('Toggle');
+        return _this;
+    }
+    Object.defineProperty(ToggleBase.prototype, "checked", {
+        /**
+         * Gets the current checked state of the toggle.
+         */
+        get: function () {
+            return this.state.checked;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ToggleBase.prototype.componentWillReceiveProps = function (newProps) {
+        if (newProps.checked !== undefined) {
+            this.setState({
+                checked: !!newProps.checked // convert null to false
+            });
+        }
+    };
+    ToggleBase.prototype.render = function () {
+        var _this = this;
+        var _a = this.props, _b = _a.as, RootType = _b === void 0 ? 'div' : _b, className = _a.className, theme = _a.theme, disabled = _a.disabled, keytipProps = _a.keytipProps, label = _a.label, ariaLabel = _a.ariaLabel, onAriaLabel = _a.onAriaLabel, offAriaLabel = _a.offAriaLabel, offText = _a.offText, onText = _a.onText, styles = _a.styles, inlineLabel = _a.inlineLabel;
+        var checked = this.state.checked;
+        var stateText = checked ? onText : offText;
+        var badAriaLabel = checked ? onAriaLabel : offAriaLabel;
+        var toggleNativeProps = getNativeProps(this.props, inputProperties, ['defaultChecked']);
+        var classNames = getClassNames(styles, {
+            theme: theme,
+            className: className,
+            disabled: disabled,
+            checked: checked,
+            inlineLabel: inlineLabel,
+            onOffMissing: !onText && !offText
+        });
+        var labelId = this._id + "-label";
+        var stateTextId = this._id + "-stateText";
+        // The following properties take priority for what Narrator should read:
+        // 1. ariaLabel
+        // 2. onAriaLabel (if checked) or offAriaLabel (if not checked)
+        // 3. label
+        // 4. onText (if checked) or offText (if not checked)
+        var labelledById = undefined;
+        if (!ariaLabel && !badAriaLabel) {
+            if (label) {
+                labelledById = labelId;
+            }
+            else if (stateText) {
+                labelledById = stateTextId;
+            }
+        }
+        var ariaRole = this.props.role ? this.props.role : 'switch';
+        return (React.createElement(RootType, { className: classNames.root, hidden: toggleNativeProps.hidden },
+            label && (React.createElement(Label, { htmlFor: this._id, className: classNames.label, id: labelId }, label)),
+            React.createElement("div", { className: classNames.container },
+                React.createElement(KeytipData, { keytipProps: keytipProps, ariaDescribedBy: toggleNativeProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React.createElement("button", __assign$2({}, toggleNativeProps, keytipAttributes, { className: classNames.pill, disabled: disabled, id: _this._id, type: "button", role: ariaRole, ref: _this._toggleButton, "aria-disabled": disabled, "aria-checked": checked, "aria-label": ariaLabel ? ariaLabel : badAriaLabel, "data-is-focusable": true, onChange: _this._noop, onClick: _this._onClick, "aria-labelledby": labelledById }),
+                    React.createElement("div", { className: classNames.thumb }))); }),
+                stateText && (React.createElement(Label, { htmlFor: this._id, className: classNames.text, id: stateTextId }, stateText)))));
+    };
+    ToggleBase.prototype.focus = function () {
+        if (this._toggleButton.current) {
+            this._toggleButton.current.focus();
+        }
+    };
+    ToggleBase.prototype._noop = function () {
+        /* no-op */
+    };
+    return ToggleBase;
+}(BaseComponent));
+
+var getStyles = function (props) {
+    var theme = props.theme, className = props.className, disabled = props.disabled, checked = props.checked, inlineLabel = props.inlineLabel, onOffMissing = props.onOffMissing;
+    var semanticColors = theme.semanticColors;
+    var pillUncheckedBackground = semanticColors.bodyBackground;
+    var pillCheckedBackground = semanticColors.inputBackgroundChecked;
+    var pillCheckedHoveredBackground = semanticColors.inputBackgroundCheckedHovered;
+    var pillCheckedDisabledBackground = semanticColors.disabledBodySubtext;
+    var thumbBackground = semanticColors.inputBorderHovered;
+    var thumbCheckedBackground = semanticColors.inputForegroundChecked;
+    var thumbDisabledBackground = semanticColors.disabledBodySubtext;
+    var thumbCheckedDisabledBackground = semanticColors.disabledBackground;
+    var pillBorderColor = semanticColors.smallInputBorder;
+    var pillBorderHoveredColor = semanticColors.inputBorderHovered;
+    var pillBorderDisabledColor = semanticColors.disabledBodySubtext;
+    var textDisabledColor = semanticColors.disabledText;
+    return {
+        root: [
+            'ms-Toggle',
+            checked && 'is-checked',
+            !disabled && 'is-enabled',
+            disabled && 'is-disabled',
+            theme.fonts.medium,
+            {
+                marginBottom: '8px'
+            },
+            inlineLabel && {
+                display: 'flex',
+                alignItems: 'center'
+            },
+            className
+        ],
+        label: [
+            'ms-Toggle-label',
+            disabled && {
+                color: textDisabledColor,
+                selectors: (_a = {},
+                    _a[HighContrastSelector] = {
+                        color: 'GrayText'
+                    },
+                    _a)
+            },
+            inlineLabel &&
+                !onOffMissing && {
+                marginRight: 16
+            },
+            onOffMissing &&
+                inlineLabel && {
+                order: 1,
+                marginLeft: 16
+            }
+        ],
+        container: [
+            'ms-Toggle-innerContainer',
+            {
+                display: 'inline-flex',
+                position: 'relative'
+            }
+        ],
+        pill: [
+            'ms-Toggle-background',
+            getFocusStyle(theme, { inset: -3 }),
+            {
+                fontSize: '20px',
+                boxSizing: 'border-box',
+                width: '2.2em',
+                height: '1em',
+                borderRadius: '1em',
+                transition: 'all 0.1s ease',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                background: pillUncheckedBackground,
+                borderColor: pillBorderColor,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '0 .2em'
+            },
+            !disabled && [
+                !checked && {
+                    selectors: {
+                        ':hover': [
+                            {
+                                borderColor: pillBorderHoveredColor
+                            }
+                        ],
+                        ':hover .ms-Toggle-thumb': [
+                            {
+                                selectors: (_b = {},
+                                    _b[HighContrastSelector] = {
+                                        borderColor: 'Highlight'
+                                    },
+                                    _b)
+                            }
+                        ]
+                    }
+                },
+                checked && [
+                    {
+                        background: pillCheckedBackground,
+                        borderColor: 'transparent',
+                        justifyContent: 'flex-end'
+                    },
+                    {
+                        selectors: (_c = {
+                                ':hover': [
+                                    {
+                                        backgroundColor: pillCheckedHoveredBackground,
+                                        borderColor: 'transparent',
+                                        selectors: (_d = {},
+                                            _d[HighContrastSelector] = {
+                                                backgroundColor: 'Highlight'
+                                            },
+                                            _d)
+                                    }
+                                ]
+                            },
+                            _c[HighContrastSelector] = {
+                                backgroundColor: 'WindowText'
+                            },
+                            _c)
+                    }
+                ]
+            ],
+            disabled && [
+                {
+                    cursor: 'default'
+                },
+                !checked && [
+                    {
+                        borderColor: pillBorderDisabledColor
+                    }
+                ],
+                checked && [
+                    {
+                        backgroundColor: pillCheckedDisabledBackground,
+                        borderColor: 'transparent',
+                        justifyContent: 'flex-end'
+                    }
+                ]
+            ],
+            !disabled && {
+                selectors: {
+                    '&:hover': {
+                        selectors: (_e = {},
+                            _e[HighContrastSelector] = {
+                                borderColor: 'Highlight'
+                            },
+                            _e)
+                    }
+                }
+            }
+        ],
+        thumb: [
+            'ms-Toggle-thumb',
+            {
+                width: '.5em',
+                height: '.5em',
+                borderRadius: '.5em',
+                transition: 'all 0.1s ease',
+                backgroundColor: thumbBackground,
+                /* Border is added to handle high contrast mode for Firefox */
+                borderColor: 'transparent',
+                borderWidth: '.28em',
+                borderStyle: 'solid',
+                boxSizing: 'border-box'
+            },
+            !disabled &&
+                checked && [
+                {
+                    backgroundColor: thumbCheckedBackground,
+                    selectors: (_f = {},
+                        _f[HighContrastSelector] = {
+                            backgroundColor: 'Window',
+                            borderColor: 'Window'
+                        },
+                        _f)
+                }
+            ],
+            disabled && [
+                !checked && [
+                    {
+                        backgroundColor: thumbDisabledBackground
+                    }
+                ],
+                checked && [
+                    {
+                        backgroundColor: thumbCheckedDisabledBackground
+                    }
+                ]
+            ]
+        ],
+        text: [
+            'ms-Toggle-stateText',
+            {
+                selectors: {
+                    // Workaround: make rules more specific than Label rules.
+                    '&&': {
+                        padding: '0',
+                        margin: '0 8px',
+                        userSelect: 'none'
+                    }
+                }
+            },
+            disabled && {
+                selectors: {
+                    '&&': {
+                        color: textDisabledColor,
+                        selectors: (_g = {},
+                            _g[HighContrastSelector] = {
+                                color: 'GrayText'
+                            },
+                            _g)
+                    }
+                }
+            }
+        ]
+    };
+    var _a, _b, _c, _d, _e, _f, _g;
+};
+
+var Toggle = styled(ToggleBase, getStyles, undefined, { scope: 'Toggle' });
+
 var InfoMark = function (props) {
     var iconName = 'AlertSolid';
     if (props.iconName != null && props.iconName != '')
@@ -22206,1514 +23111,120 @@ var InfoMark = function (props) {
             React.createElement(Icon, { iconName: iconName }))));
 };
 
-var MessageBarComp = function (props) {
-    var _a = React.useState(true), showMessageBar = _a[0], setShowMessageBar = _a[1];
-    return (React.createElement(React.Fragment, null, showMessageBar ? (React.createElement(React.Fragment, null, props.messageBarComp.showDismissButton ? (React.createElement(MessageBar, { messageBarType: props.messageBarComp.messageType, isMultiline: false, onDismiss: function () {
-            if (!props.messageBarComp.isDimissInternal) {
-                props.messageBarComp.objSetter(false);
-            }
-            setShowMessageBar(false);
-        }, dismissButtonAriaLabel: 'Close' }, props.messageBarComp.message)) : (React.createElement(MessageBar, { style: { margin: '4px' }, messageBarType: props.messageBarComp.messageType, isMultiline: false }, props.messageBarComp.message)))) : (React.createElement(React.Fragment, null))));
+var layoutStyles = "";
+
+// Inputlayout
+var EInputLayoutType;
+(function (EInputLayoutType) {
+    EInputLayoutType["oneLine"] = "OL";
+    EInputLayoutType["veryVerySmallInputLine"] = "VVSIL";
+    EInputLayoutType["verySmallInputLine"] = "VSIL";
+    EInputLayoutType["smallInputLine"] = "SIL";
+    EInputLayoutType["middleLine"] = "ML";
+    EInputLayoutType["smallMiddleLine"] = "SML";
+    EInputLayoutType["tierLine"] = "TL";
+    EInputLayoutType["quarterLine"] = "QL";
+    EInputLayoutType["smallLabel"] = "SL";
+    EInputLayoutType["noLabel"] = "NL";
+})(EInputLayoutType || (EInputLayoutType = {}));
+var EInputType;
+(function (EInputType) {
+    EInputType["NumberInput"] = "NumberInput";
+    EInputType["SelectChoice"] = "SelectChoice";
+    EInputType["SearchedDropdown"] = "SearchedDropdown";
+    EInputType["ComboBox"] = "ComboBox";
+    EInputType["DatePicker"] = "DatePicker";
+    EInputType["TextField"] = "TextField";
+    EInputType["Toogle"] = "Toogle";
+    EInputType["TrippleToggle"] = "TrippleToggle";
+    EInputType["PhoneNumber"] = "PhoneNumber";
+})(EInputType || (EInputType = {}));
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+  __assign = Object.assign || function __assign(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+  };
+  return __assign.apply(this, arguments);
 };
 
-var styles$7 = "";
+/** @deprecated */
+function __spreadArrays() {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+  for (var r = Array(s), k = 0, i = 0; i < il; i++)
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+          r[k] = a[j];
+  return r;
+}
 
-var animations = "";
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
 
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+/* --- Update Input Methods --- */
+function updateInputData(evt, currentObject, setter, dataType) {
+    var _a, _b, _c;
+    if (dataType === 'string') {
+        setter(__assign(__assign({}, currentObject), (_a = {}, _a[evt.currentTarget.name] = evt.currentTarget.value, _a)));
+    }
+    else if (dataType === 'date') {
+        var convertValue = evt.currentTarget.value.replace(/\s/g, '');
+        convertValue = convertValue.replace(/_/g, '');
+        if (convertValue.match(/^\d\d\/\d\d\/\d\d\d\d$/)) {
+            var date = new Date(convertValue.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
+            setter(__assign(__assign({}, currentObject), (_b = {}, _b[evt.currentTarget.name] = date, _b)));
         }
-      }
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  _setPrototypeOf(subClass, superClass);
-}
-
-/**
- * Checks if a given element has a CSS class.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);
-  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
-}
-
-/**
- * Adds a CSS class to a given element.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-
-function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!hasClass(element, className)) if (typeof element.className === 'string') element.className = element.className + " " + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + " " + className);
-}
-
-function replaceClassName(origClass, classToRemove) {
-  return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
-}
-/**
- * Removes a CSS class from a given element.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-
-
-function removeClass$1(element, className) {
-  if (element.classList) {
-    element.classList.remove(className);
-  } else if (typeof element.className === 'string') {
-    element.className = replaceClassName(element.className, className);
-  } else {
-    element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
-  }
-}
-
-var config = {
-  disabled: false
-};
-
-var timeoutsShape = process.env.NODE_ENV !== 'production' ? PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
-  enter: PropTypes.number,
-  exit: PropTypes.number,
-  appear: PropTypes.number
-}).isRequired]) : null;
-var classNamesShape = process.env.NODE_ENV !== 'production' ? PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
-  enter: PropTypes.string,
-  exit: PropTypes.string,
-  active: PropTypes.string
-}), PropTypes.shape({
-  enter: PropTypes.string,
-  enterDone: PropTypes.string,
-  enterActive: PropTypes.string,
-  exit: PropTypes.string,
-  exitDone: PropTypes.string,
-  exitActive: PropTypes.string
-})]) : null;
-
-var TransitionGroupContext = React__default.createContext(null);
-
-var forceReflow = function forceReflow(node) {
-  return node.scrollTop;
-};
-
-var UNMOUNTED = 'unmounted';
-var EXITED = 'exited';
-var ENTERING = 'entering';
-var ENTERED = 'entered';
-var EXITING = 'exiting';
-/**
- * The Transition component lets you describe a transition from one component
- * state to another _over time_ with a simple declarative API. Most commonly
- * it's used to animate the mounting and unmounting of a component, but can also
- * be used to describe in-place transition states as well.
- *
- * ---
- *
- * **Note**: `Transition` is a platform-agnostic base component. If you're using
- * transitions in CSS, you'll probably want to use
- * [`CSSTransition`](https://reactcommunity.org/react-transition-group/css-transition)
- * instead. It inherits all the features of `Transition`, but contains
- * additional features necessary to play nice with CSS transitions (hence the
- * name of the component).
- *
- * ---
- *
- * By default the `Transition` component does not alter the behavior of the
- * component it renders, it only tracks "enter" and "exit" states for the
- * components. It's up to you to give meaning and effect to those states. For
- * example we can add styles to a component when it enters or exits:
- *
- * ```jsx
- * import { Transition } from 'react-transition-group';
- *
- * const duration = 300;
- *
- * const defaultStyle = {
- *   transition: `opacity ${duration}ms ease-in-out`,
- *   opacity: 0,
- * }
- *
- * const transitionStyles = {
- *   entering: { opacity: 1 },
- *   entered:  { opacity: 1 },
- *   exiting:  { opacity: 0 },
- *   exited:  { opacity: 0 },
- * };
- *
- * const Fade = ({ in: inProp }) => (
- *   <Transition in={inProp} timeout={duration}>
- *     {state => (
- *       <div style={{
- *         ...defaultStyle,
- *         ...transitionStyles[state]
- *       }}>
- *         I'm a fade Transition!
- *       </div>
- *     )}
- *   </Transition>
- * );
- * ```
- *
- * There are 4 main states a Transition can be in:
- *  - `'entering'`
- *  - `'entered'`
- *  - `'exiting'`
- *  - `'exited'`
- *
- * Transition state is toggled via the `in` prop. When `true` the component
- * begins the "Enter" stage. During this stage, the component will shift from
- * its current transition state, to `'entering'` for the duration of the
- * transition and then to the `'entered'` stage once it's complete. Let's take
- * the following example (we'll use the
- * [useState](https://reactjs.org/docs/hooks-reference.html#usestate) hook):
- *
- * ```jsx
- * function App() {
- *   const [inProp, setInProp] = useState(false);
- *   return (
- *     <div>
- *       <Transition in={inProp} timeout={500}>
- *         {state => (
- *           // ...
- *         )}
- *       </Transition>
- *       <button onClick={() => setInProp(true)}>
- *         Click to Enter
- *       </button>
- *     </div>
- *   );
- * }
- * ```
- *
- * When the button is clicked the component will shift to the `'entering'` state
- * and stay there for 500ms (the value of `timeout`) before it finally switches
- * to `'entered'`.
- *
- * When `in` is `false` the same thing happens except the state moves from
- * `'exiting'` to `'exited'`.
- */
-
-var Transition = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(Transition, _React$Component);
-
-  function Transition(props, context) {
-    var _this;
-
-    _this = _React$Component.call(this, props, context) || this;
-    var parentGroup = context; // In the context of a TransitionGroup all enters are really appears
-
-    var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
-    var initialStatus;
-    _this.appearStatus = null;
-
-    if (props.in) {
-      if (appear) {
-        initialStatus = EXITED;
-        _this.appearStatus = ENTERING;
-      } else {
-        initialStatus = ENTERED;
-      }
-    } else {
-      if (props.unmountOnExit || props.mountOnEnter) {
-        initialStatus = UNMOUNTED;
-      } else {
-        initialStatus = EXITED;
-      }
-    }
-
-    _this.state = {
-      status: initialStatus
-    };
-    _this.nextCallback = null;
-    return _this;
-  }
-
-  Transition.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
-    var nextIn = _ref.in;
-
-    if (nextIn && prevState.status === UNMOUNTED) {
-      return {
-        status: EXITED
-      };
-    }
-
-    return null;
-  } // getSnapshotBeforeUpdate(prevProps) {
-  //   let nextStatus = null
-  //   if (prevProps !== this.props) {
-  //     const { status } = this.state
-  //     if (this.props.in) {
-  //       if (status !== ENTERING && status !== ENTERED) {
-  //         nextStatus = ENTERING
-  //       }
-  //     } else {
-  //       if (status === ENTERING || status === ENTERED) {
-  //         nextStatus = EXITING
-  //       }
-  //     }
-  //   }
-  //   return { nextStatus }
-  // }
-  ;
-
-  var _proto = Transition.prototype;
-
-  _proto.componentDidMount = function componentDidMount() {
-    this.updateStatus(true, this.appearStatus);
-  };
-
-  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-    var nextStatus = null;
-
-    if (prevProps !== this.props) {
-      var status = this.state.status;
-
-      if (this.props.in) {
-        if (status !== ENTERING && status !== ENTERED) {
-          nextStatus = ENTERING;
+    else if (dataType === 'number') {
+        var value = 0;
+        if (evt.currentTarget.value === '' || evt.currentTarget.value === null) {
+            value = 0;
         }
-      } else {
-        if (status === ENTERING || status === ENTERED) {
-          nextStatus = EXITING;
+        else {
+            value = parseInt(evt.currentTarget.value);
         }
-      }
+        setter(__assign(__assign({}, currentObject), (_c = {}, _c[evt.currentTarget.name] = value, _c)));
     }
-
-    this.updateStatus(false, nextStatus);
-  };
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    this.cancelNextCallback();
-  };
-
-  _proto.getTimeouts = function getTimeouts() {
-    var timeout = this.props.timeout;
-    var exit, enter, appear;
-    exit = enter = appear = timeout;
-
-    if (timeout != null && typeof timeout !== 'number') {
-      exit = timeout.exit;
-      enter = timeout.enter; // TODO: remove fallback for next major
-
-      appear = timeout.appear !== undefined ? timeout.appear : enter;
-    }
-
-    return {
-      exit: exit,
-      enter: enter,
-      appear: appear
-    };
-  };
-
-  _proto.updateStatus = function updateStatus(mounting, nextStatus) {
-    if (mounting === void 0) {
-      mounting = false;
-    }
-
-    if (nextStatus !== null) {
-      // nextStatus will always be ENTERING or EXITING.
-      this.cancelNextCallback();
-
-      if (nextStatus === ENTERING) {
-        if (this.props.unmountOnExit || this.props.mountOnEnter) {
-          var node = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM__default.findDOMNode(this); // https://github.com/reactjs/react-transition-group/pull/749
-          // With unmountOnExit or mountOnEnter, the enter animation should happen at the transition between `exited` and `entering`.
-          // To make the animation happen,  we have to separate each rendering and avoid being processed as batched.
-
-          if (node) forceReflow(node);
-        }
-
-        this.performEnter(mounting);
-      } else {
-        this.performExit();
-      }
-    } else if (this.props.unmountOnExit && this.state.status === EXITED) {
-      this.setState({
-        status: UNMOUNTED
-      });
-    }
-  };
-
-  _proto.performEnter = function performEnter(mounting) {
-    var _this2 = this;
-
-    var enter = this.props.enter;
-    var appearing = this.context ? this.context.isMounting : mounting;
-
-    var _ref2 = this.props.nodeRef ? [appearing] : [ReactDOM__default.findDOMNode(this), appearing],
-        maybeNode = _ref2[0],
-        maybeAppearing = _ref2[1];
-
-    var timeouts = this.getTimeouts();
-    var enterTimeout = appearing ? timeouts.appear : timeouts.enter; // no enter animation skip right to ENTERED
-    // if we are mounting and running this it means appear _must_ be set
-
-    if (!mounting && !enter || config.disabled) {
-      this.safeSetState({
-        status: ENTERED
-      }, function () {
-        _this2.props.onEntered(maybeNode);
-      });
-      return;
-    }
-
-    this.props.onEnter(maybeNode, maybeAppearing);
-    this.safeSetState({
-      status: ENTERING
-    }, function () {
-      _this2.props.onEntering(maybeNode, maybeAppearing);
-
-      _this2.onTransitionEnd(enterTimeout, function () {
-        _this2.safeSetState({
-          status: ENTERED
-        }, function () {
-          _this2.props.onEntered(maybeNode, maybeAppearing);
-        });
-      });
-    });
-  };
-
-  _proto.performExit = function performExit() {
-    var _this3 = this;
-
-    var exit = this.props.exit;
-    var timeouts = this.getTimeouts();
-    var maybeNode = this.props.nodeRef ? undefined : ReactDOM__default.findDOMNode(this); // no exit animation skip right to EXITED
-
-    if (!exit || config.disabled) {
-      this.safeSetState({
-        status: EXITED
-      }, function () {
-        _this3.props.onExited(maybeNode);
-      });
-      return;
-    }
-
-    this.props.onExit(maybeNode);
-    this.safeSetState({
-      status: EXITING
-    }, function () {
-      _this3.props.onExiting(maybeNode);
-
-      _this3.onTransitionEnd(timeouts.exit, function () {
-        _this3.safeSetState({
-          status: EXITED
-        }, function () {
-          _this3.props.onExited(maybeNode);
-        });
-      });
-    });
-  };
-
-  _proto.cancelNextCallback = function cancelNextCallback() {
-    if (this.nextCallback !== null) {
-      this.nextCallback.cancel();
-      this.nextCallback = null;
-    }
-  };
-
-  _proto.safeSetState = function safeSetState(nextState, callback) {
-    // This shouldn't be necessary, but there are weird race conditions with
-    // setState callbacks and unmounting in testing, so always make sure that
-    // we can cancel any pending setState callbacks after we unmount.
-    callback = this.setNextCallback(callback);
-    this.setState(nextState, callback);
-  };
-
-  _proto.setNextCallback = function setNextCallback(callback) {
-    var _this4 = this;
-
-    var active = true;
-
-    this.nextCallback = function (event) {
-      if (active) {
-        active = false;
-        _this4.nextCallback = null;
-        callback(event);
-      }
-    };
-
-    this.nextCallback.cancel = function () {
-      active = false;
-    };
-
-    return this.nextCallback;
-  };
-
-  _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
-    this.setNextCallback(handler);
-    var node = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM__default.findDOMNode(this);
-    var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
-
-    if (!node || doesNotHaveTimeoutOrListener) {
-      setTimeout(this.nextCallback, 0);
-      return;
-    }
-
-    if (this.props.addEndListener) {
-      var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback],
-          maybeNode = _ref3[0],
-          maybeNextCallback = _ref3[1];
-
-      this.props.addEndListener(maybeNode, maybeNextCallback);
-    }
-
-    if (timeout != null) {
-      setTimeout(this.nextCallback, timeout);
-    }
-  };
-
-  _proto.render = function render() {
-    var status = this.state.status;
-
-    if (status === UNMOUNTED) {
-      return null;
-    }
-
-    var _this$props = this.props,
-        children = _this$props.children;
-        _this$props.in;
-        _this$props.mountOnEnter;
-        _this$props.unmountOnExit;
-        _this$props.appear;
-        _this$props.enter;
-        _this$props.exit;
-        _this$props.timeout;
-        _this$props.addEndListener;
-        _this$props.onEnter;
-        _this$props.onEntering;
-        _this$props.onEntered;
-        _this$props.onExit;
-        _this$props.onExiting;
-        _this$props.onExited;
-        _this$props.nodeRef;
-        var childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
-
-    return (
-      /*#__PURE__*/
-      // allows for nested Transitions
-      React__default.createElement(TransitionGroupContext.Provider, {
-        value: null
-      }, typeof children === 'function' ? children(status, childProps) : React__default.cloneElement(React__default.Children.only(children), childProps))
-    );
-  };
-
-  return Transition;
-}(React__default.Component);
-
-Transition.contextType = TransitionGroupContext;
-Transition.propTypes = process.env.NODE_ENV !== "production" ? {
-  /**
-   * A React reference to DOM element that need to transition:
-   * https://stackoverflow.com/a/51127130/4671932
-   *
-   *   - When `nodeRef` prop is used, `node` is not passed to callback functions
-   *      (e.g. `onEnter`) because user already has direct access to the node.
-   *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
-   *     `nodeRef` need to be provided to `Transition` with changed `key` prop
-   *     (see
-   *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
-   */
-  nodeRef: PropTypes.shape({
-    current: typeof Element === 'undefined' ? PropTypes.any : function (propValue, key, componentName, location, propFullName, secret) {
-      var value = propValue[key];
-      return PropTypes.instanceOf(value && 'ownerDocument' in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
-    }
-  }),
-
-  /**
-   * A `function` child can be used instead of a React element. This function is
-   * called with the current transition status (`'entering'`, `'entered'`,
-   * `'exiting'`, `'exited'`), which can be used to apply context
-   * specific props to a component.
-   *
-   * ```jsx
-   * <Transition in={this.state.in} timeout={150}>
-   *   {state => (
-   *     <MyComponent className={`fade fade-${state}`} />
-   *   )}
-   * </Transition>
-   * ```
-   */
-  children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
-
-  /**
-   * Show the component; triggers the enter or exit states
-   */
-  in: PropTypes.bool,
-
-  /**
-   * By default the child component is mounted immediately along with
-   * the parent `Transition` component. If you want to "lazy mount" the component on the
-   * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
-   * mounted, even on "exited", unless you also specify `unmountOnExit`.
-   */
-  mountOnEnter: PropTypes.bool,
-
-  /**
-   * By default the child component stays mounted after it reaches the `'exited'` state.
-   * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
-   */
-  unmountOnExit: PropTypes.bool,
-
-  /**
-   * By default the child component does not perform the enter transition when
-   * it first mounts, regardless of the value of `in`. If you want this
-   * behavior, set both `appear` and `in` to `true`.
-   *
-   * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
-   * > only adds an additional enter transition. However, in the
-   * > `<CSSTransition>` component that first enter transition does result in
-   * > additional `.appear-*` classes, that way you can choose to style it
-   * > differently.
-   */
-  appear: PropTypes.bool,
-
-  /**
-   * Enable or disable enter transitions.
-   */
-  enter: PropTypes.bool,
-
-  /**
-   * Enable or disable exit transitions.
-   */
-  exit: PropTypes.bool,
-
-  /**
-   * The duration of the transition, in milliseconds.
-   * Required unless `addEndListener` is provided.
-   *
-   * You may specify a single timeout for all transitions:
-   *
-   * ```jsx
-   * timeout={500}
-   * ```
-   *
-   * or individually:
-   *
-   * ```jsx
-   * timeout={{
-   *  appear: 500,
-   *  enter: 300,
-   *  exit: 500,
-   * }}
-   * ```
-   *
-   * - `appear` defaults to the value of `enter`
-   * - `enter` defaults to `0`
-   * - `exit` defaults to `0`
-   *
-   * @type {number | { enter?: number, exit?: number, appear?: number }}
-   */
-  timeout: function timeout(props) {
-    var pt = timeoutsShape;
-    if (!props.addEndListener) pt = pt.isRequired;
-
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    return pt.apply(void 0, [props].concat(args));
-  },
-
-  /**
-   * Add a custom transition end trigger. Called with the transitioning
-   * DOM node and a `done` callback. Allows for more fine grained transition end
-   * logic. Timeouts are still used as a fallback if provided.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * ```jsx
-   * addEndListener={(node, done) => {
-   *   // use the css transitionend event to mark the finish of a transition
-   *   node.addEventListener('transitionend', done, false);
-   * }}
-   * ```
-   */
-  addEndListener: PropTypes.func,
-
-  /**
-   * Callback fired before the "entering" status is applied. An extra parameter
-   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool) -> void
-   */
-  onEnter: PropTypes.func,
-
-  /**
-   * Callback fired after the "entering" status is applied. An extra parameter
-   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool)
-   */
-  onEntering: PropTypes.func,
-
-  /**
-   * Callback fired after the "entered" status is applied. An extra parameter
-   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool) -> void
-   */
-  onEntered: PropTypes.func,
-
-  /**
-   * Callback fired before the "exiting" status is applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement) -> void
-   */
-  onExit: PropTypes.func,
-
-  /**
-   * Callback fired after the "exiting" status is applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement) -> void
-   */
-  onExiting: PropTypes.func,
-
-  /**
-   * Callback fired after the "exited" status is applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed
-   *
-   * @type Function(node: HtmlElement) -> void
-   */
-  onExited: PropTypes.func
-} : {}; // Name the function so it is clearer in the documentation
-
-function noop() {}
-
-Transition.defaultProps = {
-  in: false,
-  mountOnEnter: false,
-  unmountOnExit: false,
-  appear: false,
-  enter: true,
-  exit: true,
-  onEnter: noop,
-  onEntering: noop,
-  onEntered: noop,
-  onExit: noop,
-  onExiting: noop,
-  onExited: noop
-};
-Transition.UNMOUNTED = UNMOUNTED;
-Transition.EXITED = EXITED;
-Transition.ENTERING = ENTERING;
-Transition.ENTERED = ENTERED;
-Transition.EXITING = EXITING;
-var Transition$1 = Transition;
-
-var _addClass = function addClass$1(node, classes) {
-  return node && classes && classes.split(' ').forEach(function (c) {
-    return addClass(node, c);
-  });
-};
-
-var removeClass = function removeClass(node, classes) {
-  return node && classes && classes.split(' ').forEach(function (c) {
-    return removeClass$1(node, c);
-  });
-};
-/**
- * A transition component inspired by the excellent
- * [ng-animate](https://docs.angularjs.org/api/ngAnimate) library, you should
- * use it if you're using CSS transitions or animations. It's built upon the
- * [`Transition`](https://reactcommunity.org/react-transition-group/transition)
- * component, so it inherits all of its props.
- *
- * `CSSTransition` applies a pair of class names during the `appear`, `enter`,
- * and `exit` states of the transition. The first class is applied and then a
- * second `*-active` class in order to activate the CSS transition. After the
- * transition, matching `*-done` class names are applied to persist the
- * transition state.
- *
- * ```jsx
- * function App() {
- *   const [inProp, setInProp] = useState(false);
- *   return (
- *     <div>
- *       <CSSTransition in={inProp} timeout={200} classNames="my-node">
- *         <div>
- *           {"I'll receive my-node-* classes"}
- *         </div>
- *       </CSSTransition>
- *       <button type="button" onClick={() => setInProp(true)}>
- *         Click to Enter
- *       </button>
- *     </div>
- *   );
- * }
- * ```
- *
- * When the `in` prop is set to `true`, the child component will first receive
- * the class `example-enter`, then the `example-enter-active` will be added in
- * the next tick. `CSSTransition` [forces a
- * reflow](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
- * between before adding the `example-enter-active`. This is an important trick
- * because it allows us to transition between `example-enter` and
- * `example-enter-active` even though they were added immediately one after
- * another. Most notably, this is what makes it possible for us to animate
- * _appearance_.
- *
- * ```css
- * .my-node-enter {
- *   opacity: 0;
- * }
- * .my-node-enter-active {
- *   opacity: 1;
- *   transition: opacity 200ms;
- * }
- * .my-node-exit {
- *   opacity: 1;
- * }
- * .my-node-exit-active {
- *   opacity: 0;
- *   transition: opacity 200ms;
- * }
- * ```
- *
- * `*-active` classes represent which styles you want to animate **to**, so it's
- * important to add `transition` declaration only to them, otherwise transitions
- * might not behave as intended! This might not be obvious when the transitions
- * are symmetrical, i.e. when `*-enter-active` is the same as `*-exit`, like in
- * the example above (minus `transition`), but it becomes apparent in more
- * complex transitions.
- *
- * **Note**: If you're using the
- * [`appear`](http://reactcommunity.org/react-transition-group/transition#Transition-prop-appear)
- * prop, make sure to define styles for `.appear-*` classes as well.
- */
-
-
-var CSSTransition = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(CSSTransition, _React$Component);
-
-  function CSSTransition() {
-    var _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
-    _this.appliedClasses = {
-      appear: {},
-      enter: {},
-      exit: {}
-    };
-
-    _this.onEnter = function (maybeNode, maybeAppearing) {
-      var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing),
-          node = _this$resolveArgument[0],
-          appearing = _this$resolveArgument[1];
-
-      _this.removeClasses(node, 'exit');
-
-      _this.addClass(node, appearing ? 'appear' : 'enter', 'base');
-
-      if (_this.props.onEnter) {
-        _this.props.onEnter(maybeNode, maybeAppearing);
-      }
-    };
-
-    _this.onEntering = function (maybeNode, maybeAppearing) {
-      var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing),
-          node = _this$resolveArgument2[0],
-          appearing = _this$resolveArgument2[1];
-
-      var type = appearing ? 'appear' : 'enter';
-
-      _this.addClass(node, type, 'active');
-
-      if (_this.props.onEntering) {
-        _this.props.onEntering(maybeNode, maybeAppearing);
-      }
-    };
-
-    _this.onEntered = function (maybeNode, maybeAppearing) {
-      var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing),
-          node = _this$resolveArgument3[0],
-          appearing = _this$resolveArgument3[1];
-
-      var type = appearing ? 'appear' : 'enter';
-
-      _this.removeClasses(node, type);
-
-      _this.addClass(node, type, 'done');
-
-      if (_this.props.onEntered) {
-        _this.props.onEntered(maybeNode, maybeAppearing);
-      }
-    };
-
-    _this.onExit = function (maybeNode) {
-      var _this$resolveArgument4 = _this.resolveArguments(maybeNode),
-          node = _this$resolveArgument4[0];
-
-      _this.removeClasses(node, 'appear');
-
-      _this.removeClasses(node, 'enter');
-
-      _this.addClass(node, 'exit', 'base');
-
-      if (_this.props.onExit) {
-        _this.props.onExit(maybeNode);
-      }
-    };
-
-    _this.onExiting = function (maybeNode) {
-      var _this$resolveArgument5 = _this.resolveArguments(maybeNode),
-          node = _this$resolveArgument5[0];
-
-      _this.addClass(node, 'exit', 'active');
-
-      if (_this.props.onExiting) {
-        _this.props.onExiting(maybeNode);
-      }
-    };
-
-    _this.onExited = function (maybeNode) {
-      var _this$resolveArgument6 = _this.resolveArguments(maybeNode),
-          node = _this$resolveArgument6[0];
-
-      _this.removeClasses(node, 'exit');
-
-      _this.addClass(node, 'exit', 'done');
-
-      if (_this.props.onExited) {
-        _this.props.onExited(maybeNode);
-      }
-    };
-
-    _this.resolveArguments = function (maybeNode, maybeAppearing) {
-      return _this.props.nodeRef ? [_this.props.nodeRef.current, maybeNode] // here `maybeNode` is actually `appearing`
-      : [maybeNode, maybeAppearing];
-    };
-
-    _this.getClassNames = function (type) {
-      var classNames = _this.props.classNames;
-      var isStringClassNames = typeof classNames === 'string';
-      var prefix = isStringClassNames && classNames ? classNames + "-" : '';
-      var baseClassName = isStringClassNames ? "" + prefix + type : classNames[type];
-      var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
-      var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
-      return {
-        baseClassName: baseClassName,
-        activeClassName: activeClassName,
-        doneClassName: doneClassName
-      };
-    };
-
-    return _this;
-  }
-
-  var _proto = CSSTransition.prototype;
-
-  _proto.addClass = function addClass(node, type, phase) {
-    var className = this.getClassNames(type)[phase + "ClassName"];
-
-    var _this$getClassNames = this.getClassNames('enter'),
-        doneClassName = _this$getClassNames.doneClassName;
-
-    if (type === 'appear' && phase === 'done' && doneClassName) {
-      className += " " + doneClassName;
-    } // This is to force a repaint,
-    // which is necessary in order to transition styles when adding a class name.
-
-
-    if (phase === 'active') {
-      if (node) forceReflow(node);
-    }
-
-    if (className) {
-      this.appliedClasses[type][phase] = className;
-
-      _addClass(node, className);
-    }
-  };
-
-  _proto.removeClasses = function removeClasses(node, type) {
-    var _this$appliedClasses$ = this.appliedClasses[type],
-        baseClassName = _this$appliedClasses$.base,
-        activeClassName = _this$appliedClasses$.active,
-        doneClassName = _this$appliedClasses$.done;
-    this.appliedClasses[type] = {};
-
-    if (baseClassName) {
-      removeClass(node, baseClassName);
-    }
-
-    if (activeClassName) {
-      removeClass(node, activeClassName);
-    }
-
-    if (doneClassName) {
-      removeClass(node, doneClassName);
-    }
-  };
-
-  _proto.render = function render() {
-    var _this$props = this.props;
-        _this$props.classNames;
-        var props = _objectWithoutPropertiesLoose(_this$props, ["classNames"]);
-
-    return /*#__PURE__*/React__default.createElement(Transition$1, _extends({}, props, {
-      onEnter: this.onEnter,
-      onEntered: this.onEntered,
-      onEntering: this.onEntering,
-      onExit: this.onExit,
-      onExiting: this.onExiting,
-      onExited: this.onExited
-    }));
-  };
-
-  return CSSTransition;
-}(React__default.Component);
-
-CSSTransition.defaultProps = {
-  classNames: ''
-};
-CSSTransition.propTypes = process.env.NODE_ENV !== "production" ? _extends({}, Transition$1.propTypes, {
-  /**
-   * The animation classNames applied to the component as it appears, enters,
-   * exits or has finished the transition. A single name can be provided, which
-   * will be suffixed for each stage, e.g. `classNames="fade"` applies:
-   *
-   * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
-   * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
-   * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
-   *
-   * A few details to note about how these classes are applied:
-   *
-   * 1. They are _joined_ with the ones that are already defined on the child
-   *    component, so if you want to add some base styles, you can use
-   *    `className` without worrying that it will be overridden.
-   *
-   * 2. If the transition component mounts with `in={false}`, no classes are
-   *    applied yet. You might be expecting `*-exit-done`, but if you think
-   *    about it, a component cannot finish exiting if it hasn't entered yet.
-   *
-   * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
-   *    allows you to define different behavior for when appearing is done and
-   *    when regular entering is done, using selectors like
-   *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
-   *    an epic entrance animation when element first appears in the DOM using
-   *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
-   *    simply use `fade-enter-done` for defining both cases.
-   *
-   * Each individual classNames can also be specified independently like:
-   *
-   * ```js
-   * classNames={{
-   *  appear: 'my-appear',
-   *  appearActive: 'my-active-appear',
-   *  appearDone: 'my-done-appear',
-   *  enter: 'my-enter',
-   *  enterActive: 'my-active-enter',
-   *  enterDone: 'my-done-enter',
-   *  exit: 'my-exit',
-   *  exitActive: 'my-active-exit',
-   *  exitDone: 'my-done-exit',
-   * }}
-   * ```
-   *
-   * If you want to set these classes using CSS Modules:
-   *
-   * ```js
-   * import styles from './styles.css';
-   * ```
-   *
-   * you might want to use camelCase in your CSS file, that way could simply
-   * spread them instead of listing them one by one:
-   *
-   * ```js
-   * classNames={{ ...styles }}
-   * ```
-   *
-   * @type {string | {
-   *  appear?: string,
-   *  appearActive?: string,
-   *  appearDone?: string,
-   *  enter?: string,
-   *  enterActive?: string,
-   *  enterDone?: string,
-   *  exit?: string,
-   *  exitActive?: string,
-   *  exitDone?: string,
-   * }}
-   */
-  classNames: classNamesShape,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
-   * applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool)
-   */
-  onEnter: PropTypes.func,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'enter-active' or
-   * 'appear-active' class is applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool)
-   */
-  onEntering: PropTypes.func,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'enter' or
-   * 'appear' classes are **removed** and the `done` class is added to the DOM node.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-   *
-   * @type Function(node: HtmlElement, isAppearing: bool)
-   */
-  onEntered: PropTypes.func,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'exit' class is
-   * applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed
-   *
-   * @type Function(node: HtmlElement)
-   */
-  onExit: PropTypes.func,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed
-   *
-   * @type Function(node: HtmlElement)
-   */
-  onExiting: PropTypes.func,
-
-  /**
-   * A `<Transition>` callback fired immediately after the 'exit' classes
-   * are **removed** and the `exit-done` class is added to the DOM node.
-   *
-   * **Note**: when `nodeRef` prop is passed, `node` is not passed
-   *
-   * @type Function(node: HtmlElement)
-   */
-  onExited: PropTypes.func
-}) : {};
-var CSSTransition$1 = CSSTransition;
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return self;
 }
-
-/**
- * Given `this.props.children`, return an object mapping key to child.
- *
- * @param {*} children `this.props.children`
- * @return {object} Mapping of key to child
- */
-
-function getChildMapping(children, mapFn) {
-  var mapper = function mapper(child) {
-    return mapFn && isValidElement(child) ? mapFn(child) : child;
-  };
-
-  var result = Object.create(null);
-  if (children) Children.map(children, function (c) {
-    return c;
-  }).forEach(function (child) {
-    // run the map function here instead so that the key is the computed one
-    result[child.key] = mapper(child);
-  });
-  return result;
+function updateInputDatePickers(currentObject, setter, date, propertyName) {
+    var _a;
+    setter(__assign(__assign({}, currentObject), (_a = {}, _a[propertyName] = date, _a)));
 }
-/**
- * When you're adding or removing children some may be added or removed in the
- * same render pass. We want to show *both* since we want to simultaneously
- * animate elements in and out. This function takes a previous set of keys
- * and a new set of keys and merges them with its best guess of the correct
- * ordering. In the future we may expose some of the utilities in
- * ReactMultiChild to make this easy, but for now React itself does not
- * directly have this concept of the union of prevChildren and nextChildren
- * so we implement it here.
- *
- * @param {object} prev prev children as returned from
- * `ReactTransitionChildMapping.getChildMapping()`.
- * @param {object} next next children as returned from
- * `ReactTransitionChildMapping.getChildMapping()`.
- * @return {object} a key set that contains all keys in `prev` and all keys
- * in `next` in a reasonable order.
- */
-
-function mergeChildMappings(prev, next) {
-  prev = prev || {};
-  next = next || {};
-
-  function getValueForKey(key) {
-    return key in next ? next[key] : prev[key];
-  } // For each key of `next`, the list of keys to insert before that key in
-  // the combined list
-
-
-  var nextKeysPending = Object.create(null);
-  var pendingKeys = [];
-
-  for (var prevKey in prev) {
-    if (prevKey in next) {
-      if (pendingKeys.length) {
-        nextKeysPending[prevKey] = pendingKeys;
-        pendingKeys = [];
-      }
-    } else {
-      pendingKeys.push(prevKey);
-    }
-  }
-
-  var i;
-  var childMapping = {};
-
-  for (var nextKey in next) {
-    if (nextKeysPending[nextKey]) {
-      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-        var pendingNextKey = nextKeysPending[nextKey][i];
-        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
-      }
-    }
-
-    childMapping[nextKey] = getValueForKey(nextKey);
-  } // Finally, add the keys which didn't appear before any key in `next`
-
-
-  for (i = 0; i < pendingKeys.length; i++) {
-    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-  }
-
-  return childMapping;
+function updateBoolInputData(ev, value, currentObject, setter, name) {
+    var _a;
+    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
 }
-
-function getProp(child, prop, props) {
-  return props[prop] != null ? props[prop] : child.props[prop];
+function updateNumberInputData(value, currentObject, setter, name) {
+    var _a;
+    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
 }
-
-function getInitialChildMapping(props, onExited) {
-  return getChildMapping(props.children, function (child) {
-    return cloneElement(child, {
-      onExited: onExited.bind(null, child),
-      in: true,
-      appear: getProp(child, 'appear', props),
-      enter: getProp(child, 'enter', props),
-      exit: getProp(child, 'exit', props)
-    });
-  });
+function updateComboboxInputData(ev, value, currentObject, setter, name) {
+    var _a;
+    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
 }
-function getNextChildMapping(nextProps, prevChildMapping, onExited) {
-  var nextChildMapping = getChildMapping(nextProps.children);
-  var children = mergeChildMappings(prevChildMapping, nextChildMapping);
-  Object.keys(children).forEach(function (key) {
-    var child = children[key];
-    if (!isValidElement(child)) return;
-    var hasPrev = (key in prevChildMapping);
-    var hasNext = (key in nextChildMapping);
-    var prevChild = prevChildMapping[key];
-    var isLeaving = isValidElement(prevChild) && !prevChild.props.in; // item is new (entering)
-
-    if (hasNext && (!hasPrev || isLeaving)) {
-      // console.log('entering', key)
-      children[key] = cloneElement(child, {
-        onExited: onExited.bind(null, child),
-        in: true,
-        exit: getProp(child, 'exit', nextProps),
-        enter: getProp(child, 'enter', nextProps)
-      });
-    } else if (!hasNext && hasPrev && !isLeaving) {
-      // item is old (exiting)
-      // console.log('leaving', key)
-      children[key] = cloneElement(child, {
-        in: false
-      });
-    } else if (hasNext && hasPrev && isValidElement(prevChild)) {
-      // item hasn't changed transition states
-      // copy over the last transition props;
-      // console.log('unchanged', key)
-      children[key] = cloneElement(child, {
-        onExited: onExited.bind(null, child),
-        in: prevChild.props.in,
-        exit: getProp(child, 'exit', nextProps),
-        enter: getProp(child, 'enter', nextProps)
-      });
-    }
-  });
-  return children;
+function updateDropdownInputData(ev, value, currentObject, setter, name) {
+    var _a;
+    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
 }
-
-var values = Object.values || function (obj) {
-  return Object.keys(obj).map(function (k) {
-    return obj[k];
-  });
-};
-
-var defaultProps = {
-  component: 'div',
-  childFactory: function childFactory(child) {
-    return child;
-  }
-};
-/**
- * The `<TransitionGroup>` component manages a set of transition components
- * (`<Transition>` and `<CSSTransition>`) in a list. Like with the transition
- * components, `<TransitionGroup>` is a state machine for managing the mounting
- * and unmounting of components over time.
- *
- * Consider the example below. As items are removed or added to the TodoList the
- * `in` prop is toggled automatically by the `<TransitionGroup>`.
- *
- * Note that `<TransitionGroup>`  does not define any animation behavior!
- * Exactly _how_ a list item animates is up to the individual transition
- * component. This means you can mix and match animations across different list
- * items.
- */
-
-var TransitionGroup = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(TransitionGroup, _React$Component);
-
-  function TransitionGroup(props, context) {
-    var _this;
-
-    _this = _React$Component.call(this, props, context) || this;
-
-    var handleExited = _this.handleExited.bind(_assertThisInitialized(_this)); // Initial children should all be entering, dependent on appear
-
-
-    _this.state = {
-      contextValue: {
-        isMounting: true
-      },
-      handleExited: handleExited,
-      firstRender: true
-    };
-    return _this;
-  }
-
-  var _proto = TransitionGroup.prototype;
-
-  _proto.componentDidMount = function componentDidMount() {
-    this.mounted = true;
-    this.setState({
-      contextValue: {
-        isMounting: false
-      }
-    });
-  };
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    this.mounted = false;
-  };
-
-  TransitionGroup.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
-    var prevChildMapping = _ref.children,
-        handleExited = _ref.handleExited,
-        firstRender = _ref.firstRender;
-    return {
-      children: firstRender ? getInitialChildMapping(nextProps, handleExited) : getNextChildMapping(nextProps, prevChildMapping, handleExited),
-      firstRender: false
-    };
-  } // node is `undefined` when user provided `nodeRef` prop
-  ;
-
-  _proto.handleExited = function handleExited(child, node) {
-    var currentChildMapping = getChildMapping(this.props.children);
-    if (child.key in currentChildMapping) return;
-
-    if (child.props.onExited) {
-      child.props.onExited(node);
-    }
-
-    if (this.mounted) {
-      this.setState(function (state) {
-        var children = _extends({}, state.children);
-
-        delete children[child.key];
-        return {
-          children: children
-        };
-      });
-    }
-  };
-
-  _proto.render = function render() {
-    var _this$props = this.props,
-        Component = _this$props.component,
-        childFactory = _this$props.childFactory,
-        props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
-
-    var contextValue = this.state.contextValue;
-    var children = values(this.state.children).map(childFactory);
-    delete props.appear;
-    delete props.enter;
-    delete props.exit;
-
-    if (Component === null) {
-      return /*#__PURE__*/React__default.createElement(TransitionGroupContext.Provider, {
-        value: contextValue
-      }, children);
-    }
-
-    return /*#__PURE__*/React__default.createElement(TransitionGroupContext.Provider, {
-      value: contextValue
-    }, /*#__PURE__*/React__default.createElement(Component, props, children));
-  };
-
-  return TransitionGroup;
-}(React__default.Component);
-
-TransitionGroup.propTypes = process.env.NODE_ENV !== "production" ? {
-  /**
-   * `<TransitionGroup>` renders a `<div>` by default. You can change this
-   * behavior by providing a `component` prop.
-   * If you use React v16+ and would like to avoid a wrapping `<div>` element
-   * you can pass in `component={null}`. This is useful if the wrapping div
-   * borks your css styles.
-   */
-  component: PropTypes.any,
-
-  /**
-   * A set of `<Transition>` components, that are toggled `in` and out as they
-   * leave. the `<TransitionGroup>` will inject specific transition props, so
-   * remember to spread them through if you are wrapping the `<Transition>` as
-   * with our `<Fade>` example.
-   *
-   * While this component is meant for multiple `Transition` or `CSSTransition`
-   * children, sometimes you may want to have a single transition child with
-   * content that you want to be transitioned out and in when you change it
-   * (e.g. routes, images etc.) In that case you can change the `key` prop of
-   * the transition child as you change its content, this will cause
-   * `TransitionGroup` to transition the child out and back in.
-   */
-  children: PropTypes.node,
-
-  /**
-   * A convenience prop that enables or disables appear animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  appear: PropTypes.bool,
-
-  /**
-   * A convenience prop that enables or disables enter animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  enter: PropTypes.bool,
-
-  /**
-   * A convenience prop that enables or disables exit animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  exit: PropTypes.bool,
-
-  /**
-   * You may need to apply reactive updates to a child as it is exiting.
-   * This is generally done by using `cloneElement` however in the case of an exiting
-   * child the element has already been removed and not accessible to the consumer.
-   *
-   * If you do need to update a child as it leaves you can provide a `childFactory`
-   * to wrap every child, even the ones that are leaving.
-   *
-   * @type Function(child: ReactElement) -> ReactElement
-   */
-  childFactory: PropTypes.func
-} : {};
-TransitionGroup.defaultProps = defaultProps;
-var TransitionGroup$1 = TransitionGroup;
-
-var NotificationMessage = function (props) {
-    var title = 'Notification';
-    if (props.notificationPopup.title != null && props.notificationPopup.title != '') {
-        title = props.notificationPopup.title;
-    }
-    return (React.createElement(React.Fragment, null,
-        React.createElement("div", { className: styles$7.popupTitle },
-            React.createElement(Icon, { iconName: 'Message', className: styles$7.popupIcon }),
-            " ",
-            title),
-        React.createElement("div", { className: styles$7.popupMessage }, props.notificationPopup.message)));
-};
-
-var NotificationPopup = function (props) {
-    return (React.createElement(React.Fragment, null,
-        React.createElement(CSSTransition$1, { unmountOnExit: true, in: props.notificationPopupConfig.activator, timeout: 1000, classNames: animations },
-            React.createElement(React.Fragment, null,
-                props.notificationPopup.messageType === MessageBarType.success ? (React.createElement("span", { className: styles$7.topcorner + " " + styles$7.successNotification, onClick: function () {
-                        props.notificationPopupConfig.activatorSetter(false);
-                    } },
-                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.error ? (React.createElement("span", { className: styles$7.topcorner + " " + styles$7.dangerNotification, onClick: function () {
-                        props.notificationPopupConfig.activatorSetter(false);
-                    } },
-                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.warning ? (React.createElement("span", { className: styles$7.topcorner + " " + styles$7.warningNotification, onClick: function () {
-                        props.notificationPopupConfig.activatorSetter(false);
-                    } },
-                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.info ? (React.createElement("span", { className: styles$7.topcorner + " " + styles$7.infoNotification, onClick: function () {
-                        props.notificationPopupConfig.activatorSetter(false);
-                    } },
-                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null))))));
-};
 
 // these aren't really private, but nor are they really useful to document
 
@@ -31500,93 +31011,7 @@ function checkEmailString(email) {
     return isValid;
 }
 
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-  __assign = Object.assign || function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-  };
-  return __assign.apply(this, arguments);
-};
-
-/** @deprecated */
-function __spreadArrays() {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-  for (var r = Array(s), k = 0, i = 0; i < il; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-          r[k] = a[j];
-  return r;
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-  var e = new Error(message);
-  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-/* --- Update Input Methods --- */
-function updateInputData(evt, currentObject, setter, dataType) {
-    var _a, _b, _c;
-    if (dataType === 'string') {
-        setter(__assign(__assign({}, currentObject), (_a = {}, _a[evt.target.name] = evt.target.value, _a)));
-    }
-    else if (dataType === 'date') {
-        var convertValue = evt.target.value.replace(/\s/g, '');
-        convertValue = convertValue.replace(/_/g, '');
-        if (convertValue.match(/^\d\d\/\d\d\/\d\d\d\d$/)) {
-            var date = new Date(convertValue.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
-            setter(__assign(__assign({}, currentObject), (_b = {}, _b[evt.target.name] = date, _b)));
-        }
-    }
-    else if (dataType === 'number') {
-        var value = 0;
-        if (evt.target.value === '' || evt.target.value === null) {
-            value = 0;
-        }
-        else {
-            value = parseInt(evt.target.value);
-        }
-        setter(__assign(__assign({}, currentObject), (_c = {}, _c[evt.target.name] = value, _c)));
-    }
-}
-function updateInputDatePickers(currentObject, setter, date, propertyName) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[propertyName] = date, _a)));
-}
-function updateBoolInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
-}
-function updateNumberInputData(value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
-}
-function updateComboboxInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
-}
-function updateDropdownInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
-}
-
-var styles$6 = "";
+var styles$7 = "";
 
 var NumberInput = function (props) {
     // testing suffix that not require a 's'
@@ -31630,7 +31055,7 @@ var NumberInput = function (props) {
         }
         return value.substr(0, value.length - suffix.length);
     }
-    return (React.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$6.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: function (value) {
+    return (React.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$7.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: function (value) {
             value = _removeSuffix(value, props.suffix);
             var intValue = convertValueToFloat(value);
             var newIntValue = round$1(intValue, 2);
@@ -31719,30 +31144,26 @@ var OneLineDatePicker = function (props) {
         } }));
 };
 
-var dropdownStyles = {
-    dropdownItems: { maxHeight: 300, overflowY: 'auto' }
-};
-var SearchableDropdown = function (props) {
-    var _a = React.useState(''), searchText = _a[0], setSearchText = _a[1];
-    function renderOption(option) {
-        return option.itemType === SelectableOptionMenuItemType.Header && option.key === 'FilterHeader' ? (React.createElement(SearchBox, { onChange: function (newValue) { return setSearchText(newValue); }, underlined: true, placeholder: 'Rechercher...' })) : (React.createElement(React.Fragment, null, option.text));
-    }
-    return (React.createElement(Dropdown, __assign({}, props, { options: __spreadArrays([
-            { key: 'FilterHeader', text: '-', itemType: SelectableOptionMenuItemType.Header },
-            { key: 'dividerHeader', text: '-', itemType: SelectableOptionMenuItemType.Divider }
-        ], props.options.map(function (option) { return (!option.disabled && option.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ? option : __assign(__assign({}, option), { hidden: true })); })), calloutProps: { shouldRestoreFocus: false, setInitialFocus: false }, onRenderOption: renderOption, onDismiss: function () { return setSearchText(''); }, onChange: function (e, option) {
-            if (option != null && option != undefined)
-                updateDropdownInputData(e, option, props.currentObject, props.setter, props.propertieName);
-        }, multiSelect: false, selectedKey: props.value, styles: dropdownStyles })));
-};
-
-var styles$5 = "";
+var styles$6 = "";
 
 var SelectChoice = function (props) {
-    return (React.createElement(ComboBox, { className: styles$5.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: function (e, option) {
+    return (React.createElement(ComboBox, { className: styles$6.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: function (e, option) {
             updateComboboxInputData(e, option, props.currentObject, props.setter, props.propertieName);
         } }));
 };
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -31758,6 +31179,21 @@ function _objectWithoutProperties(source, excluded) {
     }
   }
   return target;
+}
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
 }
 
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e))for(t=0;t<e.length;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f);else for(t in e)e[t]&&(n&&(n+=" "),n+=t);return n}function clsx(){for(var e,t,f=0,n="";f<arguments.length;)(e=arguments[f++])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}
@@ -33278,6 +32714,27 @@ function _createClass(Constructor, protoProps, staticProps) {
     writable: false
   });
   return Constructor;
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  _setPrototypeOf(subClass, superClass);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return self;
 }
 
 var plainObjectConstrurctor = {}.constructor;
@@ -37803,6 +37260,1417 @@ function useIsFocusVisible() {
   };
 }
 
+/**
+ * Checks if a given element has a CSS class.
+ * 
+ * @param element the element
+ * @param className the CSS class name
+ */
+function hasClass(element, className) {
+  if (element.classList) return !!className && element.classList.contains(className);
+  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+}
+
+/**
+ * Adds a CSS class to a given element.
+ * 
+ * @param element the element
+ * @param className the CSS class name
+ */
+
+function addClass(element, className) {
+  if (element.classList) element.classList.add(className);else if (!hasClass(element, className)) if (typeof element.className === 'string') element.className = element.className + " " + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + " " + className);
+}
+
+function replaceClassName(origClass, classToRemove) {
+  return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+}
+/**
+ * Removes a CSS class from a given element.
+ * 
+ * @param element the element
+ * @param className the CSS class name
+ */
+
+
+function removeClass$1(element, className) {
+  if (element.classList) {
+    element.classList.remove(className);
+  } else if (typeof element.className === 'string') {
+    element.className = replaceClassName(element.className, className);
+  } else {
+    element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
+  }
+}
+
+var config = {
+  disabled: false
+};
+
+var timeoutsShape = process.env.NODE_ENV !== 'production' ? PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+  enter: PropTypes.number,
+  exit: PropTypes.number,
+  appear: PropTypes.number
+}).isRequired]) : null;
+var classNamesShape = process.env.NODE_ENV !== 'production' ? PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
+  enter: PropTypes.string,
+  exit: PropTypes.string,
+  active: PropTypes.string
+}), PropTypes.shape({
+  enter: PropTypes.string,
+  enterDone: PropTypes.string,
+  enterActive: PropTypes.string,
+  exit: PropTypes.string,
+  exitDone: PropTypes.string,
+  exitActive: PropTypes.string
+})]) : null;
+
+var TransitionGroupContext = React__default.createContext(null);
+
+var forceReflow = function forceReflow(node) {
+  return node.scrollTop;
+};
+
+var UNMOUNTED = 'unmounted';
+var EXITED = 'exited';
+var ENTERING = 'entering';
+var ENTERED = 'entered';
+var EXITING = 'exiting';
+/**
+ * The Transition component lets you describe a transition from one component
+ * state to another _over time_ with a simple declarative API. Most commonly
+ * it's used to animate the mounting and unmounting of a component, but can also
+ * be used to describe in-place transition states as well.
+ *
+ * ---
+ *
+ * **Note**: `Transition` is a platform-agnostic base component. If you're using
+ * transitions in CSS, you'll probably want to use
+ * [`CSSTransition`](https://reactcommunity.org/react-transition-group/css-transition)
+ * instead. It inherits all the features of `Transition`, but contains
+ * additional features necessary to play nice with CSS transitions (hence the
+ * name of the component).
+ *
+ * ---
+ *
+ * By default the `Transition` component does not alter the behavior of the
+ * component it renders, it only tracks "enter" and "exit" states for the
+ * components. It's up to you to give meaning and effect to those states. For
+ * example we can add styles to a component when it enters or exits:
+ *
+ * ```jsx
+ * import { Transition } from 'react-transition-group';
+ *
+ * const duration = 300;
+ *
+ * const defaultStyle = {
+ *   transition: `opacity ${duration}ms ease-in-out`,
+ *   opacity: 0,
+ * }
+ *
+ * const transitionStyles = {
+ *   entering: { opacity: 1 },
+ *   entered:  { opacity: 1 },
+ *   exiting:  { opacity: 0 },
+ *   exited:  { opacity: 0 },
+ * };
+ *
+ * const Fade = ({ in: inProp }) => (
+ *   <Transition in={inProp} timeout={duration}>
+ *     {state => (
+ *       <div style={{
+ *         ...defaultStyle,
+ *         ...transitionStyles[state]
+ *       }}>
+ *         I'm a fade Transition!
+ *       </div>
+ *     )}
+ *   </Transition>
+ * );
+ * ```
+ *
+ * There are 4 main states a Transition can be in:
+ *  - `'entering'`
+ *  - `'entered'`
+ *  - `'exiting'`
+ *  - `'exited'`
+ *
+ * Transition state is toggled via the `in` prop. When `true` the component
+ * begins the "Enter" stage. During this stage, the component will shift from
+ * its current transition state, to `'entering'` for the duration of the
+ * transition and then to the `'entered'` stage once it's complete. Let's take
+ * the following example (we'll use the
+ * [useState](https://reactjs.org/docs/hooks-reference.html#usestate) hook):
+ *
+ * ```jsx
+ * function App() {
+ *   const [inProp, setInProp] = useState(false);
+ *   return (
+ *     <div>
+ *       <Transition in={inProp} timeout={500}>
+ *         {state => (
+ *           // ...
+ *         )}
+ *       </Transition>
+ *       <button onClick={() => setInProp(true)}>
+ *         Click to Enter
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the button is clicked the component will shift to the `'entering'` state
+ * and stay there for 500ms (the value of `timeout`) before it finally switches
+ * to `'entered'`.
+ *
+ * When `in` is `false` the same thing happens except the state moves from
+ * `'exiting'` to `'exited'`.
+ */
+
+var Transition = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(Transition, _React$Component);
+
+  function Transition(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+    var parentGroup = context; // In the context of a TransitionGroup all enters are really appears
+
+    var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+    var initialStatus;
+    _this.appearStatus = null;
+
+    if (props.in) {
+      if (appear) {
+        initialStatus = EXITED;
+        _this.appearStatus = ENTERING;
+      } else {
+        initialStatus = ENTERED;
+      }
+    } else {
+      if (props.unmountOnExit || props.mountOnEnter) {
+        initialStatus = UNMOUNTED;
+      } else {
+        initialStatus = EXITED;
+      }
+    }
+
+    _this.state = {
+      status: initialStatus
+    };
+    _this.nextCallback = null;
+    return _this;
+  }
+
+  Transition.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+    var nextIn = _ref.in;
+
+    if (nextIn && prevState.status === UNMOUNTED) {
+      return {
+        status: EXITED
+      };
+    }
+
+    return null;
+  } // getSnapshotBeforeUpdate(prevProps) {
+  //   let nextStatus = null
+  //   if (prevProps !== this.props) {
+  //     const { status } = this.state
+  //     if (this.props.in) {
+  //       if (status !== ENTERING && status !== ENTERED) {
+  //         nextStatus = ENTERING
+  //       }
+  //     } else {
+  //       if (status === ENTERING || status === ENTERED) {
+  //         nextStatus = EXITING
+  //       }
+  //     }
+  //   }
+  //   return { nextStatus }
+  // }
+  ;
+
+  var _proto = Transition.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.updateStatus(true, this.appearStatus);
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    var nextStatus = null;
+
+    if (prevProps !== this.props) {
+      var status = this.state.status;
+
+      if (this.props.in) {
+        if (status !== ENTERING && status !== ENTERED) {
+          nextStatus = ENTERING;
+        }
+      } else {
+        if (status === ENTERING || status === ENTERED) {
+          nextStatus = EXITING;
+        }
+      }
+    }
+
+    this.updateStatus(false, nextStatus);
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.cancelNextCallback();
+  };
+
+  _proto.getTimeouts = function getTimeouts() {
+    var timeout = this.props.timeout;
+    var exit, enter, appear;
+    exit = enter = appear = timeout;
+
+    if (timeout != null && typeof timeout !== 'number') {
+      exit = timeout.exit;
+      enter = timeout.enter; // TODO: remove fallback for next major
+
+      appear = timeout.appear !== undefined ? timeout.appear : enter;
+    }
+
+    return {
+      exit: exit,
+      enter: enter,
+      appear: appear
+    };
+  };
+
+  _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+    if (mounting === void 0) {
+      mounting = false;
+    }
+
+    if (nextStatus !== null) {
+      // nextStatus will always be ENTERING or EXITING.
+      this.cancelNextCallback();
+
+      if (nextStatus === ENTERING) {
+        if (this.props.unmountOnExit || this.props.mountOnEnter) {
+          var node = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM__default.findDOMNode(this); // https://github.com/reactjs/react-transition-group/pull/749
+          // With unmountOnExit or mountOnEnter, the enter animation should happen at the transition between `exited` and `entering`.
+          // To make the animation happen,  we have to separate each rendering and avoid being processed as batched.
+
+          if (node) forceReflow(node);
+        }
+
+        this.performEnter(mounting);
+      } else {
+        this.performExit();
+      }
+    } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+      this.setState({
+        status: UNMOUNTED
+      });
+    }
+  };
+
+  _proto.performEnter = function performEnter(mounting) {
+    var _this2 = this;
+
+    var enter = this.props.enter;
+    var appearing = this.context ? this.context.isMounting : mounting;
+
+    var _ref2 = this.props.nodeRef ? [appearing] : [ReactDOM__default.findDOMNode(this), appearing],
+        maybeNode = _ref2[0],
+        maybeAppearing = _ref2[1];
+
+    var timeouts = this.getTimeouts();
+    var enterTimeout = appearing ? timeouts.appear : timeouts.enter; // no enter animation skip right to ENTERED
+    // if we are mounting and running this it means appear _must_ be set
+
+    if (!mounting && !enter || config.disabled) {
+      this.safeSetState({
+        status: ENTERED
+      }, function () {
+        _this2.props.onEntered(maybeNode);
+      });
+      return;
+    }
+
+    this.props.onEnter(maybeNode, maybeAppearing);
+    this.safeSetState({
+      status: ENTERING
+    }, function () {
+      _this2.props.onEntering(maybeNode, maybeAppearing);
+
+      _this2.onTransitionEnd(enterTimeout, function () {
+        _this2.safeSetState({
+          status: ENTERED
+        }, function () {
+          _this2.props.onEntered(maybeNode, maybeAppearing);
+        });
+      });
+    });
+  };
+
+  _proto.performExit = function performExit() {
+    var _this3 = this;
+
+    var exit = this.props.exit;
+    var timeouts = this.getTimeouts();
+    var maybeNode = this.props.nodeRef ? undefined : ReactDOM__default.findDOMNode(this); // no exit animation skip right to EXITED
+
+    if (!exit || config.disabled) {
+      this.safeSetState({
+        status: EXITED
+      }, function () {
+        _this3.props.onExited(maybeNode);
+      });
+      return;
+    }
+
+    this.props.onExit(maybeNode);
+    this.safeSetState({
+      status: EXITING
+    }, function () {
+      _this3.props.onExiting(maybeNode);
+
+      _this3.onTransitionEnd(timeouts.exit, function () {
+        _this3.safeSetState({
+          status: EXITED
+        }, function () {
+          _this3.props.onExited(maybeNode);
+        });
+      });
+    });
+  };
+
+  _proto.cancelNextCallback = function cancelNextCallback() {
+    if (this.nextCallback !== null) {
+      this.nextCallback.cancel();
+      this.nextCallback = null;
+    }
+  };
+
+  _proto.safeSetState = function safeSetState(nextState, callback) {
+    // This shouldn't be necessary, but there are weird race conditions with
+    // setState callbacks and unmounting in testing, so always make sure that
+    // we can cancel any pending setState callbacks after we unmount.
+    callback = this.setNextCallback(callback);
+    this.setState(nextState, callback);
+  };
+
+  _proto.setNextCallback = function setNextCallback(callback) {
+    var _this4 = this;
+
+    var active = true;
+
+    this.nextCallback = function (event) {
+      if (active) {
+        active = false;
+        _this4.nextCallback = null;
+        callback(event);
+      }
+    };
+
+    this.nextCallback.cancel = function () {
+      active = false;
+    };
+
+    return this.nextCallback;
+  };
+
+  _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
+    this.setNextCallback(handler);
+    var node = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM__default.findDOMNode(this);
+    var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
+
+    if (!node || doesNotHaveTimeoutOrListener) {
+      setTimeout(this.nextCallback, 0);
+      return;
+    }
+
+    if (this.props.addEndListener) {
+      var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback],
+          maybeNode = _ref3[0],
+          maybeNextCallback = _ref3[1];
+
+      this.props.addEndListener(maybeNode, maybeNextCallback);
+    }
+
+    if (timeout != null) {
+      setTimeout(this.nextCallback, timeout);
+    }
+  };
+
+  _proto.render = function render() {
+    var status = this.state.status;
+
+    if (status === UNMOUNTED) {
+      return null;
+    }
+
+    var _this$props = this.props,
+        children = _this$props.children;
+        _this$props.in;
+        _this$props.mountOnEnter;
+        _this$props.unmountOnExit;
+        _this$props.appear;
+        _this$props.enter;
+        _this$props.exit;
+        _this$props.timeout;
+        _this$props.addEndListener;
+        _this$props.onEnter;
+        _this$props.onEntering;
+        _this$props.onEntered;
+        _this$props.onExit;
+        _this$props.onExiting;
+        _this$props.onExited;
+        _this$props.nodeRef;
+        var childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+
+    return (
+      /*#__PURE__*/
+      // allows for nested Transitions
+      React__default.createElement(TransitionGroupContext.Provider, {
+        value: null
+      }, typeof children === 'function' ? children(status, childProps) : React__default.cloneElement(React__default.Children.only(children), childProps))
+    );
+  };
+
+  return Transition;
+}(React__default.Component);
+
+Transition.contextType = TransitionGroupContext;
+Transition.propTypes = process.env.NODE_ENV !== "production" ? {
+  /**
+   * A React reference to DOM element that need to transition:
+   * https://stackoverflow.com/a/51127130/4671932
+   *
+   *   - When `nodeRef` prop is used, `node` is not passed to callback functions
+   *      (e.g. `onEnter`) because user already has direct access to the node.
+   *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
+   *     `nodeRef` need to be provided to `Transition` with changed `key` prop
+   *     (see
+   *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
+   */
+  nodeRef: PropTypes.shape({
+    current: typeof Element === 'undefined' ? PropTypes.any : function (propValue, key, componentName, location, propFullName, secret) {
+      var value = propValue[key];
+      return PropTypes.instanceOf(value && 'ownerDocument' in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
+    }
+  }),
+
+  /**
+   * A `function` child can be used instead of a React element. This function is
+   * called with the current transition status (`'entering'`, `'entered'`,
+   * `'exiting'`, `'exited'`), which can be used to apply context
+   * specific props to a component.
+   *
+   * ```jsx
+   * <Transition in={this.state.in} timeout={150}>
+   *   {state => (
+   *     <MyComponent className={`fade fade-${state}`} />
+   *   )}
+   * </Transition>
+   * ```
+   */
+  children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
+
+  /**
+   * Show the component; triggers the enter or exit states
+   */
+  in: PropTypes.bool,
+
+  /**
+   * By default the child component is mounted immediately along with
+   * the parent `Transition` component. If you want to "lazy mount" the component on the
+   * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
+   * mounted, even on "exited", unless you also specify `unmountOnExit`.
+   */
+  mountOnEnter: PropTypes.bool,
+
+  /**
+   * By default the child component stays mounted after it reaches the `'exited'` state.
+   * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
+   */
+  unmountOnExit: PropTypes.bool,
+
+  /**
+   * By default the child component does not perform the enter transition when
+   * it first mounts, regardless of the value of `in`. If you want this
+   * behavior, set both `appear` and `in` to `true`.
+   *
+   * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
+   * > only adds an additional enter transition. However, in the
+   * > `<CSSTransition>` component that first enter transition does result in
+   * > additional `.appear-*` classes, that way you can choose to style it
+   * > differently.
+   */
+  appear: PropTypes.bool,
+
+  /**
+   * Enable or disable enter transitions.
+   */
+  enter: PropTypes.bool,
+
+  /**
+   * Enable or disable exit transitions.
+   */
+  exit: PropTypes.bool,
+
+  /**
+   * The duration of the transition, in milliseconds.
+   * Required unless `addEndListener` is provided.
+   *
+   * You may specify a single timeout for all transitions:
+   *
+   * ```jsx
+   * timeout={500}
+   * ```
+   *
+   * or individually:
+   *
+   * ```jsx
+   * timeout={{
+   *  appear: 500,
+   *  enter: 300,
+   *  exit: 500,
+   * }}
+   * ```
+   *
+   * - `appear` defaults to the value of `enter`
+   * - `enter` defaults to `0`
+   * - `exit` defaults to `0`
+   *
+   * @type {number | { enter?: number, exit?: number, appear?: number }}
+   */
+  timeout: function timeout(props) {
+    var pt = timeoutsShape;
+    if (!props.addEndListener) pt = pt.isRequired;
+
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return pt.apply(void 0, [props].concat(args));
+  },
+
+  /**
+   * Add a custom transition end trigger. Called with the transitioning
+   * DOM node and a `done` callback. Allows for more fine grained transition end
+   * logic. Timeouts are still used as a fallback if provided.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * ```jsx
+   * addEndListener={(node, done) => {
+   *   // use the css transitionend event to mark the finish of a transition
+   *   node.addEventListener('transitionend', done, false);
+   * }}
+   * ```
+   */
+  addEndListener: PropTypes.func,
+
+  /**
+   * Callback fired before the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEnter: PropTypes.func,
+
+  /**
+   * Callback fired after the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: PropTypes.func,
+
+  /**
+   * Callback fired after the "entered" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEntered: PropTypes.func,
+
+  /**
+   * Callback fired before the "exiting" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExit: PropTypes.func,
+
+  /**
+   * Callback fired after the "exiting" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExiting: PropTypes.func,
+
+  /**
+   * Callback fired after the "exited" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExited: PropTypes.func
+} : {}; // Name the function so it is clearer in the documentation
+
+function noop() {}
+
+Transition.defaultProps = {
+  in: false,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  appear: false,
+  enter: true,
+  exit: true,
+  onEnter: noop,
+  onEntering: noop,
+  onEntered: noop,
+  onExit: noop,
+  onExiting: noop,
+  onExited: noop
+};
+Transition.UNMOUNTED = UNMOUNTED;
+Transition.EXITED = EXITED;
+Transition.ENTERING = ENTERING;
+Transition.ENTERED = ENTERED;
+Transition.EXITING = EXITING;
+var Transition$1 = Transition;
+
+var _addClass = function addClass$1(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return addClass(node, c);
+  });
+};
+
+var removeClass = function removeClass(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return removeClass$1(node, c);
+  });
+};
+/**
+ * A transition component inspired by the excellent
+ * [ng-animate](https://docs.angularjs.org/api/ngAnimate) library, you should
+ * use it if you're using CSS transitions or animations. It's built upon the
+ * [`Transition`](https://reactcommunity.org/react-transition-group/transition)
+ * component, so it inherits all of its props.
+ *
+ * `CSSTransition` applies a pair of class names during the `appear`, `enter`,
+ * and `exit` states of the transition. The first class is applied and then a
+ * second `*-active` class in order to activate the CSS transition. After the
+ * transition, matching `*-done` class names are applied to persist the
+ * transition state.
+ *
+ * ```jsx
+ * function App() {
+ *   const [inProp, setInProp] = useState(false);
+ *   return (
+ *     <div>
+ *       <CSSTransition in={inProp} timeout={200} classNames="my-node">
+ *         <div>
+ *           {"I'll receive my-node-* classes"}
+ *         </div>
+ *       </CSSTransition>
+ *       <button type="button" onClick={() => setInProp(true)}>
+ *         Click to Enter
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the `in` prop is set to `true`, the child component will first receive
+ * the class `example-enter`, then the `example-enter-active` will be added in
+ * the next tick. `CSSTransition` [forces a
+ * reflow](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
+ * between before adding the `example-enter-active`. This is an important trick
+ * because it allows us to transition between `example-enter` and
+ * `example-enter-active` even though they were added immediately one after
+ * another. Most notably, this is what makes it possible for us to animate
+ * _appearance_.
+ *
+ * ```css
+ * .my-node-enter {
+ *   opacity: 0;
+ * }
+ * .my-node-enter-active {
+ *   opacity: 1;
+ *   transition: opacity 200ms;
+ * }
+ * .my-node-exit {
+ *   opacity: 1;
+ * }
+ * .my-node-exit-active {
+ *   opacity: 0;
+ *   transition: opacity 200ms;
+ * }
+ * ```
+ *
+ * `*-active` classes represent which styles you want to animate **to**, so it's
+ * important to add `transition` declaration only to them, otherwise transitions
+ * might not behave as intended! This might not be obvious when the transitions
+ * are symmetrical, i.e. when `*-enter-active` is the same as `*-exit`, like in
+ * the example above (minus `transition`), but it becomes apparent in more
+ * complex transitions.
+ *
+ * **Note**: If you're using the
+ * [`appear`](http://reactcommunity.org/react-transition-group/transition#Transition-prop-appear)
+ * prop, make sure to define styles for `.appear-*` classes as well.
+ */
+
+
+var CSSTransition = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(CSSTransition, _React$Component);
+
+  function CSSTransition() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.appliedClasses = {
+      appear: {},
+      enter: {},
+      exit: {}
+    };
+
+    _this.onEnter = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument[0],
+          appearing = _this$resolveArgument[1];
+
+      _this.removeClasses(node, 'exit');
+
+      _this.addClass(node, appearing ? 'appear' : 'enter', 'base');
+
+      if (_this.props.onEnter) {
+        _this.props.onEnter(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onEntering = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument2[0],
+          appearing = _this$resolveArgument2[1];
+
+      var type = appearing ? 'appear' : 'enter';
+
+      _this.addClass(node, type, 'active');
+
+      if (_this.props.onEntering) {
+        _this.props.onEntering(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onEntered = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument3[0],
+          appearing = _this$resolveArgument3[1];
+
+      var type = appearing ? 'appear' : 'enter';
+
+      _this.removeClasses(node, type);
+
+      _this.addClass(node, type, 'done');
+
+      if (_this.props.onEntered) {
+        _this.props.onEntered(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onExit = function (maybeNode) {
+      var _this$resolveArgument4 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument4[0];
+
+      _this.removeClasses(node, 'appear');
+
+      _this.removeClasses(node, 'enter');
+
+      _this.addClass(node, 'exit', 'base');
+
+      if (_this.props.onExit) {
+        _this.props.onExit(maybeNode);
+      }
+    };
+
+    _this.onExiting = function (maybeNode) {
+      var _this$resolveArgument5 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument5[0];
+
+      _this.addClass(node, 'exit', 'active');
+
+      if (_this.props.onExiting) {
+        _this.props.onExiting(maybeNode);
+      }
+    };
+
+    _this.onExited = function (maybeNode) {
+      var _this$resolveArgument6 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument6[0];
+
+      _this.removeClasses(node, 'exit');
+
+      _this.addClass(node, 'exit', 'done');
+
+      if (_this.props.onExited) {
+        _this.props.onExited(maybeNode);
+      }
+    };
+
+    _this.resolveArguments = function (maybeNode, maybeAppearing) {
+      return _this.props.nodeRef ? [_this.props.nodeRef.current, maybeNode] // here `maybeNode` is actually `appearing`
+      : [maybeNode, maybeAppearing];
+    };
+
+    _this.getClassNames = function (type) {
+      var classNames = _this.props.classNames;
+      var isStringClassNames = typeof classNames === 'string';
+      var prefix = isStringClassNames && classNames ? classNames + "-" : '';
+      var baseClassName = isStringClassNames ? "" + prefix + type : classNames[type];
+      var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
+      var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
+      return {
+        baseClassName: baseClassName,
+        activeClassName: activeClassName,
+        doneClassName: doneClassName
+      };
+    };
+
+    return _this;
+  }
+
+  var _proto = CSSTransition.prototype;
+
+  _proto.addClass = function addClass(node, type, phase) {
+    var className = this.getClassNames(type)[phase + "ClassName"];
+
+    var _this$getClassNames = this.getClassNames('enter'),
+        doneClassName = _this$getClassNames.doneClassName;
+
+    if (type === 'appear' && phase === 'done' && doneClassName) {
+      className += " " + doneClassName;
+    } // This is to force a repaint,
+    // which is necessary in order to transition styles when adding a class name.
+
+
+    if (phase === 'active') {
+      if (node) forceReflow(node);
+    }
+
+    if (className) {
+      this.appliedClasses[type][phase] = className;
+
+      _addClass(node, className);
+    }
+  };
+
+  _proto.removeClasses = function removeClasses(node, type) {
+    var _this$appliedClasses$ = this.appliedClasses[type],
+        baseClassName = _this$appliedClasses$.base,
+        activeClassName = _this$appliedClasses$.active,
+        doneClassName = _this$appliedClasses$.done;
+    this.appliedClasses[type] = {};
+
+    if (baseClassName) {
+      removeClass(node, baseClassName);
+    }
+
+    if (activeClassName) {
+      removeClass(node, activeClassName);
+    }
+
+    if (doneClassName) {
+      removeClass(node, doneClassName);
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props;
+        _this$props.classNames;
+        var props = _objectWithoutPropertiesLoose(_this$props, ["classNames"]);
+
+    return /*#__PURE__*/React__default.createElement(Transition$1, _extends({}, props, {
+      onEnter: this.onEnter,
+      onEntered: this.onEntered,
+      onEntering: this.onEntering,
+      onExit: this.onExit,
+      onExiting: this.onExiting,
+      onExited: this.onExited
+    }));
+  };
+
+  return CSSTransition;
+}(React__default.Component);
+
+CSSTransition.defaultProps = {
+  classNames: ''
+};
+CSSTransition.propTypes = process.env.NODE_ENV !== "production" ? _extends({}, Transition$1.propTypes, {
+  /**
+   * The animation classNames applied to the component as it appears, enters,
+   * exits or has finished the transition. A single name can be provided, which
+   * will be suffixed for each stage, e.g. `classNames="fade"` applies:
+   *
+   * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
+   * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
+   * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
+   *
+   * A few details to note about how these classes are applied:
+   *
+   * 1. They are _joined_ with the ones that are already defined on the child
+   *    component, so if you want to add some base styles, you can use
+   *    `className` without worrying that it will be overridden.
+   *
+   * 2. If the transition component mounts with `in={false}`, no classes are
+   *    applied yet. You might be expecting `*-exit-done`, but if you think
+   *    about it, a component cannot finish exiting if it hasn't entered yet.
+   *
+   * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
+   *    allows you to define different behavior for when appearing is done and
+   *    when regular entering is done, using selectors like
+   *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
+   *    an epic entrance animation when element first appears in the DOM using
+   *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
+   *    simply use `fade-enter-done` for defining both cases.
+   *
+   * Each individual classNames can also be specified independently like:
+   *
+   * ```js
+   * classNames={{
+   *  appear: 'my-appear',
+   *  appearActive: 'my-active-appear',
+   *  appearDone: 'my-done-appear',
+   *  enter: 'my-enter',
+   *  enterActive: 'my-active-enter',
+   *  enterDone: 'my-done-enter',
+   *  exit: 'my-exit',
+   *  exitActive: 'my-active-exit',
+   *  exitDone: 'my-done-exit',
+   * }}
+   * ```
+   *
+   * If you want to set these classes using CSS Modules:
+   *
+   * ```js
+   * import styles from './styles.css';
+   * ```
+   *
+   * you might want to use camelCase in your CSS file, that way could simply
+   * spread them instead of listing them one by one:
+   *
+   * ```js
+   * classNames={{ ...styles }}
+   * ```
+   *
+   * @type {string | {
+   *  appear?: string,
+   *  appearActive?: string,
+   *  appearDone?: string,
+   *  enter?: string,
+   *  enterActive?: string,
+   *  enterDone?: string,
+   *  exit?: string,
+   *  exitActive?: string,
+   *  exitDone?: string,
+   * }}
+   */
+  classNames: classNamesShape,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEnter: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter-active' or
+   * 'appear-active' class is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or
+   * 'appear' classes are **removed** and the `done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntered: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExit: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExiting: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' classes
+   * are **removed** and the `exit-done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExited: PropTypes.func
+}) : {};
+var CSSTransition$1 = CSSTransition;
+
+/**
+ * Given `this.props.children`, return an object mapping key to child.
+ *
+ * @param {*} children `this.props.children`
+ * @return {object} Mapping of key to child
+ */
+
+function getChildMapping(children, mapFn) {
+  var mapper = function mapper(child) {
+    return mapFn && isValidElement(child) ? mapFn(child) : child;
+  };
+
+  var result = Object.create(null);
+  if (children) Children.map(children, function (c) {
+    return c;
+  }).forEach(function (child) {
+    // run the map function here instead so that the key is the computed one
+    result[child.key] = mapper(child);
+  });
+  return result;
+}
+/**
+ * When you're adding or removing children some may be added or removed in the
+ * same render pass. We want to show *both* since we want to simultaneously
+ * animate elements in and out. This function takes a previous set of keys
+ * and a new set of keys and merges them with its best guess of the correct
+ * ordering. In the future we may expose some of the utilities in
+ * ReactMultiChild to make this easy, but for now React itself does not
+ * directly have this concept of the union of prevChildren and nextChildren
+ * so we implement it here.
+ *
+ * @param {object} prev prev children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @param {object} next next children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @return {object} a key set that contains all keys in `prev` and all keys
+ * in `next` in a reasonable order.
+ */
+
+function mergeChildMappings(prev, next) {
+  prev = prev || {};
+  next = next || {};
+
+  function getValueForKey(key) {
+    return key in next ? next[key] : prev[key];
+  } // For each key of `next`, the list of keys to insert before that key in
+  // the combined list
+
+
+  var nextKeysPending = Object.create(null);
+  var pendingKeys = [];
+
+  for (var prevKey in prev) {
+    if (prevKey in next) {
+      if (pendingKeys.length) {
+        nextKeysPending[prevKey] = pendingKeys;
+        pendingKeys = [];
+      }
+    } else {
+      pendingKeys.push(prevKey);
+    }
+  }
+
+  var i;
+  var childMapping = {};
+
+  for (var nextKey in next) {
+    if (nextKeysPending[nextKey]) {
+      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+        var pendingNextKey = nextKeysPending[nextKey][i];
+        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+      }
+    }
+
+    childMapping[nextKey] = getValueForKey(nextKey);
+  } // Finally, add the keys which didn't appear before any key in `next`
+
+
+  for (i = 0; i < pendingKeys.length; i++) {
+    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+  }
+
+  return childMapping;
+}
+
+function getProp(child, prop, props) {
+  return props[prop] != null ? props[prop] : child.props[prop];
+}
+
+function getInitialChildMapping(props, onExited) {
+  return getChildMapping(props.children, function (child) {
+    return cloneElement(child, {
+      onExited: onExited.bind(null, child),
+      in: true,
+      appear: getProp(child, 'appear', props),
+      enter: getProp(child, 'enter', props),
+      exit: getProp(child, 'exit', props)
+    });
+  });
+}
+function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+  var nextChildMapping = getChildMapping(nextProps.children);
+  var children = mergeChildMappings(prevChildMapping, nextChildMapping);
+  Object.keys(children).forEach(function (key) {
+    var child = children[key];
+    if (!isValidElement(child)) return;
+    var hasPrev = (key in prevChildMapping);
+    var hasNext = (key in nextChildMapping);
+    var prevChild = prevChildMapping[key];
+    var isLeaving = isValidElement(prevChild) && !prevChild.props.in; // item is new (entering)
+
+    if (hasNext && (!hasPrev || isLeaving)) {
+      // console.log('entering', key)
+      children[key] = cloneElement(child, {
+        onExited: onExited.bind(null, child),
+        in: true,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    } else if (!hasNext && hasPrev && !isLeaving) {
+      // item is old (exiting)
+      // console.log('leaving', key)
+      children[key] = cloneElement(child, {
+        in: false
+      });
+    } else if (hasNext && hasPrev && isValidElement(prevChild)) {
+      // item hasn't changed transition states
+      // copy over the last transition props;
+      // console.log('unchanged', key)
+      children[key] = cloneElement(child, {
+        onExited: onExited.bind(null, child),
+        in: prevChild.props.in,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    }
+  });
+  return children;
+}
+
+var values = Object.values || function (obj) {
+  return Object.keys(obj).map(function (k) {
+    return obj[k];
+  });
+};
+
+var defaultProps = {
+  component: 'div',
+  childFactory: function childFactory(child) {
+    return child;
+  }
+};
+/**
+ * The `<TransitionGroup>` component manages a set of transition components
+ * (`<Transition>` and `<CSSTransition>`) in a list. Like with the transition
+ * components, `<TransitionGroup>` is a state machine for managing the mounting
+ * and unmounting of components over time.
+ *
+ * Consider the example below. As items are removed or added to the TodoList the
+ * `in` prop is toggled automatically by the `<TransitionGroup>`.
+ *
+ * Note that `<TransitionGroup>`  does not define any animation behavior!
+ * Exactly _how_ a list item animates is up to the individual transition
+ * component. This means you can mix and match animations across different list
+ * items.
+ */
+
+var TransitionGroup = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(TransitionGroup, _React$Component);
+
+  function TransitionGroup(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+
+    var handleExited = _this.handleExited.bind(_assertThisInitialized(_this)); // Initial children should all be entering, dependent on appear
+
+
+    _this.state = {
+      contextValue: {
+        isMounting: true
+      },
+      handleExited: handleExited,
+      firstRender: true
+    };
+    return _this;
+  }
+
+  var _proto = TransitionGroup.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.mounted = true;
+    this.setState({
+      contextValue: {
+        isMounting: false
+      }
+    });
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.mounted = false;
+  };
+
+  TransitionGroup.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
+    var prevChildMapping = _ref.children,
+        handleExited = _ref.handleExited,
+        firstRender = _ref.firstRender;
+    return {
+      children: firstRender ? getInitialChildMapping(nextProps, handleExited) : getNextChildMapping(nextProps, prevChildMapping, handleExited),
+      firstRender: false
+    };
+  } // node is `undefined` when user provided `nodeRef` prop
+  ;
+
+  _proto.handleExited = function handleExited(child, node) {
+    var currentChildMapping = getChildMapping(this.props.children);
+    if (child.key in currentChildMapping) return;
+
+    if (child.props.onExited) {
+      child.props.onExited(node);
+    }
+
+    if (this.mounted) {
+      this.setState(function (state) {
+        var children = _extends({}, state.children);
+
+        delete children[child.key];
+        return {
+          children: children
+        };
+      });
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        Component = _this$props.component,
+        childFactory = _this$props.childFactory,
+        props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
+
+    var contextValue = this.state.contextValue;
+    var children = values(this.state.children).map(childFactory);
+    delete props.appear;
+    delete props.enter;
+    delete props.exit;
+
+    if (Component === null) {
+      return /*#__PURE__*/React__default.createElement(TransitionGroupContext.Provider, {
+        value: contextValue
+      }, children);
+    }
+
+    return /*#__PURE__*/React__default.createElement(TransitionGroupContext.Provider, {
+      value: contextValue
+    }, /*#__PURE__*/React__default.createElement(Component, props, children));
+  };
+
+  return TransitionGroup;
+}(React__default.Component);
+
+TransitionGroup.propTypes = process.env.NODE_ENV !== "production" ? {
+  /**
+   * `<TransitionGroup>` renders a `<div>` by default. You can change this
+   * behavior by providing a `component` prop.
+   * If you use React v16+ and would like to avoid a wrapping `<div>` element
+   * you can pass in `component={null}`. This is useful if the wrapping div
+   * borks your css styles.
+   */
+  component: PropTypes.any,
+
+  /**
+   * A set of `<Transition>` components, that are toggled `in` and out as they
+   * leave. the `<TransitionGroup>` will inject specific transition props, so
+   * remember to spread them through if you are wrapping the `<Transition>` as
+   * with our `<Fade>` example.
+   *
+   * While this component is meant for multiple `Transition` or `CSSTransition`
+   * children, sometimes you may want to have a single transition child with
+   * content that you want to be transitioned out and in when you change it
+   * (e.g. routes, images etc.) In that case you can change the `key` prop of
+   * the transition child as you change its content, this will cause
+   * `TransitionGroup` to transition the child out and back in.
+   */
+  children: PropTypes.node,
+
+  /**
+   * A convenience prop that enables or disables appear animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  appear: PropTypes.bool,
+
+  /**
+   * A convenience prop that enables or disables enter animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  enter: PropTypes.bool,
+
+  /**
+   * A convenience prop that enables or disables exit animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  exit: PropTypes.bool,
+
+  /**
+   * You may need to apply reactive updates to a child as it is exiting.
+   * This is generally done by using `cloneElement` however in the case of an exiting
+   * child the element has already been removed and not accessible to the consumer.
+   *
+   * If you do need to update a child as it leaves you can provide a `childFactory`
+   * to wrap every child, even the ones that are leaving.
+   *
+   * @type Function(child: ReactElement) -> ReactElement
+   */
+  childFactory: PropTypes.func
+} : {};
+TransitionGroup.defaultProps = defaultProps;
+var TransitionGroup$1 = TransitionGroup;
+
 var useEnhancedEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 /**
  * @ignore - internal component.
@@ -37900,7 +38768,7 @@ process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
 
 var DURATION = 550;
 var DELAY_RIPPLE = 80;
-var styles$4 = function styles(theme) {
+var styles$5 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -38198,12 +39066,12 @@ process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
    */
   className: PropTypes.string
 } : void 0;
-var TouchRipple$1 = withStyles(styles$4, {
+var TouchRipple$1 = withStyles(styles$5, {
   flip: false,
   name: 'MuiTouchRipple'
 })( /*#__PURE__*/React.memo(TouchRipple));
 
-var styles$3 = {
+var styles$4 = {
   /* Styles applied to the root element. */
   root: {
     display: 'inline-flex',
@@ -38683,7 +39551,7 @@ process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
    */
   type: PropTypes.oneOfType([PropTypes.oneOf(['button', 'reset', 'submit']), PropTypes.string])
 } : void 0;
-var ButtonBase$1 = withStyles(styles$3, {
+var ButtonBase$1 = withStyles(styles$4, {
   name: 'MuiButtonBase'
 })(ButtonBase);
 
@@ -38699,7 +39567,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-var styles$2 = function styles(theme) {
+var styles$3 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: _extends({}, theme.typography.button, {
@@ -38864,7 +39732,7 @@ process.env.NODE_ENV !== "production" ? ToggleButton.propTypes = {
    */
   value: PropTypes.any.isRequired
 } : void 0;
-var ToggleButton$1 = withStyles(styles$2, {
+var ToggleButton$1 = withStyles(styles$3, {
   name: 'MuiToggleButton'
 })(ToggleButton);
 
@@ -38882,7 +39750,7 @@ function isValueSelected(value, candidate) {
   return value === candidate;
 }
 
-var styles$1 = function styles(theme) {
+var styles$2 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -39045,11 +39913,18 @@ process.env.NODE_ENV !== "production" ? ToggleButtonGroup.propTypes = {
    */
   value: PropTypes.any
 } : void 0;
-var ToggleButtonGroup$1 = withStyles(styles$1, {
+var ToggleButtonGroup$1 = withStyles(styles$2, {
   name: 'MuiToggleButtonGroup'
 })(ToggleButtonGroup);
 
-var styles = "";
+// Toogle color
+var ETripleToogleColor;
+(function (ETripleToogleColor) {
+    ETripleToogleColor["default"] = "default";
+    ETripleToogleColor["colored"] = "colored";
+})(ETripleToogleColor || (ETripleToogleColor = {}));
+
+var styles$1 = "";
 
 var TrippleChoiceToggle = function (props) {
     // Methods
@@ -39057,13 +39932,258 @@ var TrippleChoiceToggle = function (props) {
         updateBoolInputData(ev, value, props.currentObject, props.setter, props.propertyName);
     }
     // Load view
-    return (React.createElement(ToggleButtonGroup$1, { className: styles.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: function (ev, value) {
+    return (React.createElement(ToggleButtonGroup$1, { className: styles$1.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: function (ev, value) {
             setNewValue(ev, value);
         } },
-        React.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && props.defaultValue ? styles.yesBgColor : '') }, 'Oui'),
+        React.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$1.defaultBgColor : styles$1.yesBgColor) : '') }, 'Oui'),
         React.createElement(ToggleButton$1, { value: null, disabled: true }),
-        React.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && !props.defaultValue ? styles.noBgColor : '') }, 'Non')));
+        React.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$1.defaultBgColor : styles$1.noBgColor) : '') }, 'Non')));
 };
 
-export { InfoMark, MessageBarComp, NotificationPopup, NumberInput, OneLineDatePicker, SearchableDropdown, SelectChoice as SelectedChoice, TrippleChoiceToggle, capitalize$1 as capitalize, checkEmailString, dateAndTimeFormatToDisplay, dateFormatToDisplay, datetimeToStringForFile, extractUserInfo, msToTime, pluralize, round$1 as round, stringToDateTime, tableLineCount, updateBoolInputData, updateComboboxInputData, updateDropdownInputData, updateInputData, updateInputDatePickers, updateNumberInputData };
+var dropdownStyles = {
+    dropdownItems: { maxHeight: 300, overflowY: 'auto' }
+};
+var SearchableDropdown = function (props) {
+    var _a = React.useState(''), searchText = _a[0], setSearchText = _a[1];
+    function renderOption(option) {
+        return option.itemType === SelectableOptionMenuItemType.Header && option.key === 'FilterHeader' ? (React.createElement(SearchBox, { onChange: function (newValue) { return setSearchText(newValue); }, underlined: true, placeholder: 'Rechercher...' })) : (React.createElement(React.Fragment, null, option.text));
+    }
+    return (React.createElement(Dropdown, __assign({}, props, { options: __spreadArrays([
+            { key: 'FilterHeader', text: '-', itemType: SelectableOptionMenuItemType.Header },
+            { key: 'dividerHeader', text: '-', itemType: SelectableOptionMenuItemType.Divider }
+        ], props.options.map(function (option) { return (!option.disabled && option.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ? option : __assign(__assign({}, option), { hidden: true })); })), calloutProps: { shouldRestoreFocus: false, setInitialFocus: false }, onRenderOption: renderOption, onDismiss: function () { return setSearchText(''); }, onChange: function (e, option) {
+            if (option != null && option != undefined)
+                updateDropdownInputData(e, option, props.currentObject, props.setter, props.propertieName);
+        }, multiSelect: false, selectedKey: props.value, styles: dropdownStyles })));
+};
+
+var InputComponentView = function (props) {
+    return (React.createElement(React.Fragment, null,
+        props.component === EInputType.NumberInput ? (React.createElement(NumberInput, { label: '', isReadOnly: props.isReadOnly, suffix: props.suffix || '', increment: props.increment || 1, defaultValue: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName, min: props.min, max: props.max })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.DatePicker ? (React.createElement(OneLineDatePicker, { label: '', isReadOnly: props.isReadOnly, date: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.SearchedDropdown ? (React.createElement(SearchableDropdown, { label: '', isReadOnly: props.isReadOnly, value: props.objValue, options: props.selectOptions || [], currentObject: props.currentObj, setter: props.objSetter, propertieName: props.objPropertyName })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.SelectChoice ? (React.createElement(SelectChoice, { label: '', isReadOnly: props.isReadOnly, value: props.objValue, options: props.selectOptions || [], currentObject: props.currentObj, setter: props.objSetter, propertieName: props.objPropertyName })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.TextField ? (React.createElement(TextField, { label: '', value: props.objValue, name: props.objPropertyName, onChange: function (e) {
+                updateInputData(e, props.currentObj, props.objSetter, 'string');
+            }, underlined: true, disabled: props.isReadOnly })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.PhoneNumber ? (React.createElement(MaskedTextField, { label: '', underlined: true, mask: '99 99 99 99 99', className: layoutStyles.inputNoBorder, name: props.objPropertyName, onChange: function (e) {
+                updateInputData(e, props.currentObj, props.objSetter, 'string');
+            }, value: props.objValue, disabled: props.isReadOnly })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.Toogle ? (React.createElement(Toggle, { className: layoutStyles.inputShift, label: '', inlineLabel: true, onText: props.onTextToogle, offText: props.offTextToogle, onChange: function (ev, checked) {
+                updateBoolInputData(ev, checked, props.currentObj, props.objSetter, props.objPropertyName);
+            }, checked: props.objValue, disabled: props.isReadOnly })) : (React.createElement(React.Fragment, null)),
+        props.component === EInputType.TrippleToggle ? (React.createElement(TrippleChoiceToggle, { isReadOnly: props.isReadOnly, defaultValue: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName, isPrimaryColor: props.isPrimaryColor })) : (React.createElement(React.Fragment, null))));
+};
+
+var InputLayout = function (props) {
+    // required input
+    var required = false;
+    if ('isRequired' in props)
+        required = props.isRequired;
+    // hasIconMark input
+    var hasIconMark = false;
+    if ('hasIconMark' in props)
+        hasIconMark = props.hasIconMark;
+    // label html
+    var label = props.label;
+    if (required) {
+        label = label + ' <span style="color: #c52e3d; font-weight: bold;">*</span>';
+    }
+    // label className adder
+    var addLabelClassName = false;
+    if (props.component === EInputType.TextField || props.component === EInputType.PhoneNumber) {
+        addLabelClassName = true;
+    }
+    var minValue = -1; // if props.min = -1 --> no min value
+    if (props.min != null && props.min != undefined)
+        minValue = props.min;
+    var maxValue = 0; // if props.max = 0 --> no max value
+    if (props.max != null && props.max != undefined)
+        maxValue = props.max;
+    return (React.createElement(React.Fragment, null,
+        props.layoutType === EInputLayoutType.oneLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("span", { style: { display: 'flex', alignItems: 'baseline' } },
+                React.createElement("span", { style: { flexGrow: 0.2 }, dangerouslySetInnerHTML: { __html: label } }),
+                React.createElement("div", { style: { display: 'flex', alignItems: 'center' } },
+                    React.createElement("span", { style: { flexGrow: 1 } },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })),
+                    hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                        React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.veryVerySmallInputLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm10 ms-md10' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm2 ms-md2' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.verySmallInputLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm8 ms-md8' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm4 ms-md4' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.smallInputLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm7 ms-md7' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm5 ms-md5' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.middleLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm6 ms-md6' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm6 ms-md6' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.smallMiddleLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm5 ms-md5' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm7 ms-md7' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.tierLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm4 ms-md4' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm8 ms-md8' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.quarterLine ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm3 ms-md3' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm9 ms-md9' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.smallLabel ? (React.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React.createElement("div", { className: 'ms-Grid' },
+                React.createElement("div", { className: 'ms-Grid-row' },
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm2 ms-md2' },
+                        React.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))),
+                    React.createElement("div", { className: 'ms-Grid-col ms-sm10 ms-md10' },
+                        React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React.createElement(React.Fragment, null)),
+        props.layoutType === EInputLayoutType.noLabel ? (React.createElement("div", { style: { display: 'flex', alignItems: 'center' } },
+            React.createElement("span", { style: { flexGrow: 1 } },
+                React.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                    // input spe
+                    increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                    // obj
+                    objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })),
+            hasIconMark ? (React.createElement("span", { style: { marginLeft: '5px' } },
+                React.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React.createElement(React.Fragment, null)))) : (React.createElement(React.Fragment, null))));
+};
+
+var MessageBarComp = function (props) {
+    var _a = React.useState(true), showMessageBar = _a[0], setShowMessageBar = _a[1];
+    return (React.createElement(React.Fragment, null, showMessageBar ? (React.createElement(React.Fragment, null, props.messageBarComp.showDismissButton ? (React.createElement(MessageBar, { messageBarType: props.messageBarComp.messageType, isMultiline: false, onDismiss: function () {
+            if (!props.messageBarComp.isDimissInternal) {
+                props.messageBarComp.objSetter(false);
+            }
+            setShowMessageBar(false);
+        }, dismissButtonAriaLabel: 'Close' }, props.messageBarComp.message)) : (React.createElement(MessageBar, { style: { margin: '4px' }, messageBarType: props.messageBarComp.messageType, isMultiline: false }, props.messageBarComp.message)))) : (React.createElement(React.Fragment, null))));
+};
+
+var styles = "";
+
+var animations = "";
+
+var NotificationMessage = function (props) {
+    var title = 'Notification';
+    if (props.notificationPopup.title != null && props.notificationPopup.title != '') {
+        title = props.notificationPopup.title;
+    }
+    return (React.createElement(React.Fragment, null,
+        React.createElement("div", { className: styles.popupTitle },
+            React.createElement(Icon, { iconName: 'Message', className: styles.popupIcon }),
+            " ",
+            title),
+        React.createElement("div", { className: styles.popupMessage }, props.notificationPopup.message)));
+};
+
+var NotificationPopup = function (props) {
+    return (React.createElement(React.Fragment, null,
+        React.createElement(CSSTransition$1, { unmountOnExit: true, in: props.notificationPopupConfig.activator, timeout: 1000, classNames: animations },
+            React.createElement(React.Fragment, null,
+                props.notificationPopup.messageType === MessageBarType.success ? (React.createElement("span", { className: styles.topcorner + " " + styles.successNotification, onClick: function () {
+                        props.notificationPopupConfig.activatorSetter(false);
+                    } },
+                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
+                props.notificationPopup.messageType === MessageBarType.error ? (React.createElement("span", { className: styles.topcorner + " " + styles.dangerNotification, onClick: function () {
+                        props.notificationPopupConfig.activatorSetter(false);
+                    } },
+                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
+                props.notificationPopup.messageType === MessageBarType.warning ? (React.createElement("span", { className: styles.topcorner + " " + styles.warningNotification, onClick: function () {
+                        props.notificationPopupConfig.activatorSetter(false);
+                    } },
+                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null)),
+                props.notificationPopup.messageType === MessageBarType.info ? (React.createElement("span", { className: styles.topcorner + " " + styles.infoNotification, onClick: function () {
+                        props.notificationPopupConfig.activatorSetter(false);
+                    } },
+                    React.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React.createElement(React.Fragment, null))))));
+};
+
+export { InfoMark, InputLayout, MessageBarComp, NotificationPopup, NumberInput, OneLineDatePicker, SearchableDropdown, SelectChoice as SelectedChoice, TrippleChoiceToggle, capitalize$1 as capitalize, checkEmailString, dateAndTimeFormatToDisplay, dateFormatToDisplay, datetimeToStringForFile, extractUserInfo, msToTime, pluralize, round$1 as round, stringToDateTime, tableLineCount, updateBoolInputData, updateComboboxInputData, updateDropdownInputData, updateInputData, updateInputDatePickers, updateNumberInputData };
 //# sourceMappingURL=index.js.map

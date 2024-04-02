@@ -2,25 +2,30 @@ import { IComboBox, IComboBoxOption, IDropdownOption } from 'office-ui-fabric-re
 import { FormEvent } from 'react';
 
 /* --- Update Input Methods --- */
-export function updateInputData<T>(evt: React.ChangeEvent<HTMLInputElement>, currentObject: T, setter: React.Dispatch<React.SetStateAction<T>>, dataType: string): void {
+export function updateInputData<T>(
+  evt: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  currentObject: T,
+  setter: React.Dispatch<React.SetStateAction<T>>,
+  dataType: string
+): void {
   if (dataType === 'string') {
-    setter({ ...currentObject, [evt.target.name]: evt.target.value });
+    setter({ ...currentObject, [evt.currentTarget.name]: evt.currentTarget.value });
   } else if (dataType === 'date') {
-    let convertValue = evt.target.value.replace(/\s/g, '');
+    let convertValue = evt.currentTarget.value.replace(/\s/g, '');
     convertValue = convertValue.replace(/_/g, '');
     if (convertValue.match(/^\d\d\/\d\d\/\d\d\d\d$/)) {
       const date: Date = new Date(convertValue.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
-      setter({ ...currentObject, [evt.target.name]: date });
+      setter({ ...currentObject, [evt.currentTarget.name]: date });
     }
   } else if (dataType === 'number') {
     let value = 0;
-    if (evt.target.value === '' || evt.target.value === null) {
+    if (evt.currentTarget.value === '' || evt.currentTarget.value === null) {
       value = 0;
     } else {
-      value = parseInt(evt.target.value);
+      value = parseInt(evt.currentTarget.value);
     }
 
-    setter({ ...currentObject, [evt.target.name]: value });
+    setter({ ...currentObject, [evt.currentTarget.name]: value });
   }
 }
 
@@ -28,7 +33,13 @@ export function updateInputDatePickers<T>(currentObject: T, setter: React.Dispat
   setter({ ...currentObject, [propertyName]: date });
 }
 
-export function updateBoolInputData<T>(ev: React.MouseEvent<HTMLElement>, value: boolean, currentObject: T, setter: React.Dispatch<React.SetStateAction<T>>, name: string): void {
+export function updateBoolInputData<T>(
+  ev: React.MouseEvent<HTMLElement, MouseEvent>,
+  value: boolean,
+  currentObject: T,
+  setter: React.Dispatch<React.SetStateAction<T>>,
+  name: string
+): void {
   setter({ ...currentObject, [name]: value });
 }
 
