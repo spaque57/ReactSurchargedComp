@@ -21,6 +21,66 @@ You may find some property shared with all components and there is why :
 - value / defaultValue : the default value to display in the component
 
 
+# InputLayout using Grid layout
+This component is used to create aligned form instead of using many different type of input (like TextField, NumberInput, Dropdown, DatePicker...). Using the InputLayout component, you can specify what alignment you want for an input : no label, all in one line, small label with bigger input...Using this component, you an call every other component of the library with same properties and specify same layout to perfectly align all inputs.
+
+Examples below :
+
+1. Simple TextField
+
+                <InputLayout
+                  component={EInputType.TextField}
+                  layoutType={EInputLayoutType.tierLine}
+                  isReadOnly={customDisableButtonAccess()}
+                  label={'Name'}
+                  objValue={userObject.name}
+                  currentObj={userObject}
+                  objSetter={setUserObject}
+                  objPropertyName='name'
+                  isRequired={true}
+                />
+
+2. TrippelToggle
+
+	<InputLayout
+		component={EInputType.TrippleToggle}
+                layoutType={EInputLayoutType.veryVerySmallInputLine}
+                isReadOnly={customDisableButtonAccess()}
+                onTextToogle={Yes}
+                offTextToogle={No}
+   		label={'User is admin ?'}
+                objValue={userObject.admin}
+                currentObj={userObject}
+                objSetter={setUserObject}
+                objPropertyName='admin'
+                isRequired={true}
+                isPrimaryColor={ETripleToogleColor.default}
+             />
+
+3. NumberInput
+
+                <InputLayout
+                  component={EInputType.NumberInput}
+                  layoutType={EInputLayoutType.middleLine}
+                  isReadOnly={true}
+                  suffix={' ' + '€'}
+                  min={0}
+                  label={'API cost'}
+                  objValue={api.cost}
+                  currentObj={api}
+                  objSetter={setApi}
+                  objPropertyName='cost'
+                />
+
+
+In the settings of the InputLayout you can change the display of your component using only one property : layoutType. 
+You have many possible layout from the smallest 'veryVerySmallInputLine' (input is very small like 1 word but label is big) to the biggest 'smallLabel'.
+You can set an input without label or set input and label in one line using all the screen space.
+Check the layout options and test what is the best for your form. Using same option for different component will align them all in the page.
+
+You can also add your own component in the InputLayout : add your component in the 'inputComponentView.tsx' script and setup all the required properties for your input in the 'IInputLayoutProps.ts'. Add your component name in the 'EInputType' enum and that's all, you can now use your component in the InputLayout.
+
+
 # Components
 ### MessageBarComp
 This component display a message in a box with icons in function of the type of message that you wants to show : warning, error, info and success.
