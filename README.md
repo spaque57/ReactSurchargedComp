@@ -129,6 +129,29 @@ This component display a datepicker input box in one line. You can change datepi
         />
 
 
+### SearchedDropdown
+This component display a dropdown with a search input inside the options of the dropdown.
+
+1. Generate a list of options
+
+	      // Generate fruit list
+		  const fruitList: Array<IComboBoxOption> = [];
+		  fruitList.forEach((fruit: IFuit) => {
+		   fruitList.push({ key: idFruit, text: fruitLib });
+		  });
+
+2. Use component
+
+	     <SearchableDropdown
+          label='Fruits'
+          isReadOnly={false}
+          value={props.objValue}
+          options={fruitList}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertieName={'favoredFruit'}
+        />
+
 
 # Using
 Feel free to use this library !
