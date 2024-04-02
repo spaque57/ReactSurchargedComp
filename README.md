@@ -1,6 +1,6 @@
 # React Surcharged Components
 
-I was working on many projects using the same React FluentUi components and decided to add them all in a homemade custom library. 
+I was working on many projects using the same React FluentUi components and decided to add them all in a homemade 'custom library'. 
 
 
 # Config info
@@ -13,7 +13,7 @@ I was working on many projects using the same React FluentUi components and deci
 More info on package.json
 
 ### Component config
-You may find some property hared with all component and there is why :
+You may find some property shared with all components and there is why :
 - currentObj : state object to use with the component
 - objSetter / setter : state setter of the current object
 - propertyName : name of the property in current object (for the setter)
@@ -202,7 +202,7 @@ This component display a custom dropdown.
 
 ### TrippleChoiceToggle
 This component display toggle button with 2 choices, but user can unselect all choices (for a null value). Give the possibility of a true, or false, or nothing (null).
-PrimaryColor will use default blue color for the input. if false, buttons will be green (for true) and red (for false).
+PrimaryColor will use default blue color for the input. If false, buttons will be green (for true) and red (for false).
 
         <TrippleChoiceToggle
           isReadOnly={false}
