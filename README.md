@@ -152,6 +152,66 @@ This component display a dropdown with a search input inside the options of the 
           propertieName={'favoredFruit'}
         />
 
+### SelectChoice
+This component display a custom dropdown.
+
+1. Generate a list of options
+
+	      // Generate fruit list
+		  const fruitList: Array<IComboBoxOption> = [];
+		  fruitList.forEach((fruit: IFuit) => {
+		   fruitList.push({ key: idFruit, text: fruitLib });
+		  });
+
+2. Use component
+
+        <SelectChoice
+          label='Fruit List'
+          isReadOnly={false}
+          value={props.objValue}
+          options={fruitList}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertieName={'Favored fruit'}
+        />
+
+
+### SelectChoice
+This component display a custom dropdown.
+
+1. Generate a list of options
+
+	      // Generate fruit list
+		  const fruitList: Array<IComboBoxOption> = [];
+		  fruitList.forEach((fruit: IFuit) => {
+		   fruitList.push({ key: idFruit, text: fruitLib });
+		  });
+
+2. Use component
+
+        <SelectChoice
+          label='Fruit List'
+          isReadOnly={false}
+          value={props.objValue}
+          options={fruitList}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertieName={'Favored fruit'}
+        />
+   
+
+### TrippleChoiceToggle
+This component display toggle button with 2 choices, but user can unselect all choices (for a null value). Give the possibility of a true, or false, or nothing (null).
+PrimaryColor will use default blue color for the input. if false, buttons will be green (for true) and red (for false).
+
+        <TrippleChoiceToggle
+          isReadOnly={false}
+          defaultValue={props.objValue}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertyName={'hasRights'}
+          isPrimaryColor={true}
+        />
 
 # Using
 Feel free to use this library !
