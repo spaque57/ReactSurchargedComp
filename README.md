@@ -4,13 +4,21 @@ I was working on many projects using the same React FluentUi components and deci
 
 
 # Config info
-Components works with :
+### Library config
 - FluentUi React Fabric 6
 - Requires 
 	-  "react": "^17.0.2"
 	-  "react-dom": "^17.0.2"
 	-  "typescript": "3.9.7"
 More info on package.json
+
+### Component config
+You may find some property hared with all component and there is why :
+- currentObj : state object to use with the component
+- objSetter / setter : state setter of the current object
+- propertyName : name of the property in current object (for the setter)
+- isReadOnly : set the input as read only
+- value / defaultValue : the default value to display in the component
 
 
 # Components
@@ -89,6 +97,23 @@ This component display a notification in the top right corner of the screen. The
         <div>
 		    <NotificationPopup notificationPopup={notificationMessage} notificationPopupConfig={notificationConfig} />
 	    </div>
+
+
+### NumberInput
+This component display a input box for number with arrow to add or remove the amount. Component also check min or max value, and can add a prefix to the number.
+
+        <NumberInput
+          label='Rating component'
+          isReadOnly={true}
+          suffix={'%'}
+          increment={1}
+          defaultValue={props.objValue}
+          currentObject={props.currentObj}
+          setter={props.objSetter}
+          propertyName={'rate'}
+          min={0}
+          max={100}
+        />
 
 
 
