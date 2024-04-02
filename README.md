@@ -42,13 +42,13 @@ Examples below :
 
 2. TrippelToggle
 
-	<InputLayout
-		component={EInputType.TrippleToggle}
+	    <InputLayout
+		    	component={EInputType.TrippleToggle}
                 layoutType={EInputLayoutType.veryVerySmallInputLine}
                 isReadOnly={customDisableButtonAccess()}
                 onTextToogle={Yes}
                 offTextToogle={No}
-   		label={'User is admin ?'}
+		    	label={'User is admin ?'}
                 objValue={userObject.admin}
                 currentObj={userObject}
                 objSetter={setUserObject}
