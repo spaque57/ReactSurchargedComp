@@ -14348,7 +14348,7 @@ var stylesImport = /*#__PURE__*/Object.freeze({
     leftdate: leftdate
 });
 
-var styles$c = stylesImport;
+var styles$d = stylesImport;
 var DAYS_IN_WEEK = 7;
 var CalendarDay = /** @class */ (function (_super) {
     __extends(CalendarDay, _super);
@@ -14376,7 +14376,7 @@ var CalendarDay = /** @class */ (function (_super) {
                 if (dateRangeType === DateRangeType.Month) {
                     _this._applyFunctionToDayRefs(function (ref, day) {
                         if (ref && day.originalDate.getMonth() === originalDate.getMonth() && day.isInBounds) {
-                            ref.classList.add(styles$c.dayPress);
+                            ref.classList.add(styles$d.dayPress);
                         }
                     });
                 }
@@ -14384,11 +14384,11 @@ var CalendarDay = /** @class */ (function (_super) {
                     // week or work week view
                     _this._applyFunctionToDayRefs(function (ref, day, dayWeekIndex) {
                         if (ref && dayWeekIndex === weekIndex && day.isInBounds) {
-                            ref.classList.add(styles$c.dayPress);
-                            ref.classList.add(styles$c.dayIsHighlighted);
+                            ref.classList.add(styles$d.dayPress);
+                            ref.classList.add(styles$d.dayIsHighlighted);
                         }
                         else if (ref) {
-                            ref.classList.remove(styles$c.dayIsHighlighted);
+                            ref.classList.remove(styles$d.dayIsHighlighted);
                         }
                     });
                 }
@@ -14400,7 +14400,7 @@ var CalendarDay = /** @class */ (function (_super) {
                 if (dateRangeType === DateRangeType.Month) {
                     _this._applyFunctionToDayRefs(function (ref, day) {
                         if (ref && day.originalDate.getMonth() === originalDate.getMonth() && day.isInBounds) {
-                            ref.classList.remove(styles$c.dayPress);
+                            ref.classList.remove(styles$d.dayPress);
                         }
                     });
                 }
@@ -14408,7 +14408,7 @@ var CalendarDay = /** @class */ (function (_super) {
                     // week or work week view
                     _this._applyFunctionToDayRefs(function (ref, day, dayWeekIndex) {
                         if (ref && dayWeekIndex === weekIndex && day.isInBounds) {
-                            ref.classList.remove(styles$c.dayPress);
+                            ref.classList.remove(styles$d.dayPress);
                         }
                     });
                 }
@@ -14420,7 +14420,7 @@ var CalendarDay = /** @class */ (function (_super) {
                 if (dateRangeType === DateRangeType.Month) {
                     _this._applyFunctionToDayRefs(function (ref, day) {
                         if (ref && day.originalDate.getMonth() === originalDate.getMonth() && day.isInBounds) {
-                            ref.classList.add(styles$c.dayHover);
+                            ref.classList.add(styles$d.dayHover);
                         }
                     });
                 }
@@ -14428,7 +14428,7 @@ var CalendarDay = /** @class */ (function (_super) {
                     // week or work week view
                     _this._applyFunctionToDayRefs(function (ref, day, dayWeekIndex) {
                         if (ref && dayWeekIndex === weekIndex && day.isInBounds) {
-                            ref.classList.add(styles$c.dayHover);
+                            ref.classList.add(styles$d.dayHover);
                         }
                     });
                 }
@@ -14440,7 +14440,7 @@ var CalendarDay = /** @class */ (function (_super) {
                 if (dateRangeType === DateRangeType.Month) {
                     _this._applyFunctionToDayRefs(function (ref, day) {
                         if (ref && day.originalDate.getMonth() === originalDate.getMonth() && day.isInBounds) {
-                            ref.classList.remove(styles$c.dayHover);
+                            ref.classList.remove(styles$d.dayHover);
                         }
                     });
                 }
@@ -14448,7 +14448,7 @@ var CalendarDay = /** @class */ (function (_super) {
                     // week or work week view
                     _this._applyFunctionToDayRefs(function (ref, day, dayWeekIndex) {
                         if (ref && dayWeekIndex === weekIndex && day.isInBounds) {
-                            ref.classList.remove(styles$c.dayHover);
+                            ref.classList.remove(styles$d.dayHover);
                         }
                     });
                 }
@@ -14463,8 +14463,8 @@ var CalendarDay = /** @class */ (function (_super) {
             }
             _this._applyFunctionToDayRefs(function (ref, day) {
                 if (ref) {
-                    ref.classList.remove(styles$c.dayHover);
-                    ref.classList.remove(styles$c.dayPress);
+                    ref.classList.remove(styles$d.dayHover);
+                    ref.classList.remove(styles$d.dayPress);
                 }
             });
         };
@@ -14477,7 +14477,7 @@ var CalendarDay = /** @class */ (function (_super) {
             }
             _this._applyFunctionToDayRefs(function (ref, day) {
                 if (ref) {
-                    ref.classList.remove(styles$c.dayPress);
+                    ref.classList.remove(styles$d.dayPress);
                 }
             });
         };
@@ -14575,49 +14575,49 @@ var CalendarDay = /** @class */ (function (_super) {
         // determine if previous/next months are in bounds
         var prevMonthInBounds = minDate ? compareDatePart(minDate, getMonthStart(navigatedDate)) < 0 : true;
         var nextMonthInBounds = maxDate ? compareDatePart(getMonthEnd(navigatedDate), maxDate) < 0 : true;
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-dayPicker', styles$c.dayPicker, showWeekNumbers && 'ms-DatePicker-showWeekNumbers' && (getRTL() ? styles$c.showWeekNumbersRTL : styles$c.showWeekNumbers)), id: dayPickerId },
-            React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$c.header) },
-                React__namespace.createElement("div", { "aria-live": "polite", "aria-relevant": "text", "aria-atomic": "true", id: monthAndYearId, className: styles$c.monthAndYear }, this.props.onHeaderSelect ? (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthAndYear js-showMonthPicker', styles$c.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": dateTimeFormatter.formatMonthYear(navigatedDate, strings), role: "button", tabIndex: 0 }, dateTimeFormatter.formatMonthYear(navigatedDate, strings))) : (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthAndYear', styles$c.monthAndYear) }, dateTimeFormatter.formatMonthYear(navigatedDate, strings)))),
-                React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthComponents', styles$c.monthComponents) },
-                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$c.navContainer) },
-                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevMonth js-prevMonth', styles$c.prevMonth, (_c = {},
-                                _c['ms-DatePicker-prevMonth--disabled ' + styles$c.prevMonthIsDisabled] = !prevMonthInBounds,
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-dayPicker', styles$d.dayPicker, showWeekNumbers && 'ms-DatePicker-showWeekNumbers' && (getRTL() ? styles$d.showWeekNumbersRTL : styles$d.showWeekNumbers)), id: dayPickerId },
+            React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$d.header) },
+                React__namespace.createElement("div", { "aria-live": "polite", "aria-relevant": "text", "aria-atomic": "true", id: monthAndYearId, className: styles$d.monthAndYear }, this.props.onHeaderSelect ? (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthAndYear js-showMonthPicker', styles$d.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": dateTimeFormatter.formatMonthYear(navigatedDate, strings), role: "button", tabIndex: 0 }, dateTimeFormatter.formatMonthYear(navigatedDate, strings))) : (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthAndYear', styles$d.monthAndYear) }, dateTimeFormatter.formatMonthYear(navigatedDate, strings)))),
+                React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthComponents', styles$d.monthComponents) },
+                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$d.navContainer) },
+                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevMonth js-prevMonth', styles$d.prevMonth, (_c = {},
+                                _c['ms-DatePicker-prevMonth--disabled ' + styles$d.prevMonthIsDisabled] = !prevMonthInBounds,
                                 _c)), disabled: !allFocusable && !prevMonthInBounds, "aria-disabled": !prevMonthInBounds, onClick: prevMonthInBounds ? this._onSelectPrevMonth : undefined, onKeyDown: prevMonthInBounds ? this._onPrevMonthKeyDown : undefined, "aria-controls": dayPickerId, title: strings.prevMonthAriaLabel
                                 ? strings.prevMonthAriaLabel + ' ' + strings.months[addMonths(navigatedDate, -1).getMonth()]
                                 : undefined, role: "button", type: "button" },
                             React__namespace.createElement(Icon, { iconName: leftNavigationIcon })),
-                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextMonth js-nextMonth', styles$c.nextMonth, (_d = {},
-                                _d['ms-DatePicker-nextMonth--disabled ' + styles$c.nextMonthIsDisabled] = !nextMonthInBounds,
+                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextMonth js-nextMonth', styles$d.nextMonth, (_d = {},
+                                _d['ms-DatePicker-nextMonth--disabled ' + styles$d.nextMonthIsDisabled] = !nextMonthInBounds,
                                 _d)), disabled: !allFocusable && !nextMonthInBounds, "aria-disabled": !nextMonthInBounds, onClick: nextMonthInBounds ? this._onSelectNextMonth : undefined, onKeyDown: nextMonthInBounds ? this._onNextMonthKeyDown : undefined, "aria-controls": dayPickerId, title: strings.nextMonthAriaLabel
                                 ? strings.nextMonthAriaLabel + ' ' + strings.months[addMonths(navigatedDate, 1).getMonth()]
                                 : undefined, role: "button", type: "button" },
                             React__namespace.createElement(Icon, { iconName: rightNavigationIcon })),
-                        showCloseButton && (React__namespace.createElement("button", { className: css$1('ms-DatePicker-closeButton js-closeButton', styles$c.closeButton), onClick: this._onClose, onKeyDown: this._onCloseButtonKeyDown, title: strings.closeButtonAriaLabel, role: "button", type: "button" },
+                        showCloseButton && (React__namespace.createElement("button", { className: css$1('ms-DatePicker-closeButton js-closeButton', styles$d.closeButton), onClick: this._onClose, onKeyDown: this._onCloseButtonKeyDown, title: strings.closeButtonAriaLabel, role: "button", type: "button" },
                             React__namespace.createElement(Icon, { iconName: closeNavigationIcon })))))),
             React__namespace.createElement(FocusZone, null,
-                React__namespace.createElement("table", { className: css$1('ms-DatePicker-table', styles$c.table), "aria-readonly": "true", "aria-multiselectable": "false", "aria-labelledby": monthAndYearId, "aria-activedescendant": activeDescendantId, role: "grid" },
+                React__namespace.createElement("table", { className: css$1('ms-DatePicker-table', styles$d.table), "aria-readonly": "true", "aria-multiselectable": "false", "aria-labelledby": monthAndYearId, "aria-activedescendant": activeDescendantId, role: "grid" },
                     React__namespace.createElement("thead", null,
                         React__namespace.createElement("tr", null,
-                            showWeekNumbers && React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekday', styles$c.weekday) }),
-                            strings.shortDays.map(function (val, index) { return (React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekday', styles$c.weekday), role: "columnheader", scope: "col", key: index, title: strings.days[(index + firstDayOfWeek) % DAYS_IN_WEEK], "aria-label": strings.days[(index + firstDayOfWeek) % DAYS_IN_WEEK], "data-is-focusable": allFocusable ? true : undefined }, strings.shortDays[(index + firstDayOfWeek) % DAYS_IN_WEEK])); }))),
+                            showWeekNumbers && React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekday', styles$d.weekday) }),
+                            strings.shortDays.map(function (val, index) { return (React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekday', styles$d.weekday), role: "columnheader", scope: "col", key: index, title: strings.days[(index + firstDayOfWeek) % DAYS_IN_WEEK], "aria-label": strings.days[(index + firstDayOfWeek) % DAYS_IN_WEEK], "data-is-focusable": allFocusable ? true : undefined }, strings.shortDays[(index + firstDayOfWeek) % DAYS_IN_WEEK])); }))),
                     React__namespace.createElement("tbody", { onMouseLeave: dateRangeType !== DateRangeType.Day ? this._onTableMouseLeave : undefined, onMouseUp: dateRangeType !== DateRangeType.Day ? this._onTableMouseUp : undefined }, weeks.map(function (week, weekIndex) {
                         return (React__namespace.createElement("tr", { key: weekNumbers ? weekNumbers[weekIndex] : weekIndex },
-                            showWeekNumbers && weekNumbers && (React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekNumbers', 'ms-DatePicker-weekday', styles$c.weekday, styles$c.weekNumbers), key: weekIndex, title: weekNumbers && strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex]), "aria-label": weekNumbers && strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex]), scope: "row" },
-                                React__namespace.createElement("div", { className: css$1('ms-DatePicker-day', styles$c.day, (_a = {},
-                                        _a['ms-DatePicker-week--highlighted ' + styles$c.weekIsHighlighted] = selectedDateWeekNumber === weekNumbers[weekIndex],
+                            showWeekNumbers && weekNumbers && (React__namespace.createElement("th", { className: css$1('ms-DatePicker-weekNumbers', 'ms-DatePicker-weekday', styles$d.weekday, styles$d.weekNumbers), key: weekIndex, title: weekNumbers && strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex]), "aria-label": weekNumbers && strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex]), scope: "row" },
+                                React__namespace.createElement("div", { className: css$1('ms-DatePicker-day', styles$d.day, (_a = {},
+                                        _a['ms-DatePicker-week--highlighted ' + styles$d.weekIsHighlighted] = selectedDateWeekNumber === weekNumbers[weekIndex],
                                         _a)) },
                                     React__namespace.createElement("span", null, weekNumbers[weekIndex])))),
                             week.map(function (day, dayIndex) {
                                 var isNavigatedDate = compareDates(navigatedDate, day.originalDate);
-                                return (React__namespace.createElement("td", { key: day.key, onClick: day.isInBounds ? day.onSelected : undefined, className: css$1(styles$c.dayWrapper, 'ms-DatePicker-day', _this._getHighlightedCornerStyle(weekCorners, dayIndex, weekIndex), (_a = {},
-                                        _a['ms-DatePicker-weekBackground ' + styles$c.weekBackground] = day.isSelected && (dateRangeType === DateRangeType.Week || dateRangeType === DateRangeType.WorkWeek),
-                                        _a['ms-DatePicker-dayBackground ' + styles$c.dayBackground] = dateRangeType === DateRangeType.Day,
-                                        _a['ms-DatePicker-day--highlighted ' + styles$c.dayIsHighlighted] = day.isSelected && dateRangeType === DateRangeType.Day,
-                                        _a['ms-DatePicker-day--infocus ' + styles$c.dayIsFocused] = day.isInBounds && day.isInMonth,
-                                        _a['ms-DatePicker-day--outfocus ' + styles$c.dayIsUnfocused] = day.isInBounds && !day.isInMonth,
-                                        _a[styles$c.daySelection] = dateRangeType === DateRangeType.Day,
-                                        _a[styles$c.weekSelection] = dateRangeType === DateRangeType.Week || dateRangeType === DateRangeType.WorkWeek,
-                                        _a[styles$c.monthSelection] = dateRangeType === DateRangeType.Month,
+                                return (React__namespace.createElement("td", { key: day.key, onClick: day.isInBounds ? day.onSelected : undefined, className: css$1(styles$d.dayWrapper, 'ms-DatePicker-day', _this._getHighlightedCornerStyle(weekCorners, dayIndex, weekIndex), (_a = {},
+                                        _a['ms-DatePicker-weekBackground ' + styles$d.weekBackground] = day.isSelected && (dateRangeType === DateRangeType.Week || dateRangeType === DateRangeType.WorkWeek),
+                                        _a['ms-DatePicker-dayBackground ' + styles$d.dayBackground] = dateRangeType === DateRangeType.Day,
+                                        _a['ms-DatePicker-day--highlighted ' + styles$d.dayIsHighlighted] = day.isSelected && dateRangeType === DateRangeType.Day,
+                                        _a['ms-DatePicker-day--infocus ' + styles$d.dayIsFocused] = day.isInBounds && day.isInMonth,
+                                        _a['ms-DatePicker-day--outfocus ' + styles$d.dayIsUnfocused] = day.isInBounds && !day.isInMonth,
+                                        _a[styles$d.daySelection] = dateRangeType === DateRangeType.Day,
+                                        _a[styles$d.weekSelection] = dateRangeType === DateRangeType.Week || dateRangeType === DateRangeType.WorkWeek,
+                                        _a[styles$d.monthSelection] = dateRangeType === DateRangeType.Month,
                                         _a)), ref: function (element) { return _this._setDayCellRef(element, day, isNavigatedDate); }, onMouseOver: dateRangeType !== DateRangeType.Day && day.isInBounds
                                         ? _this._onDayMouseOver(day.originalDate, weekIndex, dayIndex, dateRangeType)
                                         : undefined, onMouseLeave: dateRangeType !== DateRangeType.Day && day.isInBounds
@@ -14627,9 +14627,9 @@ var CalendarDay = /** @class */ (function (_super) {
                                         : undefined, onMouseUp: dateRangeType !== DateRangeType.Day && day.isInBounds
                                         ? _this._onDayMouseUp(day.originalDate, weekIndex, dayIndex, dateRangeType)
                                         : undefined, role: 'gridcell' },
-                                    React__namespace.createElement("button", { key: day.key + 'button', onClick: day.isInBounds ? day.onSelected : undefined, className: css$1(styles$c.day, 'ms-DatePicker-day-button', (_b = {},
-                                            _b['ms-DatePicker-day--disabled ' + styles$c.dayIsDisabled] = !day.isInBounds,
-                                            _b['ms-DatePicker-day--today ' + styles$c.dayIsToday] = day.isToday,
+                                    React__namespace.createElement("button", { key: day.key + 'button', onClick: day.isInBounds ? day.onSelected : undefined, className: css$1(styles$d.day, 'ms-DatePicker-day-button', (_b = {},
+                                            _b['ms-DatePicker-day--disabled ' + styles$d.dayIsDisabled] = !day.isInBounds,
+                                            _b['ms-DatePicker-day--today ' + styles$d.dayIsToday] = day.isToday,
                                             _b)), role: "gridcell", onKeyDown: _this._onDayKeyDown(day.originalDate, weekIndex, dayIndex), "aria-label": dateTimeFormatter.formatMonthDayYear(day.originalDate, strings), id: isNavigatedDate ? activeDescendantId : undefined, "aria-readonly": true, "aria-selected": day.isInBounds ? day.isSelected : undefined, "data-is-focusable": allFocusable || (day.isInBounds ? true : undefined), ref: function (element) { return _this._setDayRef(element, day, isNavigatedDate); }, disabled: !allFocusable && !day.isInBounds, "aria-disabled": !day.isInBounds, type: "button" },
                                         React__namespace.createElement("span", { "aria-hidden": "true" }, dateTimeFormatter.formatDay(day.originalDate)))));
                                 var _a, _b;
@@ -14689,28 +14689,28 @@ var CalendarDay = /** @class */ (function (_super) {
                         var roundedBottomRight = !below && !right;
                         var style = '';
                         if (roundedTopLeft) {
-                            style = getRTL() ? style.concat(styles$c.topRightCornerDate + ' ') : style.concat(styles$c.topLeftCornerDate + ' ');
+                            style = getRTL() ? style.concat(styles$d.topRightCornerDate + ' ') : style.concat(styles$d.topLeftCornerDate + ' ');
                         }
                         if (roundedTopRight) {
-                            style = getRTL() ? style.concat(styles$c.topLeftCornerDate + ' ') : style.concat(styles$c.topRightCornerDate + ' ');
+                            style = getRTL() ? style.concat(styles$d.topLeftCornerDate + ' ') : style.concat(styles$d.topRightCornerDate + ' ');
                         }
                         if (roundedBottomLeft) {
-                            style = getRTL() ? style.concat(styles$c.bottomRightCornerDate + ' ') : style.concat(styles$c.bottomLeftCornerDate + ' ');
+                            style = getRTL() ? style.concat(styles$d.bottomRightCornerDate + ' ') : style.concat(styles$d.bottomLeftCornerDate + ' ');
                         }
                         if (roundedBottomRight) {
-                            style = getRTL() ? style.concat(styles$c.bottomLeftCornerDate + ' ') : style.concat(styles$c.bottomRightCornerDate + ' ');
+                            style = getRTL() ? style.concat(styles$d.bottomLeftCornerDate + ' ') : style.concat(styles$d.bottomRightCornerDate + ' ');
                         }
                         if (!above) {
-                            style = style.concat(styles$c.topDate + ' ');
+                            style = style.concat(styles$d.topDate + ' ');
                         }
                         if (!below) {
-                            style = style.concat(styles$c.bottomDate + ' ');
+                            style = style.concat(styles$d.bottomDate + ' ');
                         }
                         if (!right) {
-                            style = style.concat(styles$c.rightDate + ' ');
+                            style = style.concat(styles$d.rightDate + ' ');
                         }
                         if (!left) {
-                            style = style.concat(styles$c.leftdate + ' ');
+                            style = style.concat(styles$d.leftdate + ' ');
                         }
                         weekCornersStyled[weekIndex + '_' + dayIndex] = style;
                     });
@@ -14725,8 +14725,8 @@ var CalendarDay = /** @class */ (function (_super) {
                     var maxIndex = _this._findLastIndex(week, function (item) {
                         return item.isInBounds;
                     });
-                    var leftStyle = styles$c.topLeftCornerDate + ' ' + styles$c.bottomLeftCornerDate;
-                    var rightStyle = styles$c.topRightCornerDate + ' ' + styles$c.bottomRightCornerDate;
+                    var leftStyle = styles$d.topLeftCornerDate + ' ' + styles$d.bottomLeftCornerDate;
+                    var rightStyle = styles$d.topRightCornerDate + ' ' + styles$d.bottomRightCornerDate;
                     weekCornersStyled[weekIndex + '_' + minIndex] = getRTL() ? rightStyle : leftStyle;
                     weekCornersStyled[weekIndex + '_' + maxIndex] = getRTL() ? leftStyle : rightStyle;
                 });
@@ -14860,7 +14860,7 @@ var CalendarDay = /** @class */ (function (_super) {
     return CalendarDay;
 }(BaseComponent));
 
-var styles$b = stylesImport;
+var styles$c = stylesImport;
 var CELL_COUNT = 12;
 var DefaultCalendarYearStrings = {
     prevRangeAriaLabel: undefined,
@@ -14902,9 +14902,9 @@ var CalendarYearGridCell = /** @class */ (function (_super) {
     };
     CalendarYearGridCell.prototype.render = function () {
         var _a = this.props, year = _a.year, selected = _a.selected, disabled = _a.disabled, onSelectYear = _a.onSelectYear;
-        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-yearOption', styles$b.yearOption, (_b = {},
-                _b['ms-DatePicker-day--highlighted ' + styles$b.yearIsHighlighted] = selected,
-                _b['ms-DatePicker-yearOption--disabled ' + styles$b.yearOptionIsDisabled] = disabled,
+        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-yearOption', styles$c.yearOption, (_b = {},
+                _b['ms-DatePicker-day--highlighted ' + styles$c.yearIsHighlighted] = selected,
+                _b['ms-DatePicker-yearOption--disabled ' + styles$c.yearOptionIsDisabled] = disabled,
                 _b)), type: "button", role: "gridcell", onClick: !disabled && onSelectYear ? this._onClick : undefined, onKeyDown: !disabled && onSelectYear ? this._onKeyDown : undefined, disabled: disabled, "aria-label": String(year), "aria-selected": selected, ref: this._buttonRef }, this._onRenderYear()));
         var _b;
     };
@@ -14942,7 +14942,7 @@ var CalendarYearGrid = /** @class */ (function (_super) {
             year++;
         }
         return (React__namespace.createElement(FocusZone, null,
-            React__namespace.createElement("div", { className: css$1('ms-DatePicker-optionGrid', styles$b.optionGrid), role: "grid" },
+            React__namespace.createElement("div", { className: css$1('ms-DatePicker-optionGrid', styles$c.optionGrid), role: "grid" },
                 React__namespace.createElement("div", { role: "row" }, cells))));
     };
     return CalendarYearGrid;
@@ -14975,8 +14975,8 @@ var CalendarYearNavPrev = /** @class */ (function (_super) {
             : undefined;
         var disabled = this.isDisabled;
         var onSelectPrev = this.props.onSelectPrev;
-        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevDecade', styles$b.prevDecade, (_a = {},
-                _a['ms-DatePicker-prevDecade--disabled ' + styles$b.prevDecadeIsDisabled] = disabled,
+        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevDecade', styles$c.prevDecade, (_a = {},
+                _a['ms-DatePicker-prevDecade--disabled ' + styles$c.prevDecadeIsDisabled] = disabled,
                 _a)), onClick: !disabled && onSelectPrev ? this._onSelectPrev : undefined, onKeyDown: !disabled && onSelectPrev ? this._onKeyDown : undefined, type: "button", tabIndex: 0, title: prevAriaLabel, disabled: disabled },
             React__namespace.createElement(Icon, { iconName: getRTL() ? iconStrings.rightNavigation : iconStrings.leftNavigation })));
         var _a;
@@ -15019,8 +15019,8 @@ var CalendarYearNavNext = /** @class */ (function (_super) {
             : undefined;
         var onSelectNext = this.props.onSelectNext;
         var disabled = this.isDisabled;
-        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextDecade', styles$b.nextDecade, (_a = {},
-                _a['ms-DatePicker-nextDecade--disabled ' + styles$b.nextDecadeIsDisabled] = disabled,
+        return (React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextDecade', styles$c.nextDecade, (_a = {},
+                _a['ms-DatePicker-nextDecade--disabled ' + styles$c.nextDecadeIsDisabled] = disabled,
                 _a)), onClick: !disabled && onSelectNext ? this._onSelectNext : undefined, onKeyDown: !disabled && onSelectNext ? this._onKeyDown : undefined, type: "button", tabIndex: 0, title: nextAriaLabel, disabled: this.isDisabled },
             React__namespace.createElement(Icon, { iconName: getRTL() ? iconStrings.leftNavigation : iconStrings.rightNavigation })));
         var _a;
@@ -15041,8 +15041,8 @@ var CalendarYearNav = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     CalendarYearNav.prototype.render = function () {
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-decadeComponents', styles$b.decadeComponents) },
-            React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$b.navContainer) },
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-decadeComponents', styles$c.decadeComponents) },
+            React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$c.navContainer) },
                 React__namespace.createElement(CalendarYearNavPrev, __assign$2({}, this.props)),
                 React__namespace.createElement(CalendarYearNavNext, __assign$2({}, this.props)))));
     };
@@ -15080,12 +15080,12 @@ var CalendarYearTitle = /** @class */ (function (_super) {
                     ? rangeAriaLabel
                     : rangeAriaLabel(this.props)
                 : undefined;
-            return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentDecade js-showYearPicker', styles$b.currentDecade, styles$b.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": ariaLabel, role: "button", "aria-atomic": true, "aria-live": "polite", tabIndex: 0 },
+            return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentDecade js-showYearPicker', styles$c.currentDecade, styles$c.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": ariaLabel, role: "button", "aria-atomic": true, "aria-live": "polite", tabIndex: 0 },
                 this._onRenderYear(fromYear),
                 " - ",
                 this._onRenderYear(toYear)));
         }
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentDecade js-showYearPicker', styles$b.currentDecade) },
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentDecade js-showYearPicker', styles$c.currentDecade) },
             this._onRenderYear(fromYear),
             " - ",
             this._onRenderYear(toYear)));
@@ -15108,7 +15108,7 @@ var CalendarYearHeader = /** @class */ (function (_super) {
         return _this;
     }
     CalendarYearHeader.prototype.render = function () {
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$b.header) },
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$c.header) },
             this._onRenderTitle(),
             this._onRenderNav()));
     };
@@ -15140,7 +15140,7 @@ var CalendarYear = /** @class */ (function (_super) {
         }
     };
     CalendarYear.prototype.render = function () {
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-yearPicker', styles$b.yearPicker) },
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-yearPicker', styles$c.yearPicker) },
             this._renderHeader(),
             this._renderGrid()));
     };
@@ -15157,7 +15157,7 @@ var CalendarYear = /** @class */ (function (_super) {
     return CalendarYear;
 }(React__namespace.Component));
 
-var styles$a = stylesImport;
+var styles$b = stylesImport;
 var MONTHS_PER_ROW = 4;
 var CalendarMonth = /** @class */ (function (_super) {
     __extends(CalendarMonth, _super);
@@ -15301,25 +15301,25 @@ var CalendarMonth = /** @class */ (function (_super) {
         // determine if previous/next years are in bounds
         var isPrevYearInBounds = minDate ? compareDatePart(minDate, getYearStart(navigatedDate)) < 0 : true;
         var isNextYearInBounds = maxDate ? compareDatePart(getYearEnd(navigatedDate), maxDate) < 0 : true;
-        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthPicker', styles$a.monthPicker) },
-            React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$a.header) },
-                this.props.onHeaderSelect || !yearPickerHidden ? (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentYear js-showYearPicker', styles$a.currentYear, styles$a.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": dateTimeFormatter.formatYear(navigatedDate), role: "button", "aria-atomic": true, "aria-live": "polite", tabIndex: 0 }, dateTimeFormatter.formatYear(navigatedDate))) : (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentYear js-showYearPicker', styles$a.currentYear) }, dateTimeFormatter.formatYear(navigatedDate))),
-                React__namespace.createElement("div", { className: css$1('ms-DatePicker-yearComponents', styles$a.yearComponents) },
-                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$a.navContainer) },
-                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevYear js-prevYear', styles$a.prevYear, (_b = {},
-                                _b['ms-DatePicker-prevYear--disabled ' + styles$a.prevYearIsDisabled] = !isPrevYearInBounds,
+        return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-monthPicker', styles$b.monthPicker) },
+            React__namespace.createElement("div", { className: css$1('ms-DatePicker-header', styles$b.header) },
+                this.props.onHeaderSelect || !yearPickerHidden ? (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentYear js-showYearPicker', styles$b.currentYear, styles$b.headerToggleView), onClick: this._onHeaderSelect, onKeyDown: this._onHeaderKeyDown, "aria-label": dateTimeFormatter.formatYear(navigatedDate), role: "button", "aria-atomic": true, "aria-live": "polite", tabIndex: 0 }, dateTimeFormatter.formatYear(navigatedDate))) : (React__namespace.createElement("div", { className: css$1('ms-DatePicker-currentYear js-showYearPicker', styles$b.currentYear) }, dateTimeFormatter.formatYear(navigatedDate))),
+                React__namespace.createElement("div", { className: css$1('ms-DatePicker-yearComponents', styles$b.yearComponents) },
+                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$b.navContainer) },
+                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-prevYear js-prevYear', styles$b.prevYear, (_b = {},
+                                _b['ms-DatePicker-prevYear--disabled ' + styles$b.prevYearIsDisabled] = !isPrevYearInBounds,
                                 _b)), disabled: !isPrevYearInBounds, onClick: isPrevYearInBounds ? this._onSelectPrevYear : undefined, onKeyDown: isPrevYearInBounds ? this._onSelectPrevYearKeyDown : undefined, title: strings.prevYearAriaLabel
                                 ? strings.prevYearAriaLabel + ' ' + dateTimeFormatter.formatYear(addYears(navigatedDate, -1))
                                 : undefined, role: "button", type: "button" },
                             React__namespace.createElement(Icon, { iconName: getRTL() ? rightNavigationIcon : leftNavigationIcon })),
-                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextYear js-nextYear', styles$a.nextYear, (_c = {},
-                                _c['ms-DatePicker-nextYear--disabled ' + styles$a.nextYearIsDisabled] = !isNextYearInBounds,
+                        React__namespace.createElement("button", { className: css$1('ms-DatePicker-nextYear js-nextYear', styles$b.nextYear, (_c = {},
+                                _c['ms-DatePicker-nextYear--disabled ' + styles$b.nextYearIsDisabled] = !isNextYearInBounds,
                                 _c)), disabled: !isNextYearInBounds, onClick: isNextYearInBounds ? this._onSelectNextYear : undefined, onKeyDown: isNextYearInBounds ? this._onSelectNextYearKeyDown : undefined, title: strings.nextYearAriaLabel
                                 ? strings.nextYearAriaLabel + ' ' + dateTimeFormatter.formatYear(addYears(navigatedDate, 1))
                                 : undefined, role: "button", type: "button" },
                             React__namespace.createElement(Icon, { iconName: getRTL() ? leftNavigationIcon : rightNavigationIcon }))))),
             React__namespace.createElement(FocusZone, null,
-                React__namespace.createElement("div", { className: css$1('ms-DatePicker-optionGrid', styles$a.optionGrid), role: "grid", "aria-readonly": "true" }, rowIndexes.map(function (rowNum) {
+                React__namespace.createElement("div", { className: css$1('ms-DatePicker-optionGrid', styles$b.optionGrid), role: "grid", "aria-readonly": "true" }, rowIndexes.map(function (rowNum) {
                     var monthsForRow = strings.shortMonths.slice(rowNum * MONTHS_PER_ROW, (rowNum + 1) * MONTHS_PER_ROW);
                     return (React__namespace.createElement("div", { key: 'monthRow_' + rowNum, role: "row" }, monthsForRow.map(function (month, index) {
                         var monthIndex = rowNum * MONTHS_PER_ROW + index;
@@ -15330,10 +15330,10 @@ var CalendarMonth = /** @class */ (function (_super) {
                         var isSelectedYear = selectedDate.getFullYear() === navigatedDate.getFullYear();
                         var isInBounds = (minDate ? compareDatePart(minDate, getMonthEnd(indexedMonth)) < 1 : true) &&
                             (maxDate ? compareDatePart(getMonthStart(indexedMonth), maxDate) < 1 : true);
-                        return (React__namespace.createElement("button", { role: 'gridcell', className: css$1('ms-DatePicker-monthOption', styles$a.monthOption, (_a = {},
-                                _a['ms-DatePicker-day--today ' + styles$a.monthIsCurrentMonth] = highlightCurrentMonth && isCurrentMonth,
-                                _a['ms-DatePicker-day--highlighted ' + styles$a.monthIsHighlighted] = (highlightCurrentMonth || highlightSelectedMonth) && isSelectedMonth && isSelectedYear,
-                                _a['ms-DatePicker-monthOption--disabled ' + styles$a.monthOptionIsDisabled] = !isInBounds,
+                        return (React__namespace.createElement("button", { role: 'gridcell', className: css$1('ms-DatePicker-monthOption', styles$b.monthOption, (_a = {},
+                                _a['ms-DatePicker-day--today ' + styles$b.monthIsCurrentMonth] = highlightCurrentMonth && isCurrentMonth,
+                                _a['ms-DatePicker-day--highlighted ' + styles$b.monthIsHighlighted] = (highlightCurrentMonth || highlightSelectedMonth) && isSelectedMonth && isSelectedYear,
+                                _a['ms-DatePicker-monthOption--disabled ' + styles$b.monthOptionIsDisabled] = !isInBounds,
                                 _a)), disabled: !isInBounds, key: monthIndex, onClick: isInBounds ? _this._selectMonthCallbacks[monthIndex] : undefined, onKeyDown: isInBounds ? _this._onSelectMonthKeyDown(monthIndex) : undefined, "aria-label": dateTimeFormatter.formatMonthYear(indexedMonth, strings), "aria-selected": isCurrentMonth || isNavigatedMonth, "data-is-focusable": isInBounds ? true : undefined, ref: isNavigatedMonth ? _this._navigatedMonthRef : undefined, type: "button" }, month));
                         var _a;
                     })));
@@ -15355,7 +15355,7 @@ var CalendarMonth = /** @class */ (function (_super) {
     return CalendarMonth;
 }(BaseComponent));
 
-var styles$9 = stylesImport;
+var styles$a = stylesImport;
 var leftArrow = 'Up';
 var rightArrow = 'Down';
 var closeIcon = 'CalculatorMultiply';
@@ -15513,17 +15513,17 @@ var Calendar = /** @class */ (function (_super) {
                     navigatedMonthDate.getFullYear() !== today.getFullYear() ||
                     navigatedMonthDate.getMonth() !== today.getMonth();
         }
-        return (React__namespace.createElement("div", { className: css$1(rootClass, styles$9.root, className), role: "application" },
-            React__namespace.createElement("div", __assign$2({}, nativeProps, { className: css$1('ms-DatePicker-picker ms-DatePicker-picker--opened ms-DatePicker-picker--focused', styles$9.picker, styles$9.pickerIsOpened, styles$9.pickerIsFocused, isMonthPickerVisible && 'ms-DatePicker-monthPickerVisible ' + styles$9.monthPickerVisible, isMonthPickerVisible && isDayPickerVisible && 'ms-DatePicker-calendarsInline ' + styles$9.calendarsInline, monthPickerOnly && 'ms-DatePicker-monthPickerOnly ' + styles$9.monthPickerOnly, showMonthPickerAsOverlay && 'ms-DatePicker-monthPickerAsOverlay ' + styles$9.monthPickerAsOverlay) }),
-                React__namespace.createElement("div", { className: css$1('ms-DatePicker-holder ms-slideDownIn10', styles$9.holder, overlayedWithButton && styles$9.holderWithButton), onKeyDown: this._onDatePickerPopupKeyDown },
-                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-frame', styles$9.frame) },
-                        React__namespace.createElement("div", { className: css$1('ms-DatePicker-wrap', styles$9.wrap, showGoToToday && styles$9.goTodaySpacing) },
+        return (React__namespace.createElement("div", { className: css$1(rootClass, styles$a.root, className), role: "application" },
+            React__namespace.createElement("div", __assign$2({}, nativeProps, { className: css$1('ms-DatePicker-picker ms-DatePicker-picker--opened ms-DatePicker-picker--focused', styles$a.picker, styles$a.pickerIsOpened, styles$a.pickerIsFocused, isMonthPickerVisible && 'ms-DatePicker-monthPickerVisible ' + styles$a.monthPickerVisible, isMonthPickerVisible && isDayPickerVisible && 'ms-DatePicker-calendarsInline ' + styles$a.calendarsInline, monthPickerOnly && 'ms-DatePicker-monthPickerOnly ' + styles$a.monthPickerOnly, showMonthPickerAsOverlay && 'ms-DatePicker-monthPickerAsOverlay ' + styles$a.monthPickerAsOverlay) }),
+                React__namespace.createElement("div", { className: css$1('ms-DatePicker-holder ms-slideDownIn10', styles$a.holder, overlayedWithButton && styles$a.holderWithButton), onKeyDown: this._onDatePickerPopupKeyDown },
+                    React__namespace.createElement("div", { className: css$1('ms-DatePicker-frame', styles$a.frame) },
+                        React__namespace.createElement("div", { className: css$1('ms-DatePicker-wrap', styles$a.wrap, showGoToToday && styles$a.goTodaySpacing) },
                             isDayPickerVisible && (React__namespace.createElement(CalendarDay, { selectedDate: selectedDate, navigatedDate: navigatedDayDate, today: this.props.today, onSelectDate: this._onSelectDate, onNavigateDate: this._onNavigateDayDate, onDismiss: this.props.onDismiss, firstDayOfWeek: firstDayOfWeek, dateRangeType: dateRangeType, autoNavigateOnSelection: autoNavigateOnSelection, strings: strings, onHeaderSelect: onHeaderSelect, navigationIcons: navigationIcons, showWeekNumbers: this.props.showWeekNumbers, firstWeekOfYear: this.props.firstWeekOfYear, dateTimeFormatter: this.props.dateTimeFormatter, showSixWeeksByDefault: this.props.showSixWeeksByDefault, minDate: minDate, maxDate: maxDate, restrictedDates: restrictedDates, workWeekDays: this.props.workWeekDays, componentRef: this._dayPicker, showCloseButton: showCloseButton, allFocusable: allFocusable })),
-                            isDayPickerVisible && isMonthPickerVisible && React__namespace.createElement("div", { className: styles$9.divider }),
+                            isDayPickerVisible && isMonthPickerVisible && React__namespace.createElement("div", { className: styles$a.divider }),
                             isMonthPickerVisible && (React__namespace.createElement(CalendarMonth, { navigatedDate: navigatedMonthDate, selectedDate: navigatedDayDate, strings: strings, onNavigateDate: this._onNavigateMonthDate, today: this.props.today, highlightCurrentMonth: highlightCurrentMonth, highlightSelectedMonth: highlightSelectedMonth, onHeaderSelect: onHeaderSelect, navigationIcons: navigationIcons, dateTimeFormatter: this.props.dateTimeFormatter, minDate: minDate, maxDate: maxDate, componentRef: this._monthPicker, yearPickerHidden: yearPickerHidden || showMonthPickerAsOverlay })),
-                            showGoToToday && (React__namespace.createElement("button", { role: "button", className: css$1('ms-DatePicker-goToday js-goToday', styles$9.goToday, (_c = {},
-                                    _c[styles$9.goTodayInlineMonth] = isMonthPickerVisible,
-                                    _c[styles$9.goToTodayIsDisabled] = !goTodayEnabled,
+                            showGoToToday && (React__namespace.createElement("button", { role: "button", className: css$1('ms-DatePicker-goToday js-goToday', styles$a.goToday, (_c = {},
+                                    _c[styles$a.goTodayInlineMonth] = isMonthPickerVisible,
+                                    _c[styles$a.goToTodayIsDisabled] = !goTodayEnabled,
                                     _c)), onClick: this._onGotoTodayClick, onKeyDown: this._onGotoTodayKeyDown, tabIndex: 0, disabled: !goTodayEnabled, type: "button" }, strings.goToToday))))))));
         var _c;
     };
@@ -19546,7 +19546,7 @@ var GlobalClassNames$4 = {
     withoutLabel: 'ms-DatePicker-event--without-label',
     disabled: 'msDatePickerDisabled '
 };
-var styles$8 = function (props) {
+var styles$9 = function (props) {
     var className = props.className, theme = props.theme, disabled = props.disabled, label = props.label, isDatePickerShown = props.isDatePickerShown;
     var palette = theme.palette, semanticColors = theme.semanticColors;
     var classNames = getGlobalClassNames(GlobalClassNames$4, theme);
@@ -19607,7 +19607,7 @@ var styles$8 = function (props) {
 /**
  * DatePicker description
  */
-var DatePicker = styled(DatePickerBase, styles$8, undefined, {
+var DatePicker = styled(DatePickerBase, styles$9, undefined, {
     scope: 'DatePicker'
 });
 
@@ -31038,7 +31038,7 @@ function checkEmailString(email) {
     return isValid;
 }
 
-var styles$7 = "";
+var styles$8 = "";
 
 var NumberInput = function (props) {
     // testing suffix that not require a 's'
@@ -31082,7 +31082,7 @@ var NumberInput = function (props) {
         }
         return value.substr(0, value.length - suffix.length);
     }
-    return (React__namespace.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$7.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: function (value) {
+    return (React__namespace.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$8.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: function (value) {
             value = _removeSuffix(value, props.suffix);
             var intValue = convertValueToFloat(value);
             var newIntValue = round$1(intValue, 2);
@@ -31171,10 +31171,10 @@ var OneLineDatePicker = function (props) {
         } }));
 };
 
-var styles$6 = "";
+var styles$7 = "";
 
 var SelectChoice = function (props) {
-    return (React__namespace.createElement(ComboBox, { className: styles$6.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: function (e, option) {
+    return (React__namespace.createElement(ComboBox, { className: styles$7.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: function (e, option) {
             updateComboboxInputData(e, option, props.currentObject, props.setter, props.propertieName);
         } }));
 };
@@ -38795,7 +38795,7 @@ process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
 
 var DURATION = 550;
 var DELAY_RIPPLE = 80;
-var styles$5 = function styles(theme) {
+var styles$6 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -39093,12 +39093,12 @@ process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
    */
   className: PropTypes.string
 } : void 0;
-var TouchRipple$1 = withStyles(styles$5, {
+var TouchRipple$1 = withStyles(styles$6, {
   flip: false,
   name: 'MuiTouchRipple'
 })( /*#__PURE__*/React__namespace.memo(TouchRipple));
 
-var styles$4 = {
+var styles$5 = {
   /* Styles applied to the root element. */
   root: {
     display: 'inline-flex',
@@ -39578,7 +39578,7 @@ process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
    */
   type: PropTypes.oneOfType([PropTypes.oneOf(['button', 'reset', 'submit']), PropTypes.string])
 } : void 0;
-var ButtonBase$1 = withStyles(styles$4, {
+var ButtonBase$1 = withStyles(styles$5, {
   name: 'MuiButtonBase'
 })(ButtonBase);
 
@@ -39594,7 +39594,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-var styles$3 = function styles(theme) {
+var styles$4 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: _extends({}, theme.typography.button, {
@@ -39759,7 +39759,7 @@ process.env.NODE_ENV !== "production" ? ToggleButton.propTypes = {
    */
   value: PropTypes.any.isRequired
 } : void 0;
-var ToggleButton$1 = withStyles(styles$3, {
+var ToggleButton$1 = withStyles(styles$4, {
   name: 'MuiToggleButton'
 })(ToggleButton);
 
@@ -39777,7 +39777,7 @@ function isValueSelected(value, candidate) {
   return value === candidate;
 }
 
-var styles$2 = function styles(theme) {
+var styles$3 = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -39940,7 +39940,7 @@ process.env.NODE_ENV !== "production" ? ToggleButtonGroup.propTypes = {
    */
   value: PropTypes.any
 } : void 0;
-var ToggleButtonGroup$1 = withStyles(styles$2, {
+var ToggleButtonGroup$1 = withStyles(styles$3, {
   name: 'MuiToggleButtonGroup'
 })(ToggleButtonGroup);
 
@@ -39951,7 +39951,7 @@ var ETripleToogleColor;
     ETripleToogleColor["colored"] = "colored";
 })(ETripleToogleColor || (ETripleToogleColor = {}));
 
-var styles$1 = "";
+var styles$2 = "";
 
 var TrippleChoiceToggle = function (props) {
     // Methods
@@ -39959,12 +39959,12 @@ var TrippleChoiceToggle = function (props) {
         updateBoolInputData(ev, value, props.currentObject, props.setter, props.propertyName);
     }
     // Load view
-    return (React__namespace.createElement(ToggleButtonGroup$1, { className: styles$1.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: function (ev, value) {
+    return (React__namespace.createElement(ToggleButtonGroup$1, { className: styles$2.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: function (ev, value) {
             setNewValue(ev, value);
         } },
-        React__namespace.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$1.defaultBgColor : styles$1.yesBgColor) : '') }, 'Oui'),
+        React__namespace.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.yesBgColor) : '') }, 'Oui'),
         React__namespace.createElement(ToggleButton$1, { value: null, disabled: true }),
-        React__namespace.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$1.defaultBgColor : styles$1.noBgColor) : '') }, 'Non')));
+        React__namespace.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.noBgColor) : '') }, 'Non')));
 };
 
 var dropdownStyles = {
@@ -40163,6 +40163,8 @@ var InputLayout = function (props) {
                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))) : (React__namespace.createElement(React__namespace.Fragment, null))));
 };
 
+var styles$1 = "";
+
 var MessageBarComp = function (props) {
     var _a = React__namespace.useState(true), showMessageBar = _a[0], setShowMessageBar = _a[1];
     return (React__namespace.createElement(React__namespace.Fragment, null, showMessageBar ? (React__namespace.createElement(React__namespace.Fragment, null, props.messageBarComp.showDismissButton ? (React__namespace.createElement(MessageBar, { messageBarType: props.messageBarComp.messageType, isMultiline: false, onDismiss: function () {
@@ -40170,7 +40172,7 @@ var MessageBarComp = function (props) {
                 props.messageBarComp.objSetter(false);
             }
             setShowMessageBar(false);
-        }, dismissButtonAriaLabel: 'Close' }, props.messageBarComp.message)) : (React__namespace.createElement(MessageBar, { style: { margin: '4px' }, messageBarType: props.messageBarComp.messageType, isMultiline: false }, props.messageBarComp.message)))) : (React__namespace.createElement(React__namespace.Fragment, null))));
+        }, dismissButtonAriaLabel: 'Close' }, props.messageBarComp.message)) : (React__namespace.createElement(MessageBar, { className: styles$1.smallBar, messageBarType: props.messageBarComp.messageType, isMultiline: false }, props.messageBarComp.message)))) : (React__namespace.createElement(React__namespace.Fragment, null))));
 };
 
 var styles = "";
