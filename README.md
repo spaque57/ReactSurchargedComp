@@ -212,29 +212,6 @@ This component display a dropdown with a search input inside the options of the 
           propertieName={'favoredFruit'}
         />
 
-### SelectChoice
-This component display a custom dropdown.
-
-1. Generate a list of options
-
-	      // Generate fruit list
-		  const fruitList: Array<IComboBoxOption> = [];
-		  fruitList.forEach((fruit: IFuit) => {
-		   fruitList.push({ key: idFruit, text: fruitLib });
-		  });
-
-2. Use component
-
-        <SelectChoice
-          label='Fruit List'
-          isReadOnly={false}
-          value={props.objValue}
-          options={fruitList}
-          currentObject={props.currentObj}
-          setter={props.objSetter}
-          propertieName={'Favored fruit'}
-        />
-
 
 ### SelectChoice
 This component display a custom dropdown.
