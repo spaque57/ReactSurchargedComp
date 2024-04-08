@@ -31043,16 +31043,21 @@ var styles$8 = "";
 var NumberInput = function (props) {
     // testing suffix that not require a 's'
     var internalSuffix = 's';
-    var isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' ? true : false;
+    var isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' || props.suffix === ' €' ? true : false;
     var isWordX = props.suffix === ' niveau' ? true : false;
-    var defaultValue = props.defaultValue.toString() + ' ' + props.suffix;
-    if (props.defaultValue > 1 && !isNotPluralWord && !isWordX) {
+    // input prevent error
+    var inputValue = 0;
+    if (props.defaultValue != null)
+        inputValue = props.defaultValue;
+    var defaultValue = inputValue.toString() + ' ' + props.suffix;
+    if (inputValue > 1 && !isNotPluralWord && !isWordX) {
         defaultValue = defaultValue + internalSuffix;
     }
-    else if (props.defaultValue > 1 && !isNotPluralWord && isWordX) {
+    else if (inputValue > 1 && !isNotPluralWord && isWordX) {
         internalSuffix = 'x';
         defaultValue = defaultValue + internalSuffix;
     }
+    // min/max value
     var minValue = -1; // if props.min = -1 --> no min value
     if (props.min != null && props.min != undefined)
         minValue = props.min;

@@ -8,16 +8,22 @@ import styles from './numberInput.module.scss';
 const NumberInput = <T,>(props: INumberInputProps<T>) => {
   // testing suffix that not require a 's'
   let internalSuffix = 's';
-  const isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' ? true : false;
+  const isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' || props.suffix === ' €' ? true : false;
   const isWordX = props.suffix === ' niveau' ? true : false;
-  let defaultValue = props.defaultValue.toString() + ' ' + props.suffix;
-  if (props.defaultValue > 1 && !isNotPluralWord && !isWordX) {
+
+  // input prevent error
+  let inputValue = 0;
+  if (props.defaultValue != null) inputValue = props.defaultValue;
+
+  let defaultValue = inputValue.toString() + ' ' + props.suffix;
+  if (inputValue > 1 && !isNotPluralWord && !isWordX) {
     defaultValue = defaultValue + internalSuffix;
-  } else if (props.defaultValue > 1 && !isNotPluralWord && isWordX) {
+  } else if (inputValue > 1 && !isNotPluralWord && isWordX) {
     internalSuffix = 'x';
     defaultValue = defaultValue + internalSuffix;
   }
 
+  // min/max value
   let minValue = -1; // if props.min = -1 --> no min value
   if (props.min != null && props.min != undefined) minValue = props.min;
   let maxValue = 0; // if props.max = 0 --> no max value
