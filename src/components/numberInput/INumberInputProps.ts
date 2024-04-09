@@ -10,3 +10,28 @@ export interface INumberInputProps<T> {
   min?: number;
   max?: number;
 }
+
+export interface ICustomSuffixlist {
+  suffix: Array<ICustomSuffix>;
+}
+
+export interface ICustomSuffix {
+  label: string;
+  suffix: string;
+  pluralType: string;
+}
+
+export enum ESuffixType {
+  S = 's',
+  X = 'x',
+  None = ''
+}
+
+export enum ENumberInputSuffix {
+  Euro = 'Euro',
+  Percent = 'Percent',
+  Month = 'Month',
+  M2 = 'M2',
+  Level = 'Level',
+  KM = 'KM'
+}

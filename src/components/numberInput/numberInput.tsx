@@ -1,25 +1,40 @@
 import * as React from 'react';
 import { SpinButton } from 'office-ui-fabric-react/lib/SpinButton';
-import { INumberInputProps } from './INumberInputProps';
+import { ESuffixType, ICustomSuffix, INumberInputProps } from './INumberInputProps';
 import { round } from '../../services/sharedFunctions';
 import { updateNumberInputData } from '../../services/inputService';
 import styles from './numberInput.module.scss';
+import InputSuffix from './ENumberInputSuffix.json';
 
 const NumberInput = <T,>(props: INumberInputProps<T>) => {
   // testing suffix that not require a 's'
-  let internalSuffix = 's';
-  const isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' || props.suffix === ' €' ? true : false;
-  const isWordX = props.suffix === ' niveau' ? true : false;
+  let internalSuffix = ESuffixType.S;
+  let isNotPluralWord = false;
+  let isWordX = false;
+  let suffix = props.suffix;
+
+  // testing input without suffi
+  if (suffix == '') isNotPluralWord = true;
+  else {
+    InputSuffix.suffix.forEach((customSuffix: ICustomSuffix) => {
+      // put right suffix instead of ENumberInputSuffix
+      if (suffix == customSuffix.label) suffix = customSuffix.suffix;
+
+      // checking plural requirement
+      if (suffix == customSuffix.suffix && customSuffix.pluralType == ESuffixType.None) isNotPluralWord = true;
+      if (suffix == customSuffix.suffix && customSuffix.pluralType == ESuffixType.X) isWordX = true;
+    });
+  }
 
   // input prevent error
   let inputValue = 0;
   if (props.defaultValue != null) inputValue = props.defaultValue;
 
-  let defaultValue = inputValue.toString() + ' ' + props.suffix;
+  let defaultValue = inputValue.toString() + ' ' + suffix;
   if (inputValue > 1 && !isNotPluralWord && !isWordX) {
     defaultValue = defaultValue + internalSuffix;
   } else if (inputValue > 1 && !isNotPluralWord && isWordX) {
-    internalSuffix = 'x';
+    internalSuffix = ESuffixType.X;
     defaultValue = defaultValue + internalSuffix;
   }
 
@@ -64,7 +79,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
       max={maxValue}
       value={defaultValue}
       onValidate={(value: string) => {
-        value = _removeSuffix(value, props.suffix);
+        value = _removeSuffix(value, suffix);
         const intValue: number = convertValueToFloat(value);
         let newIntValue = round(intValue, 2);
 
@@ -73,7 +88,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + props.suffix;
+        let result = newIntValue + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }
@@ -85,7 +100,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         }
       }}
       onIncrement={(value: string) => {
-        value = _removeSuffix(value, props.suffix);
+        value = _removeSuffix(value, suffix);
         const intValue: number = convertValueToFloat(value);
         let newIntValue = round(intValue + props.increment, 2);
 
@@ -94,7 +109,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + props.suffix;
+        let result = newIntValue + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }
@@ -106,7 +121,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         }
       }}
       onDecrement={(value: string) => {
-        value = _removeSuffix(value, props.suffix);
+        value = _removeSuffix(value, suffix);
         const intValue: number = convertValueToFloat(value);
         let newIntValue = round(intValue - props.increment, 2);
 
@@ -115,7 +130,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + props.suffix;
+        let result = newIntValue + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }
