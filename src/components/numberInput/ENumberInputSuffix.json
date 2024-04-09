@@ -1,0 +1,34 @@
+{
+  "suffix": [
+    {
+      "label": "Euro",
+      "suffix": "€",
+      "pluralType": ""
+    },
+    {
+      "label": "Percent",
+      "suffix": "%",
+      "pluralType": ""
+    },
+    {
+      "label": "Month",
+      "suffix": "mois",
+      "pluralType": ""
+    },
+    {
+      "label": "M2",
+      "suffix": "m²",
+      "pluralType": ""
+    },
+    {
+      "label": "Level",
+      "suffix": "niveau",
+      "pluralType": "x"
+    },
+    {
+      "label": "KM",
+      "suffix": "km",
+      "pluralType": ""
+    }
+  ]
+}
