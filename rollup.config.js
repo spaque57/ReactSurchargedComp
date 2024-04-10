@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import scss from 'rollup-plugin-scss';
+import json from '@rollup/plugin-json';
 
 const packageJson = require('./package.json');
 
@@ -21,7 +22,7 @@ export default [
         sourcemap: true
       }
     ],
-    plugins: [resolve(), commonjs(), typescript({ tsconfig: './tsconfig.json' }), scss({ output: false })],
+    plugins: [resolve(), commonjs(), typescript({ tsconfig: './tsconfig.json' }), json(), scss({ output: false })],
     external: ['react', 'react-dom']
   },
   {

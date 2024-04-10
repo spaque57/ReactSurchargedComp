@@ -2,12 +2,7 @@ import { IComboBox, IComboBoxOption, IDropdownOption } from 'office-ui-fabric-re
 import { FormEvent } from 'react';
 
 /* --- Update Input Methods --- */
-export function updateInputData<T>(
-  evt: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-  currentObject: T,
-  setter: React.Dispatch<React.SetStateAction<T>>,
-  dataType: string
-): void {
+export function updateInputData<T>(evt: React.ChangeEvent<HTMLInputElement>, currentObject: T, setter: React.Dispatch<React.SetStateAction<T>>, dataType: string): void {
   if (dataType === 'string') {
     setter({ ...currentObject, [evt.currentTarget.name]: evt.currentTarget.value });
   } else if (dataType === 'date') {

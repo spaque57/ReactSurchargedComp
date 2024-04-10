@@ -71,7 +71,7 @@ const InputComponentView = <T,>(props: PropsInputLayout<T>) => {
           label=''
           value={props.objValue}
           name={props.objPropertyName}
-          onChange={(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             updateInputData(e, props.currentObj, props.objSetter, 'string');
           }}
           underlined
@@ -87,7 +87,7 @@ const InputComponentView = <T,>(props: PropsInputLayout<T>) => {
           mask='99 99 99 99 99'
           className={layoutStyles.inputNoBorder}
           name={props.objPropertyName}
-          onChange={(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             updateInputData(e, props.currentObj, props.objSetter, 'string');
           }}
           value={props.objValue}

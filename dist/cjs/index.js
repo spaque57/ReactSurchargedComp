@@ -59,15 +59,15 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-var __assign$2 = function() {
-    __assign$2 = Object.assign || function __assign(t) {
+var __assign$1 = function() {
+    __assign$1 = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
         }
         return t;
     };
-    return __assign$2.apply(this, arguments);
+    return __assign$1.apply(this, arguments);
 };
 
 function __rest(s, e) {
@@ -149,7 +149,7 @@ var Stylesheet = /** @class */ (function () {
         this._onResetCallbacks = [];
         // tslint:disable-next-line:no-any
         this._classNameToArgs = {};
-        this._config = __assign$2({ injectionMode: InjectionMode.insertNode, defaultPrefix: 'css', namespace: undefined, cspSettings: undefined }, config);
+        this._config = __assign$1({ injectionMode: InjectionMode.insertNode, defaultPrefix: 'css', namespace: undefined, cspSettings: undefined }, config);
     }
     /**
      * Gets the singleton instance.
@@ -168,7 +168,7 @@ var Stylesheet = /** @class */ (function () {
      * Configures the stylesheet.
      */
     Stylesheet.prototype.setConfig = function (config) {
-        this._config = __assign$2({}, this._config, config);
+        this._config = __assign$1({}, this._config, config);
     };
     /**
      * Configures a reset callback.
@@ -3085,14 +3085,14 @@ var Customizations = /** @class */ (function () {
      * @example Customizations.applySettings(\{ theme: \{...\} \});
      */
     Customizations.applySettings = function (settings) {
-        _allSettings.settings = __assign$2({}, _allSettings.settings, settings);
+        _allSettings.settings = __assign$1({}, _allSettings.settings, settings);
         Customizations._raiseChange();
     };
     /** Apply Customizations to a particular named scope, like a component.
      * @example Customizations.applyScopedSettings('Nav', \{ styles: () =\> \{\} \});
      */
     Customizations.applyScopedSettings = function (scopeName, settings) {
-        _allSettings.scopedSettings[scopeName] = __assign$2({}, _allSettings.scopedSettings[scopeName], settings);
+        _allSettings.scopedSettings[scopeName] = __assign$1({}, _allSettings.scopedSettings[scopeName], settings);
         Customizations._raiseChange();
     };
     Customizations.getSettings = function (properties, scopeName, localSettings
@@ -3201,14 +3201,14 @@ function customizable(scope, fields, concatStyles
                         var componentProps = _this.props;
                         // If defaultProps.styles is a function, evaluate it before calling concatStyleSets
                         if (defaultProps.styles && typeof defaultProps.styles === 'function') {
-                            defaultProps.styles = defaultProps.styles(__assign$2({}, defaultProps, componentProps));
+                            defaultProps.styles = defaultProps.styles(__assign$1({}, defaultProps, componentProps));
                         }
                         // If concatStyles is true and custom styles have been defined compute those styles
                         if (concatStyles && (defaultProps.styles || componentProps.styles)) {
                             var mergedStyles = concatStyleSets(defaultProps.styles, componentProps.styles);
-                            return React__namespace.createElement(ComposedComponent, __assign$2({}, defaultProps, componentProps, { styles: mergedStyles }));
+                            return React__namespace.createElement(ComposedComponent, __assign$1({}, defaultProps, componentProps, { styles: mergedStyles }));
                         }
-                        return React__namespace.createElement(ComposedComponent, __assign$2({}, defaultProps, componentProps));
+                        return React__namespace.createElement(ComposedComponent, __assign$1({}, defaultProps, componentProps));
                     }));
                 };
                 ComponentWithInjectedProps.prototype._onSettingChanged = function () {
@@ -4616,7 +4616,7 @@ function styled(Component, baseStyles, getProps, customizable, pure) {
                 var customizedStyles = settings.styles; settings.dir; var rest = __rest(settings, ["styles", "dir"]);
                 var additionalProps = getProps ? getProps(_this.props) : undefined;
                 _this._updateStyles(customizedStyles);
-                return React__namespace.createElement(Component, __assign$2({}, rest, additionalProps, _this.props, { styles: _this._styles }));
+                return React__namespace.createElement(Component, __assign$1({}, rest, additionalProps, _this.props, { styles: _this._styles }));
             };
             _this._onSettingsChanged = function () { return _this.forceUpdate(); };
             return _this;
@@ -5297,8 +5297,8 @@ var DefaultSpacing = {
 
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
-var __assign$1 = (undefined && undefined.__assign) || function () {
-    __assign$1 = Object.assign || function(t) {
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -5306,7 +5306,7 @@ var __assign$1 = (undefined && undefined.__assign) || function () {
         }
         return t;
     };
-    return __assign$1.apply(this, arguments);
+    return __assign.apply(this, arguments);
 };
 // Store the theming state in __themeState__ global scope for reuse in the case of duplicate
 // load-themed-styles hosted on the page.
@@ -5337,7 +5337,7 @@ function initializeThemeState() {
         registeredStyles: []
     };
     if (!state.runState) {
-        state = __assign$1(__assign$1({}, state), { perf: {
+        state = __assign(__assign({}, state), { perf: {
                 count: 0,
                 duration: 0
             }, runState: {
@@ -5347,7 +5347,7 @@ function initializeThemeState() {
             } });
     }
     if (!state.registeredThemableStyles) {
-        state = __assign$1(__assign$1({}, state), { registeredThemableStyles: [] });
+        state = __assign(__assign({}, state), { registeredThemableStyles: [] });
     }
     _root.__themeState__ = state;
     return state;
@@ -5561,13 +5561,13 @@ function getTheme(depComments) {
  */
 function createTheme$1(theme, depComments) {
     if (depComments === void 0) { depComments = false; }
-    var newPalette = __assign$2({}, DefaultPalette, theme.palette);
+    var newPalette = __assign$1({}, DefaultPalette, theme.palette);
     if (!theme.palette || !theme.palette.accent) {
         newPalette.accent = newPalette.themePrimary;
     }
     // mix in custom overrides with good slots first, since custom overrides might be used in fixing deprecated slots
-    var newSemanticColors = __assign$2({}, _makeSemanticColorsFromPalette(newPalette, !!theme.isInverted, depComments), theme.semanticColors);
-    var defaultFontStyles = __assign$2({}, DefaultFontStyles);
+    var newSemanticColors = __assign$1({}, _makeSemanticColorsFromPalette(newPalette, !!theme.isInverted, depComments), theme.semanticColors);
+    var defaultFontStyles = __assign$1({}, DefaultFontStyles);
     if (theme.defaultFontStyle) {
         for (var _i = 0, _a = Object.keys(defaultFontStyles); _i < _a.length; _i++) {
             var fontStyle = _a[_i];
@@ -5582,12 +5582,12 @@ function createTheme$1(theme, depComments) {
     }
     return {
         palette: newPalette,
-        fonts: __assign$2({}, defaultFontStyles),
+        fonts: __assign$1({}, defaultFontStyles),
         semanticColors: newSemanticColors,
         isInverted: !!theme.isInverted,
         disableGlobalClassNames: !!theme.disableGlobalClassNames,
-        spacing: __assign$2({}, DefaultSpacing, theme.spacing),
-        effects: __assign$2({}, DefaultEffects, theme.effects)
+        spacing: __assign$1({}, DefaultSpacing, theme.spacing),
+        effects: __assign$1({}, DefaultEffects, theme.effects)
     };
 }
 // Generates all the semantic slot colors based on the Fabric palette.
@@ -6256,7 +6256,7 @@ function _getPositionData(directionalHint, directionalHintForRTL, previousPositi
             targetEdge: previousPositions.targetEdge
         };
     }
-    var positionInformation = __assign$2({}, DirectionalDictionary[directionalHint]);
+    var positionInformation = __assign$1({}, DirectionalDictionary[directionalHint]);
     if (getRTL()) {
         // If alignment edge exists and that alignment edge is -2 or 2, right or left, then flip it.
         if (positionInformation.alignmentEdge && positionInformation.alignmentEdge % 2 === 0) {
@@ -6317,7 +6317,7 @@ function _finalizeBeakPosition(elementPosition, positionedBeak, bounds) {
     returnValue[RectangleEdge[targetEdge]] = _getEdgeValue(positionedBeak, targetEdge);
     returnValue[RectangleEdge[returnEdge]] = _getRelativeEdgeDifference(positionedBeak, actualElement, returnEdge);
     return {
-        elementPosition: __assign$2({}, returnValue),
+        elementPosition: __assign$1({}, returnValue),
         closestEdge: getClosestEdge(elementPosition.targetEdge, positionedBeak, actualElement),
         targetEdge: targetEdge
     };
@@ -6407,7 +6407,7 @@ function _positionElementRelative(props, elementToPosition, boundingRect, previo
     var targetRect = _getTargetRect(boundingRect, props.target);
     var positionData = _getAlignmentData(_getPositionData(props.directionalHint, props.directionalHintForRTL, previousPositions), targetRect, boundingRect, props.coverTarget, props.alignTargetEdge);
     var positionedElement = _positionElementWithinBounds(_getRectangleFromElement(elementToPosition), targetRect, boundingRect, positionData, gap, props.directionalHintFixed, props.coverTarget);
-    return __assign$2({}, positionedElement, { targetRectangle: targetRect });
+    return __assign$1({}, positionedElement, { targetRectangle: targetRect });
 }
 function _finalizePositionData(positionedElement, hostElement, bounds, coverTarget, doNotFinalizeReturnEdge) {
     var finalizedElement = _finalizeElementPosition(positionedElement.elementRectangle, hostElement, positionedElement.targetEdge, bounds, positionedElement.alignmentEdge, coverTarget, doNotFinalizeReturnEdge);
@@ -6428,7 +6428,7 @@ function _positionCallout(props, hostElement, callout, previousPositions, doNotF
     var positionedElement = _positionElementRelative(positionProps, callout, boundingRect, previousPositions);
     var beakPositioned = _positionBeak(beakWidth, positionedElement);
     var finalizedBeakPosition = _finalizeBeakPosition(positionedElement, beakPositioned, boundingRect);
-    return __assign$2({}, _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget, doNotFinalizeReturnEdge), { beakPosition: finalizedBeakPosition });
+    return __assign$1({}, _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget, doNotFinalizeReturnEdge), { beakPosition: finalizedBeakPosition });
 }
 function _positionCard(props, hostElement, callout, previousPositions) {
     return _positionCallout(props, hostElement, callout, previousPositions, true);
@@ -6531,7 +6531,7 @@ var Popup = /** @class */ (function (_super) {
     };
     Popup.prototype.render = function () {
         var _a = this.props, role = _a.role, className = _a.className, ariaLabel = _a.ariaLabel, ariaLabelledBy = _a.ariaLabelledBy, ariaDescribedBy = _a.ariaDescribedBy, style = _a.style;
-        return (React__namespace.createElement("div", __assign$2({ ref: this._root }, getNativeProps(this.props, divProperties), { className: className, role: role, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, onKeyDown: this._onKeyDown, style: __assign$2({ overflowY: this.state.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }, style) }), this.props.children));
+        return (React__namespace.createElement("div", __assign$1({ ref: this._root }, getNativeProps(this.props, divProperties), { className: className, role: role, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, onKeyDown: this._onKeyDown, style: __assign$1({ overflowY: this.state.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }, style) }), this.props.children));
     };
     Popup.prototype._updateScrollBarAsync = function () {
         var _this = this;
@@ -6734,16 +6734,16 @@ var CalloutContentBase = /** @class */ (function (_super) {
             backgroundColor: backgroundColor,
             calloutMaxWidth: calloutMaxWidth
         });
-        var overflowStyle = __assign$2({}, style, { maxHeight: contentMaxHeight }, (overflowYHidden && { overflowY: 'hidden' }));
+        var overflowStyle = __assign$1({}, style, { maxHeight: contentMaxHeight }, (overflowYHidden && { overflowY: 'hidden' }));
         var visibilityStyle = this.props.hidden ? { visibility: 'hidden' } : undefined;
         // React.CSSProperties does not understand IRawStyle, so the inline animations will need to be cast as any for now.
         var content = (React__namespace.createElement("div", { ref: this._hostElement, className: this._classNames.container, style: visibilityStyle },
-            React__namespace.createElement("div", __assign$2({}, getNativeProps(this.props, divProperties, ARIA_ROLE_ATTRIBUTES), { className: css$1(this._classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge]), style: positions ? positions.elementPosition : OFF_SCREEN_STYLE, tabIndex: -1, 
+            React__namespace.createElement("div", __assign$1({}, getNativeProps(this.props, divProperties, ARIA_ROLE_ATTRIBUTES), { className: css$1(this._classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge]), style: positions ? positions.elementPosition : OFF_SCREEN_STYLE, tabIndex: -1, 
                 // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
                 ref: this._calloutElement }),
                 beakVisible && React__namespace.createElement("div", { className: this._classNames.beak, style: this._getBeakPosition() }),
                 beakVisible && React__namespace.createElement("div", { className: this._classNames.beakCurtain }),
-                React__namespace.createElement(Popup, __assign$2({}, getNativeProps(this.props, ARIA_ROLE_ATTRIBUTES), { ariaLabel: ariaLabel, ariaDescribedBy: ariaDescribedBy, ariaLabelledBy: ariaLabelledBy, className: this._classNames.calloutMain, onDismiss: this.dismiss, onScroll: onScroll, shouldRestoreFocus: shouldRestoreFocus, style: overflowStyle }), children))));
+                React__namespace.createElement(Popup, __assign$1({}, getNativeProps(this.props, ARIA_ROLE_ATTRIBUTES), { ariaLabel: ariaLabel, ariaDescribedBy: ariaDescribedBy, ariaLabelledBy: ariaLabelledBy, className: this._classNames.calloutMain, onDismiss: this.dismiss, onScroll: onScroll, shouldRestoreFocus: shouldRestoreFocus, style: overflowStyle }), children))));
         return content;
     };
     CalloutContentBase.prototype._dismissOnClickOrScroll = function (ev) {
@@ -6779,7 +6779,7 @@ var CalloutContentBase = /** @class */ (function (_super) {
     };
     CalloutContentBase.prototype._getBeakPosition = function () {
         var positions = this.state.positions;
-        var beakPostionStyle = __assign$2({}, (positions && positions.beakPosition ? positions.beakPosition.elementPosition : null));
+        var beakPostionStyle = __assign$1({}, (positions && positions.beakPosition ? positions.beakPosition.elementPosition : null));
         if (!beakPostionStyle.top && !beakPostionStyle.bottom && !beakPostionStyle.left && !beakPostionStyle.right) {
             beakPostionStyle.left = BEAK_ORIGIN_POSITION.left;
             beakPostionStyle.top = BEAK_ORIGIN_POSITION.top;
@@ -7103,7 +7103,7 @@ var FabricBase = /** @class */ (function (_super) {
             isFocusVisible: this.state.isFocusVisible
         });
         var divProps = getNativeProps(rest, divProperties);
-        return React__namespace.createElement("div", __assign$2({}, divProps, { className: classNames.root, ref: this._rootElement }));
+        return React__namespace.createElement("div", __assign$1({}, divProps, { className: classNames.root, ref: this._rootElement }));
     };
     FabricBase.prototype.componentDidMount = function () {
         var win = getWindow(this._rootElement.current);
@@ -7211,7 +7211,7 @@ var LayerBase = /** @class */ (function (_super) {
         var classNames = this._getClassNames();
         var eventBubblingEnabled = this.props.eventBubblingEnabled;
         return (React__namespace.createElement("span", { className: "ms-layer", ref: this._rootRef }, layerElement &&
-            ReactDOM__namespace.createPortal(React__namespace.createElement(Fabric, __assign$2({}, (!eventBubblingEnabled && _getFilteredEvents()), { className: classNames.content }), this.props.children), layerElement)));
+            ReactDOM__namespace.createPortal(React__namespace.createElement(Fabric, __assign$1({}, (!eventBubblingEnabled && _getFilteredEvents()), { className: classNames.content }), this.props.children), layerElement)));
     };
     LayerBase.prototype.componentDidUpdate = function () {
         if (this.props.hostId !== this.state.hostId) {
@@ -7361,8 +7361,8 @@ var Callout = /** @class */ (function (_super) {
     }
     Callout.prototype.render = function () {
         var _a = this.props, layerProps = _a.layerProps, rest = __rest(_a, ["layerProps"]);
-        var content = React__namespace.createElement(CalloutContent, __assign$2({}, rest));
-        return this.props.doNotLayer ? content : React__namespace.createElement(Layer, __assign$2({}, layerProps), content);
+        var content = React__namespace.createElement(CalloutContent, __assign$1({}, rest));
+        return this.props.doNotLayer ? content : React__namespace.createElement(Layer, __assign$1({}, layerProps), content);
     };
     return Callout;
 }(React__namespace.Component));
@@ -7511,10 +7511,10 @@ var FocusTrapZone = /** @class */ (function (_super) {
             tabIndex: disabled ? -1 : 0,
             'data-is-visible': true
         };
-        return (React__namespace.createElement("div", __assign$2({}, divProps, { className: className, ref: this._root, "aria-labelledby": ariaLabelledBy, onFocusCapture: this._onFocusCapture, onFocus: this._onRootFocus, onBlur: this._onRootBlur }),
-            React__namespace.createElement("div", __assign$2({}, bumperProps, { ref: this._firstBumper, onFocus: this._onFirstBumperFocus })),
+        return (React__namespace.createElement("div", __assign$1({}, divProps, { className: className, ref: this._root, "aria-labelledby": ariaLabelledBy, onFocusCapture: this._onFocusCapture, onFocus: this._onRootFocus, onBlur: this._onRootBlur }),
+            React__namespace.createElement("div", __assign$1({}, bumperProps, { ref: this._firstBumper, onFocus: this._onFirstBumperFocus })),
             this.props.children,
-            React__namespace.createElement("div", __assign$2({}, bumperProps, { ref: this._lastBumper, onFocus: this._onLastBumperFocus }))));
+            React__namespace.createElement("div", __assign$1({}, bumperProps, { ref: this._lastBumper, onFocus: this._onLastBumperFocus }))));
     };
     FocusTrapZone.prototype.focus = function () {
         var _a = this.props, focusPreviouslyFocusedInnerElement = _a.focusPreviouslyFocusedInnerElement, firstFocusableSelector = _a.firstFocusableSelector;
@@ -7616,7 +7616,7 @@ var TooltipBase = /** @class */ (function (_super) {
             gapSpace: calloutProps && calloutProps.gapSpace,
             maxWidth: maxWidth
         });
-        return (React__namespace.createElement(Callout, __assign$2({ target: targetElement, directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL }, calloutProps, getNativeProps(this.props, divProperties, ['id']), { className: this._classNames.root }),
+        return (React__namespace.createElement(Callout, __assign$1({ target: targetElement, directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL }, calloutProps, getNativeProps(this.props, divProperties, ['id']), { className: this._classNames.root }),
             React__namespace.createElement("div", { className: this._classNames.content, id: id, role: "tooltip", onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave }, onRenderContent(this.props, this._onRenderContent))));
     };
     // Specify default props values
@@ -7791,9 +7791,9 @@ var TooltipHostBase = /** @class */ (function (_super) {
         var isContentPresent = !!(content || (tooltipProps && tooltipProps.onRenderContent && tooltipProps.onRenderContent()));
         var showTooltip = isTooltipVisible && isContentPresent;
         var ariaDescribedBy = setAriaDescribedBy && isTooltipVisible && isContentPresent ? tooltipId : undefined;
-        return (React__namespace.createElement("div", __assign$2({ className: this._classNames.root, ref: this._tooltipHost }, { onFocusCapture: this._onTooltipMouseEnter }, { onBlurCapture: this._hideTooltip }, { onMouseEnter: this._onTooltipMouseEnter, onMouseLeave: this._onTooltipMouseLeave, onKeyDown: this._onTooltipKeyDown, "aria-describedby": ariaDescribedBy }),
+        return (React__namespace.createElement("div", __assign$1({ className: this._classNames.root, ref: this._tooltipHost }, { onFocusCapture: this._onTooltipMouseEnter }, { onBlurCapture: this._hideTooltip }, { onMouseEnter: this._onTooltipMouseEnter, onMouseLeave: this._onTooltipMouseLeave, onKeyDown: this._onTooltipKeyDown, "aria-describedby": ariaDescribedBy }),
             children,
-            showTooltip && (React__namespace.createElement(Tooltip, __assign$2({ id: tooltipId, delay: delay, content: content, targetElement: this._getTargetElement(), directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL, calloutProps: assign$1({}, calloutProps, {
+            showTooltip && (React__namespace.createElement(Tooltip, __assign$1({ id: tooltipId, delay: delay, content: content, targetElement: this._getTargetElement(), directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL, calloutProps: assign$1({}, calloutProps, {
                     onMouseEnter: this._onTooltipMouseEnter,
                     onMouseLeave: this._onTooltipMouseLeave
                 }), onMouseEnter: this._onTooltipMouseEnter, onMouseLeave: this._onTooltipMouseLeave }, getNativeProps(this.props, divProperties), tooltipProps)))));
@@ -8039,7 +8039,7 @@ var ImageBase = /** @class */ (function (_super) {
         });
         // If image dimensions aren't specified, the natural size of the image is used.
         return (React__namespace.createElement("div", { className: classNames.root, style: { width: width, height: height }, ref: this._frameElement },
-            React__namespace.createElement("img", __assign$2({}, imageProps, { onLoad: this._onImageLoaded, onError: this._onImageError, key: KEY_PREFIX + this.props.src || '', className: classNames.image, ref: this._imageElement, src: src, alt: alt, role: role }))));
+            React__namespace.createElement("img", __assign$1({}, imageProps, { onLoad: this._onImageLoaded, onError: this._onImageError, key: KEY_PREFIX + this.props.src || '', className: classNames.image, ref: this._imageElement, src: src, alt: alt, role: role }))));
     };
     ImageBase.prototype._checkImageLoaded = function () {
         var src = this.props.src;
@@ -8295,7 +8295,7 @@ var FontIcon = function (props) {
             role: 'presentation',
             'aria-hidden': true
         };
-    return (React__namespace.createElement("i", __assign$2({ "data-icon-name": iconName }, containerProps, nativeProps, { className: css$1(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className) }), children));
+    return (React__namespace.createElement("i", __assign$1({ "data-icon-name": iconName }, containerProps, nativeProps, { className: css$1(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className) }), children));
 };
 /**
  * Memoized helper for rendering a FontIcon.
@@ -8342,7 +8342,7 @@ var IconBase = /** @class */ (function (_super) {
         var RootType = isImage ? 'div' : 'i';
         var nativeProps = getNativeProps(this.props, htmlElementProperties, ['aria-label']);
         var imageLoadError = this.state.imageLoadError;
-        var imageProps = __assign$2({}, this.props.imageProps, { onLoadingStateChange: this.onImageLoadingStateChange });
+        var imageProps = __assign$1({}, this.props.imageProps, { onLoadingStateChange: this.onImageLoadingStateChange });
         var ImageType = (imageLoadError && imageErrorAs) || Image;
         var ariaLabel = this.props.ariaLabel || this.props['aria-label'];
         var containerProps = ariaLabel
@@ -8353,7 +8353,7 @@ var IconBase = /** @class */ (function (_super) {
                 role: 'presentation',
                 'aria-hidden': imageProps.alt || imageProps['aria-labelledby'] ? false : true
             };
-        return (React__namespace.createElement(RootType, __assign$2({ "data-icon-name": iconName }, containerProps, nativeProps, { className: classNames.root }), isImage ? React__namespace.createElement(ImageType, __assign$2({}, imageProps)) : children));
+        return (React__namespace.createElement(RootType, __assign$1({ "data-icon-name": iconName }, containerProps, nativeProps, { className: classNames.root }), isImage ? React__namespace.createElement(ImageType, __assign$1({}, imageProps)) : children));
     };
     return IconBase;
 }(React__namespace.Component));
@@ -8557,7 +8557,7 @@ var Autofill = /** @class */ (function (_super) {
     Autofill.prototype.render = function () {
         var displayValue = this.state.displayValue;
         var nativeProps = getNativeProps(this.props, inputProperties);
-        return (React__namespace.createElement("input", __assign$2({ autoCapitalize: "off", autoComplete: "off", "aria-autocomplete": 'both' }, nativeProps, { ref: this._inputElement, value: displayValue, onCompositionStart: this._onCompositionStart, onCompositionEnd: this._onCompositionEnd, onChange: this._onChanged, onInput: this._onInputChanged, onKeyDown: this._onKeyDown, onClick: this.props.onClick ? this.props.onClick : this._onClick, "data-lpignore": true })));
+        return (React__namespace.createElement("input", __assign$1({ autoCapitalize: "off", autoComplete: "off", "aria-autocomplete": 'both' }, nativeProps, { ref: this._inputElement, value: displayValue, onCompositionStart: this._onCompositionStart, onCompositionEnd: this._onCompositionEnd, onChange: this._onChanged, onInput: this._onInputChanged, onKeyDown: this._onKeyDown, onClick: this.props.onClick ? this.props.onClick : this._onClick, "data-lpignore": true })));
     };
     Autofill.prototype.focus = function () {
         this._inputElement.current && this._inputElement.current.focus();
@@ -9025,7 +9025,7 @@ var FocusZone = /** @class */ (function (_super) {
         // Then, later in componentDidUpdate, we can evaluate if we need to restore it in
         // the case the element was removed.
         this._evaluateFocusBeforeRender();
-        return (React__namespace.createElement(Tag, __assign$2({ role: "presentation", "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy }, divProps, rootProps, { 
+        return (React__namespace.createElement(Tag, __assign$1({ role: "presentation", "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy }, divProps, rootProps, { 
             // Once the getClassName correctly memoizes inputs this should
             // be replaced so that className is passed to getRootClass and is included there so
             // the class names will always be in the same order.
@@ -9735,7 +9735,7 @@ var KeytipManager = /** @class */ (function () {
                 return arraysEqual(fullSequence, keytip.keySequences);
             });
             if (parentKeytip && parentKeytip.overflowSetSequence) {
-                return __assign$2({}, keytipProps, { overflowSetSequence: parentKeytip.overflowSetSequence });
+                return __assign$1({}, keytipProps, { overflowSetSequence: parentKeytip.overflowSetSequence });
             }
         }
         return keytipProps;
@@ -9761,7 +9761,7 @@ var KeytipManager = /** @class */ (function () {
      */
     KeytipManager.prototype._getUniqueKtp = function (keytipProps, uniqueID) {
         if (uniqueID === void 0) { uniqueID = getId(); }
-        return { keytip: __assign$2({}, keytipProps), uniqueID: uniqueID };
+        return { keytip: __assign$1({}, keytipProps), uniqueID: uniqueID };
     };
     KeytipManager._instance = new KeytipManager();
     return KeytipManager;
@@ -9841,7 +9841,7 @@ var KeytipData = /** @class */ (function (_super) {
         return children(nativeKeytipProps);
     };
     KeytipData.prototype._getKtpProps = function () {
-        return __assign$2({ disabled: this.props.disabled }, this.props.keytipProps);
+        return __assign$1({ disabled: this.props.disabled }, this.props.keytipProps);
     };
     /**
      * Gets the aria- and data- attributes to attach to the component
@@ -9982,7 +9982,7 @@ function withResponsiveMode(ComposedComponent) {
         };
         WithResponsiveMode.prototype.render = function () {
             var responsiveMode = this.state.responsiveMode;
-            return responsiveMode === ResponsiveMode.unknown ? null : (React__namespace.createElement(ComposedComponent, __assign$2({ ref: this._updateComposedComponentRef, responsiveMode: responsiveMode }, this.props)));
+            return responsiveMode === ResponsiveMode.unknown ? null : (React__namespace.createElement(ComposedComponent, __assign$1({ ref: this._updateComposedComponentRef, responsiveMode: responsiveMode }, this.props)));
         };
         return WithResponsiveMode;
     }(BaseDecorator));
@@ -10022,7 +10022,7 @@ var renderItemIcon = function (props) {
     if (item.onRenderIcon) {
         return item.onRenderIcon(props);
     }
-    return React__namespace.createElement(Icon, __assign$2({}, iconProps, { className: classNames.icon }));
+    return React__namespace.createElement(Icon, __assign$1({}, iconProps, { className: classNames.icon }));
 };
 var renderCheckMarkIcon = function (_a) {
     var onCheckmarkClick = _a.onCheckmarkClick, item = _a.item, classNames = _a.classNames;
@@ -10051,7 +10051,7 @@ var renderSecondaryText = function (_a) {
 var renderSubMenuIcon = function (_a) {
     var item = _a.item, classNames = _a.classNames;
     if (hasSubmenu(item)) {
-        return React__namespace.createElement(Icon, __assign$2({ iconName: getRTL() ? 'ChevronLeft' : 'ChevronRight' }, item.submenuIconProps, { className: classNames.subMenuIcon }));
+        return React__namespace.createElement(Icon, __assign$1({ iconName: getRTL() ? 'ChevronLeft' : 'ChevronRight' }, item.submenuIconProps, { className: classNames.subMenuIcon }));
     }
     return null;
 };
@@ -10174,11 +10174,11 @@ var getMenuItemStyles = memoizeFunction(function (theme) {
                 },
                 _a)
         },
-        rootHovered: __assign$2({ backgroundColor: ContextualMenuItemBackgroundHoverColor }, getItemHighContrastStyles()),
-        rootFocused: __assign$2({ backgroundColor: ContextualMenuItemBackgroundHoverColor }, getItemHighContrastStyles()),
-        rootChecked: __assign$2({}, getItemHighContrastStyles()),
-        rootPressed: __assign$2({ backgroundColor: ContextualMenuItemBackgroundSelectedColor }, getItemHighContrastStyles()),
-        rootExpanded: __assign$2({ backgroundColor: ContextualMenuItemBackgroundSelectedColor, color: semanticColors.bodyTextChecked }, getItemHighContrastStyles()),
+        rootHovered: __assign$1({ backgroundColor: ContextualMenuItemBackgroundHoverColor }, getItemHighContrastStyles()),
+        rootFocused: __assign$1({ backgroundColor: ContextualMenuItemBackgroundHoverColor }, getItemHighContrastStyles()),
+        rootChecked: __assign$1({}, getItemHighContrastStyles()),
+        rootPressed: __assign$1({ backgroundColor: ContextualMenuItemBackgroundSelectedColor }, getItemHighContrastStyles()),
+        rootExpanded: __assign$1({ backgroundColor: ContextualMenuItemBackgroundSelectedColor, color: semanticColors.bodyTextChecked }, getItemHighContrastStyles()),
         linkContent: {
             whiteSpace: 'nowrap',
             height: 'inherit',
@@ -10531,11 +10531,11 @@ var ContextualMenuAnchor = /** @class */ (function (_super) {
         var itemProps = item.itemProps;
         var keytipProps = item.keytipProps;
         if (keytipProps && itemHasSubmenu) {
-            keytipProps = __assign$2({}, keytipProps, { hasMenu: true });
+            keytipProps = __assign$1({}, keytipProps, { hasMenu: true });
         }
         return (React__namespace.createElement("div", null,
-            React__namespace.createElement(KeytipData, { keytipProps: item.keytipProps, ariaDescribedBy: nativeProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("a", __assign$2({}, nativeProps, keytipAttributes, { ref: _this._anchor, href: item.href, target: item.target, rel: anchorRel, className: classNames.root, role: "menuitem", "aria-owns": item.key === expandedMenuItemKey ? subMenuId : undefined, "aria-haspopup": itemHasSubmenu || undefined, "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, "aria-disabled": isItemDisabled(item), style: item.style, onClick: _this._onItemClick, onMouseEnter: _this._onItemMouseEnter, onMouseLeave: _this._onItemMouseLeave, onMouseMove: _this._onItemMouseMove, onKeyDown: itemHasSubmenu ? _this._onItemKeyDown : undefined }),
-                React__namespace.createElement(ChildrenRenderer, __assign$2({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)))); })));
+            React__namespace.createElement(KeytipData, { keytipProps: item.keytipProps, ariaDescribedBy: nativeProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("a", __assign$1({}, nativeProps, keytipAttributes, { ref: _this._anchor, href: item.href, target: item.target, rel: anchorRel, className: classNames.root, role: "menuitem", "aria-owns": item.key === expandedMenuItemKey ? subMenuId : undefined, "aria-haspopup": itemHasSubmenu || undefined, "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, "aria-disabled": isItemDisabled(item), style: item.style, onClick: _this._onItemClick, onMouseEnter: _this._onItemMouseEnter, onMouseLeave: _this._onItemMouseLeave, onMouseMove: _this._onItemMouseMove, onKeyDown: itemHasSubmenu ? _this._onItemKeyDown : undefined }),
+                React__namespace.createElement(ChildrenRenderer, __assign$1({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)))); })));
     };
     return ContextualMenuAnchor;
 }(ContextualMenuItemWrapper));
@@ -10585,10 +10585,10 @@ var ContextualMenuButton = /** @class */ (function (_super) {
         };
         var keytipProps = item.keytipProps;
         if (keytipProps && itemHasSubmenu) {
-            keytipProps = __assign$2({}, keytipProps, { hasMenu: true });
+            keytipProps = __assign$1({}, keytipProps, { hasMenu: true });
         }
-        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, ariaDescribedBy: buttonNativeProperties['aria-describedby'], disabled: isItemDisabled(item) }, function (keytipAttributes) { return (React__namespace.createElement("button", __assign$2({ ref: _this._btn }, buttonNativeProperties, itemButtonProperties, keytipAttributes),
-            React__namespace.createElement(ChildrenRenderer, __assign$2({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)))); }));
+        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, ariaDescribedBy: buttonNativeProperties['aria-describedby'], disabled: isItemDisabled(item) }, function (keytipAttributes) { return (React__namespace.createElement("button", __assign$1({ ref: _this._btn }, buttonNativeProperties, itemButtonProperties, keytipAttributes),
+            React__namespace.createElement(ChildrenRenderer, __assign$1({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)))); }));
     };
     return ContextualMenuButton;
 }(ContextualMenuItemWrapper));
@@ -10658,7 +10658,7 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
         _this._onItemMouseEnterPrimary = function (ev) {
             var _a = _this.props, item = _a.item, onItemMouseEnter = _a.onItemMouseEnter;
             if (onItemMouseEnter) {
-                onItemMouseEnter(__assign$2({}, item, { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
+                onItemMouseEnter(__assign$1({}, item, { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
             }
         };
         _this._onItemMouseEnterIcon = function (ev) {
@@ -10670,7 +10670,7 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
         _this._onItemMouseMovePrimary = function (ev) {
             var _a = _this.props, item = _a.item, onItemMouseMove = _a.onItemMouseMove;
             if (onItemMouseMove) {
-                onItemMouseMove(__assign$2({}, item, { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
+                onItemMouseMove(__assign$1({}, item, { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
             }
         };
         _this._onItemMouseMoveIcon = function (ev) {
@@ -10722,9 +10722,9 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
         var itemHasSubmenu = hasSubmenu(item);
         var keytipProps = item.keytipProps;
         if (keytipProps) {
-            keytipProps = __assign$2({}, keytipProps, { hasMenu: true });
+            keytipProps = __assign$1({}, keytipProps, { hasMenu: true });
         }
-        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: isItemDisabled(item) }, function (keytipAttributes) { return (React__namespace.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: function (splitButton) { return (_this._splitButton = splitButton); }, role: 'menuitem', "aria-label": item.ariaLabel, className: classNames.splitContainer, "aria-disabled": isItemDisabled(item), "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-haspopup": true, "aria-describedby": mergeAriaAttributeValues(item.ariaDescription, keytipAttributes['aria-describedby']), "aria-checked": item.isChecked || item.checked, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, onMouseEnter: _this._onItemMouseEnterPrimary, onMouseLeave: onItemMouseLeave ? onItemMouseLeave.bind(_this, __assign$2({}, item, { subMenuProps: null, items: null })) : undefined, onMouseMove: _this._onItemMouseMovePrimary, onKeyDown: _this._onItemKeyDown, onClick: _this._executeItemClick, onTouchStart: _this._onTouchStart, tabIndex: 0, "data-is-focusable": true, "aria-roledescription": item['aria-roledescription'] },
+        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: isItemDisabled(item) }, function (keytipAttributes) { return (React__namespace.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: function (splitButton) { return (_this._splitButton = splitButton); }, role: 'menuitem', "aria-label": item.ariaLabel, className: classNames.splitContainer, "aria-disabled": isItemDisabled(item), "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-haspopup": true, "aria-describedby": mergeAriaAttributeValues(item.ariaDescription, keytipAttributes['aria-describedby']), "aria-checked": item.isChecked || item.checked, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, onMouseEnter: _this._onItemMouseEnterPrimary, onMouseLeave: onItemMouseLeave ? onItemMouseLeave.bind(_this, __assign$1({}, item, { subMenuProps: null, items: null })) : undefined, onMouseMove: _this._onItemMouseMovePrimary, onKeyDown: _this._onItemKeyDown, onClick: _this._executeItemClick, onTouchStart: _this._onTouchStart, tabIndex: 0, "data-is-focusable": true, "aria-roledescription": item['aria-roledescription'] },
             _this._renderSplitPrimaryButton(item, classNames, index, hasCheckmarks, hasIcons),
             _this._renderSplitDivider(item),
             _this._renderSplitIconButton(item, classNames, index, keytipAttributes))); }));
@@ -10745,8 +10745,8 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
             'aria-hidden': true
         };
         var itemComponentProps = item.itemProps;
-        return (React__namespace.createElement("button", __assign$2({}, getNativeProps(itemProps, buttonProperties)),
-            React__namespace.createElement(ChildrenRenderer, __assign$2({ "data-is-focusable": false, item: itemProps, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons }, itemComponentProps))));
+        return (React__namespace.createElement("button", __assign$1({}, getNativeProps(itemProps, buttonProperties)),
+            React__namespace.createElement(ChildrenRenderer, __assign$1({ "data-is-focusable": false, item: itemProps, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons }, itemComponentProps))));
     };
     ContextualMenuSplitButton.prototype._renderSplitDivider = function (item) {
         var getDividerClassNames = item.getSplitButtonVerticalDividerClassNames || getSplitButtonVerticalDividerClassNames;
@@ -10763,7 +10763,7 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
             split: true,
             key: item.key
         };
-        var buttonProps = __assign$2({}, getNativeProps(itemProps, buttonProperties), {
+        var buttonProps = __assign$1({}, getNativeProps(itemProps, buttonProperties), {
             onMouseEnter: this._onItemMouseEnterIcon,
             onMouseLeave: onItemMouseLeave ? onItemMouseLeave.bind(this, item) : undefined,
             onMouseDown: function (ev) { return (onItemMouseDown ? onItemMouseDown(item, ev) : undefined); },
@@ -10773,8 +10773,8 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
             'aria-hidden': true
         });
         var itemComponentProps = item.itemProps;
-        return (React__namespace.createElement("button", __assign$2({}, buttonProps),
-            React__namespace.createElement(ChildrenRenderer, __assign$2({ componentRef: item.componentRef, item: itemProps, classNames: classNames, index: index, hasIcons: false, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: this._getSubmenuTarget }, itemComponentProps))));
+        return (React__namespace.createElement("button", __assign$1({}, buttonProps),
+            React__namespace.createElement(ChildrenRenderer, __assign$1({ componentRef: item.componentRef, item: itemProps, classNames: classNames, index: index, hasIcons: false, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: this._getSubmenuTarget }, itemComponentProps))));
     };
     ContextualMenuSplitButton.prototype._handleTouchAndPointerEvent = function (ev) {
         var _this = this;
@@ -11199,7 +11199,7 @@ var ContextualMenuBase = /** @class */ (function (_super) {
             }
             return false;
         }
-        this._adjustedFocusZoneProps = __assign$2({}, focusZoneProps, { direction: this._getFocusZoneDirection() });
+        this._adjustedFocusZoneProps = __assign$1({}, focusZoneProps, { direction: this._getFocusZoneDirection() });
         var hasCheckmarks = canAnyMenuItemsCheck(items);
         var submenuProps = this.state.expandedMenuItemKey && this.props.hidden !== true ? this._getSubmenuProps() : null;
         isBeakVisible = isBeakVisible === undefined ? this.props.responsiveMode <= ResponsiveMode.medium : isBeakVisible;
@@ -11235,13 +11235,13 @@ var ContextualMenuBase = /** @class */ (function (_super) {
             var calloutStyles = !getMenuClassNames && this._classNames.subComponentStyles
                 ? this._classNames.subComponentStyles.callout
                 : undefined;
-            return (React__namespace.createElement(Callout, __assign$2({ styles: calloutStyles }, calloutProps, { target: target, isBeakVisible: isBeakVisible, beakWidth: beakWidth, directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL, gapSpace: gapSpace, coverTarget: coverTarget, doNotLayer: doNotLayer, className: css$1('ms-ContextualMenu-Callout', calloutProps && calloutProps.className), setInitialFocus: shouldFocusOnMount, onDismiss: this.props.onDismiss, onScroll: this._onScroll, bounds: bounds, directionalHintFixed: directionalHintFixed, alignTargetEdge: alignTargetEdge, hidden: this.props.hidden }),
+            return (React__namespace.createElement(Callout, __assign$1({ styles: calloutStyles }, calloutProps, { target: target, isBeakVisible: isBeakVisible, beakWidth: beakWidth, directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL, gapSpace: gapSpace, coverTarget: coverTarget, doNotLayer: doNotLayer, className: css$1('ms-ContextualMenu-Callout', calloutProps && calloutProps.className), setInitialFocus: shouldFocusOnMount, onDismiss: this.props.onDismiss, onScroll: this._onScroll, bounds: bounds, directionalHintFixed: directionalHintFixed, alignTargetEdge: alignTargetEdge, hidden: this.props.hidden }),
                 React__namespace.createElement("div", { "aria-label": ariaLabel, "aria-labelledby": labelElementId, style: contextMenuStyle, ref: function (host) { return (_this._host = host); }, id: id, className: this._classNames.container, tabIndex: shouldFocusOnContainer ? 0 : -1, onKeyDown: this._onMenuKeyDown, onKeyUp: this._onKeyUp, onFocusCapture: this._onMenuFocusCapture },
                     title && React__namespace.createElement("div", { className: this._classNames.title },
                         " ",
                         title,
                         " "),
-                    items && items.length ? (React__namespace.createElement(FocusZone, __assign$2({}, this._adjustedFocusZoneProps, { className: this._classNames.root, isCircularNavigation: true, handleTabKey: FocusZoneTabbableElements.all }), onRenderMenuList({
+                    items && items.length ? (React__namespace.createElement(FocusZone, __assign$1({}, this._adjustedFocusZoneProps, { className: this._classNames.root, isCircularNavigation: true, handleTabKey: FocusZoneTabbableElements.all }), onRenderMenuList({
                         items: items,
                         totalItemCount: totalItemCount,
                         hasCheckmarks: hasCheckmarks,
@@ -11394,7 +11394,7 @@ var ContextualMenuBase = /** @class */ (function (_super) {
     };
     ContextualMenuBase.prototype._renderNormalItem = function (item, classNames, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons) {
         if (item.onRender) {
-            return item.onRender(__assign$2({ 'aria-posinset': focusableElementIndex + 1, 'aria-setsize': totalItemCount }, item), this.dismiss);
+            return item.onRender(__assign$1({ 'aria-posinset': focusableElementIndex + 1, 'aria-setsize': totalItemCount }, item), this.dismiss);
         }
         if (item.href) {
             return this._renderAnchorMenuItem(item, classNames, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons);
@@ -11408,8 +11408,8 @@ var ContextualMenuBase = /** @class */ (function (_super) {
         var _a = this.props.contextualMenuItemAs, ChildrenRenderer = _a === void 0 ? ContextualMenuItem : _a;
         var itemProps = item.itemProps;
         var divHtmlProperties = itemProps && getNativeProps(itemProps, divProperties);
-        return (React__namespace.createElement("div", __assign$2({ className: this._classNames.header }, divHtmlProperties, { style: item.style }),
-            React__namespace.createElement(ChildrenRenderer, __assign$2({ item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks ? this._onItemClick : undefined, hasIcons: hasIcons }, itemProps))));
+        return (React__namespace.createElement("div", __assign$1({ className: this._classNames.header }, divHtmlProperties, { style: item.style }),
+            React__namespace.createElement(ChildrenRenderer, __assign$1({ item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks ? this._onItemClick : undefined, hasIcons: hasIcons }, itemProps))));
     };
     ContextualMenuBase.prototype._renderAnchorMenuItem = function (item, classNames, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons) {
         var contextualMenuItemAs = this.props.contextualMenuItemAs;
@@ -11638,7 +11638,7 @@ var getStyles$f = function (props) {
 // This is to prevent cyclic import with ContextualMenu.base.tsx.
 var LocalContextualMenu;
 function onRenderSubMenu(subMenuProps) {
-    return React__namespace.createElement(LocalContextualMenu, __assign$2({}, subMenuProps));
+    return React__namespace.createElement(LocalContextualMenu, __assign$1({}, subMenuProps));
 }
 LocalContextualMenu = styled(ContextualMenuBase, getStyles$f, function () {
     return {
@@ -11788,7 +11788,7 @@ var BaseButton = /** @class */ (function (_super) {
             var iconProps = _this.props.iconProps;
             if (iconProps && (iconProps.iconName !== undefined || iconProps.imageProps)) {
                 var className = iconProps.className, rest = __rest(iconProps, ["className"]);
-                return React__namespace.createElement(Icon, __assign$2({ className: css$1(_this._classNames.icon, className) }, rest));
+                return React__namespace.createElement(Icon, __assign$1({ className: css$1(_this._classNames.icon, className) }, rest));
             }
             return null;
         };
@@ -11836,7 +11836,7 @@ var BaseButton = /** @class */ (function (_super) {
         };
         _this._onRenderMenuIcon = function (props) {
             var menuIconProps = _this.props.menuIconProps;
-            return React__namespace.createElement(Icon, __assign$2({ iconName: "ChevronDown" }, menuIconProps, { className: _this._classNames.menuIcon }));
+            return React__namespace.createElement(Icon, __assign$1({ iconName: "ChevronDown" }, menuIconProps, { className: _this._classNames.menuIcon }));
         };
         _this._onRenderMenu = function (menuProps) {
             var _a = menuProps.onDismiss, onDismiss = _a === void 0 ? _this._dismissMenu : _a;
@@ -11845,22 +11845,22 @@ var BaseButton = /** @class */ (function (_super) {
             // If the menu props do not specify an explicit value for aria-label or aria-labelledBy,
             // AND the button has text, we'll set the menu aria-labelledBy to the text element id.
             if (!menuProps.ariaLabel && !menuProps.labelElementId && _this._hasText()) {
-                menuProps = __assign$2({}, menuProps, { labelElementId: _this._labelId });
+                menuProps = __assign$1({}, menuProps, { labelElementId: _this._labelId });
             }
-            return (React__namespace.createElement(MenuType, __assign$2({ id: _this._labelId + '-menu', directionalHint: DirectionalHint.bottomLeftEdge }, menuProps, { shouldFocusOnContainer: _this.state.menuProps ? _this.state.menuProps.shouldFocusOnContainer : undefined, shouldFocusOnMount: _this.state.menuProps ? _this.state.menuProps.shouldFocusOnMount : undefined, hidden: _this.state.menuProps ? _this.state.menuProps.hidden : undefined, className: css$1('ms-BaseButton-menuhost', menuProps.className), target: _this._isSplitButton ? _this._splitButtonContainer.current : _this._buttonElement.current, onDismiss: onDismiss })));
+            return (React__namespace.createElement(MenuType, __assign$1({ id: _this._labelId + '-menu', directionalHint: DirectionalHint.bottomLeftEdge }, menuProps, { shouldFocusOnContainer: _this.state.menuProps ? _this.state.menuProps.shouldFocusOnContainer : undefined, shouldFocusOnMount: _this.state.menuProps ? _this.state.menuProps.shouldFocusOnMount : undefined, hidden: _this.state.menuProps ? _this.state.menuProps.hidden : undefined, className: css$1('ms-BaseButton-menuhost', menuProps.className), target: _this._isSplitButton ? _this._splitButtonContainer.current : _this._buttonElement.current, onDismiss: onDismiss })));
         };
         _this._dismissMenu = function () {
             var menuProps = null;
             if (_this.props.persistMenu && _this.state.menuProps) {
                 // Create a new object to trigger componentDidUpdate
-                menuProps = __assign$2({}, _this.state.menuProps, { hidden: true });
+                menuProps = __assign$1({}, _this.state.menuProps, { hidden: true });
             }
             _this.setState({ menuProps: menuProps });
         };
         _this._openMenu = function (shouldFocusOnContainer, shouldFocusOnMount) {
             if (shouldFocusOnMount === void 0) { shouldFocusOnMount = true; }
             if (_this.props.menuProps) {
-                var menuProps = __assign$2({}, _this.props.menuProps, { shouldFocusOnContainer: shouldFocusOnContainer, shouldFocusOnMount: shouldFocusOnMount });
+                var menuProps = __assign$1({}, _this.props.menuProps, { shouldFocusOnContainer: shouldFocusOnContainer, shouldFocusOnMount: shouldFocusOnMount });
                 if (_this.props.persistMenu) {
                     _this._renderedPersistentMenu = true;
                     menuProps.hidden = false;
@@ -11984,7 +11984,7 @@ var BaseButton = /** @class */ (function (_super) {
             if (!(ev.altKey || ev.metaKey) && (isUp || isDown)) {
                 _this.setState(function (state) {
                     if (state.menuProps && !state.menuProps.shouldFocusOnMount) {
-                        return { menuProps: __assign$2({}, state.menuProps, { shouldFocusOnMount: true }) };
+                        return { menuProps: __assign$1({}, state.menuProps, { shouldFocusOnMount: true }) };
                     }
                     return state;
                 });
@@ -12166,11 +12166,11 @@ var BaseButton = /** @class */ (function (_super) {
         var menuIconProps = props.menuIconProps, menuProps = props.menuProps, _a = props.onRenderIcon, onRenderIcon = _a === void 0 ? this._onRenderIcon : _a, _b = props.onRenderAriaDescription, onRenderAriaDescription = _b === void 0 ? this._onRenderAriaDescription : _b, _c = props.onRenderChildren, onRenderChildren = _c === void 0 ? this._onRenderChildren : _c, _d = props.onRenderMenu, onRenderMenu = _d === void 0 ? this._onRenderMenu : _d, _e = props.onRenderMenuIcon, onRenderMenuIcon = _e === void 0 ? this._onRenderMenuIcon : _e, disabled = props.disabled;
         var keytipProps = props.keytipProps;
         if (keytipProps && menuProps) {
-            keytipProps = __assign$2({}, keytipProps, { hasMenu: true });
+            keytipProps = __assign$1({}, keytipProps, { hasMenu: true });
         }
         var Content = (
         // If we're making a split button, we won't put the keytip here
-        React__namespace.createElement(KeytipData, { keytipProps: !this._isSplitButton ? keytipProps : undefined, ariaDescribedBy: buttonProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement(Tag, __assign$2({}, buttonProps, keytipAttributes),
+        React__namespace.createElement(KeytipData, { keytipProps: !this._isSplitButton ? keytipProps : undefined, ariaDescribedBy: buttonProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement(Tag, __assign$1({}, buttonProps, keytipAttributes),
             React__namespace.createElement("div", { className: _this._classNames.flexContainer },
                 onRenderIcon(props, _this._onRenderIcon),
                 _this._onRenderTextContents(),
@@ -12207,10 +12207,10 @@ var BaseButton = /** @class */ (function (_super) {
         });
         var ariaDescribedBy = buttonProps.ariaDescription;
         if (keytipProps && menuProps) {
-            keytipProps = __assign$2({}, keytipProps, { hasMenu: true });
+            keytipProps = __assign$1({}, keytipProps, { hasMenu: true });
         }
         var containerProps = getNativeProps(buttonProps, [], ['disabled']);
-        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", __assign$2({}, containerProps, { "data-ktp-target": keytipAttributes['data-ktp-target'], role: 'button', "aria-disabled": disabled, "aria-haspopup": true, "aria-expanded": _this._isExpanded, "aria-pressed": toggle ? !!checked : undefined, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), className: classNames && classNames.splitButtonContainer, onKeyDown: _this._onSplitButtonContainerKeyDown, onTouchStart: _this._onTouchStart, ref: _this._splitButtonContainer, "data-is-focusable": true, onClick: !disabled && !primaryDisabled ? _this._onSplitButtonPrimaryClick : undefined, tabIndex: !disabled || allowDisabledFocus ? 0 : undefined, "aria-roledescription": buttonProps['aria-roledescription'], onFocusCapture: _this._onSplitContainerFocusCapture }),
+        return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", __assign$1({}, containerProps, { "data-ktp-target": keytipAttributes['data-ktp-target'], role: 'button', "aria-disabled": disabled, "aria-haspopup": true, "aria-expanded": _this._isExpanded, "aria-pressed": toggle ? !!checked : undefined, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), className: classNames && classNames.splitButtonContainer, onKeyDown: _this._onSplitButtonContainerKeyDown, onTouchStart: _this._onTouchStart, ref: _this._splitButtonContainer, "data-is-focusable": true, onClick: !disabled && !primaryDisabled ? _this._onSplitButtonPrimaryClick : undefined, tabIndex: !disabled || allowDisabledFocus ? 0 : undefined, "aria-roledescription": buttonProps['aria-roledescription'], onFocusCapture: _this._onSplitContainerFocusCapture }),
             React__namespace.createElement("span", { style: { display: 'flex' } },
                 _this._onRenderContent(tag, buttonProps),
                 _this._onRenderSplitButtonMenuButton(classNames, keytipAttributes),
@@ -12238,14 +12238,14 @@ var BaseButton = /** @class */ (function (_super) {
             allowDisabledFocus: allowDisabledFocus,
             onClick: this._onMenuClick,
             menuProps: undefined,
-            iconProps: __assign$2({}, menuIconProps, { className: this._classNames.menuIcon }),
+            iconProps: __assign$1({}, menuIconProps, { className: this._classNames.menuIcon }),
             ariaLabel: splitButtonAriaLabel,
             'aria-haspopup': true,
             'aria-expanded': this._isExpanded,
             'data-is-focusable': false
         };
         // Add data-ktp-execute-target to the split button if the keytip is defined
-        return (React__namespace.createElement(BaseButton, __assign$2({}, splitButtonProps, { "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'], onMouseDown: this._onMouseDown, tabIndex: -1 })));
+        return (React__namespace.createElement(BaseButton, __assign$1({}, splitButtonProps, { "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'], onMouseDown: this._onMouseDown, tabIndex: -1 })));
     };
     BaseButton.prototype._onPointerDown = function (ev) {
         if (ev.pointerType === 'touch') {
@@ -12575,7 +12575,7 @@ var ActionButton = /** @class */ (function (_super) {
     }
     ActionButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React__namespace.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$c(theme, styles), onRenderDescription: nullRender })));
+        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$c(theme, styles), onRenderDescription: nullRender })));
     };
     ActionButton = __decorate([
         customizable('ActionButton', ['theme', 'styles'], true)
@@ -12640,7 +12640,7 @@ var IconButton = /** @class */ (function (_super) {
     }
     IconButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React__namespace.createElement(BaseButton, __assign$2({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$b(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
+        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$b(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
     };
     IconButton = __decorate([
         customizable('IconButton', ['theme', 'styles'], true)
@@ -15043,8 +15043,8 @@ var CalendarYearNav = /** @class */ (function (_super) {
     CalendarYearNav.prototype.render = function () {
         return (React__namespace.createElement("div", { className: css$1('ms-DatePicker-decadeComponents', styles$c.decadeComponents) },
             React__namespace.createElement("div", { className: css$1('ms-DatePicker-navContainer', styles$c.navContainer) },
-                React__namespace.createElement(CalendarYearNavPrev, __assign$2({}, this.props)),
-                React__namespace.createElement(CalendarYearNavNext, __assign$2({}, this.props)))));
+                React__namespace.createElement(CalendarYearNavPrev, __assign$1({}, this.props)),
+                React__namespace.createElement(CalendarYearNavNext, __assign$1({}, this.props)))));
     };
     return CalendarYearNav;
 }(React__namespace.Component));
@@ -15100,10 +15100,10 @@ var CalendarYearHeader = /** @class */ (function (_super) {
             if (_this.props.onRenderTitle) {
                 return _this.props.onRenderTitle(_this.props);
             }
-            return React__namespace.createElement(CalendarYearTitle, __assign$2({}, _this.props));
+            return React__namespace.createElement(CalendarYearTitle, __assign$1({}, _this.props));
         };
         _this._onRenderNav = function () {
-            return React__namespace.createElement(CalendarYearNav, __assign$2({}, _this.props));
+            return React__namespace.createElement(CalendarYearNav, __assign$1({}, _this.props));
         };
         return _this;
     }
@@ -15126,10 +15126,10 @@ var CalendarYear = /** @class */ (function (_super) {
             _this.setState({ fromYear: _this.state.fromYear - CELL_COUNT });
         };
         _this._renderHeader = function () {
-            return (React__namespace.createElement(CalendarYearHeader, __assign$2({}, _this.props, { fromYear: _this.state.fromYear, toYear: _this.state.fromYear + CELL_COUNT - 1, onSelectPrev: _this._onNavPrev, onSelectNext: _this._onNavNext })));
+            return (React__namespace.createElement(CalendarYearHeader, __assign$1({}, _this.props, { fromYear: _this.state.fromYear, toYear: _this.state.fromYear + CELL_COUNT - 1, onSelectPrev: _this._onNavPrev, onSelectNext: _this._onNavNext })));
         };
         _this._renderGrid = function () {
-            return (React__namespace.createElement(CalendarYearGrid, __assign$2({}, _this.props, { fromYear: _this.state.fromYear, toYear: _this.state.fromYear + CELL_COUNT - 1, ref: _this._gridRef })));
+            return (React__namespace.createElement(CalendarYearGrid, __assign$1({}, _this.props, { fromYear: _this.state.fromYear, toYear: _this.state.fromYear + CELL_COUNT - 1, ref: _this._gridRef })));
         };
         _this.state = _this._calculateInitialStateFromProps(props);
         return _this;
@@ -15514,7 +15514,7 @@ var Calendar = /** @class */ (function (_super) {
                     navigatedMonthDate.getMonth() !== today.getMonth();
         }
         return (React__namespace.createElement("div", { className: css$1(rootClass, styles$a.root, className), role: "application" },
-            React__namespace.createElement("div", __assign$2({}, nativeProps, { className: css$1('ms-DatePicker-picker ms-DatePicker-picker--opened ms-DatePicker-picker--focused', styles$a.picker, styles$a.pickerIsOpened, styles$a.pickerIsFocused, isMonthPickerVisible && 'ms-DatePicker-monthPickerVisible ' + styles$a.monthPickerVisible, isMonthPickerVisible && isDayPickerVisible && 'ms-DatePicker-calendarsInline ' + styles$a.calendarsInline, monthPickerOnly && 'ms-DatePicker-monthPickerOnly ' + styles$a.monthPickerOnly, showMonthPickerAsOverlay && 'ms-DatePicker-monthPickerAsOverlay ' + styles$a.monthPickerAsOverlay) }),
+            React__namespace.createElement("div", __assign$1({}, nativeProps, { className: css$1('ms-DatePicker-picker ms-DatePicker-picker--opened ms-DatePicker-picker--focused', styles$a.picker, styles$a.pickerIsOpened, styles$a.pickerIsFocused, isMonthPickerVisible && 'ms-DatePicker-monthPickerVisible ' + styles$a.monthPickerVisible, isMonthPickerVisible && isDayPickerVisible && 'ms-DatePicker-calendarsInline ' + styles$a.calendarsInline, monthPickerOnly && 'ms-DatePicker-monthPickerOnly ' + styles$a.monthPickerOnly, showMonthPickerAsOverlay && 'ms-DatePicker-monthPickerAsOverlay ' + styles$a.monthPickerAsOverlay) }),
                 React__namespace.createElement("div", { className: css$1('ms-DatePicker-holder ms-slideDownIn10', styles$a.holder, overlayedWithButton && styles$a.holderWithButton), onKeyDown: this._onDatePickerPopupKeyDown },
                     React__namespace.createElement("div", { className: css$1('ms-DatePicker-frame', styles$a.frame) },
                         React__namespace.createElement("div", { className: css$1('ms-DatePicker-wrap', styles$a.wrap, showGoToToday && styles$a.goTodaySpacing) },
@@ -15638,10 +15638,10 @@ var CheckboxBase = /** @class */ (function (_super) {
             isUsingCustomLabelRender: onRenderLabel !== this._onRenderLabel
         });
         return (React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", { className: _this._classNames.root },
-            React__namespace.createElement("input", __assign$2({ type: "checkbox" }, inputProps, { "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'] }, checked !== undefined && { checked: checked }, defaultChecked !== undefined && { defaultChecked: defaultChecked }, { disabled: disabled, className: _this._classNames.input, ref: _this._checkBox, name: name, id: _this._id, title: title, onChange: _this._onChange, onFocus: _this._onFocus, onBlur: _this._onBlur, "aria-disabled": disabled, "aria-label": ariaLabel || label, "aria-labelledby": ariaLabelledBy, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), "aria-posinset": ariaPositionInSet, "aria-setsize": ariaSetSize })),
+            React__namespace.createElement("input", __assign$1({ type: "checkbox" }, inputProps, { "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'] }, checked !== undefined && { checked: checked }, defaultChecked !== undefined && { defaultChecked: defaultChecked }, { disabled: disabled, className: _this._classNames.input, ref: _this._checkBox, name: name, id: _this._id, title: title, onChange: _this._onChange, onFocus: _this._onFocus, onBlur: _this._onBlur, "aria-disabled": disabled, "aria-label": ariaLabel || label, "aria-labelledby": ariaLabelledBy, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), "aria-posinset": ariaPositionInSet, "aria-setsize": ariaSetSize })),
             React__namespace.createElement("label", { className: _this._classNames.label, htmlFor: _this._id },
                 React__namespace.createElement("div", { className: _this._classNames.checkbox, "data-ktp-target": keytipAttributes['data-ktp-target'] },
-                    React__namespace.createElement(Icon, __assign$2({ iconName: "CheckMark" }, checkmarkIconProps, { className: _this._classNames.checkmark }))),
+                    React__namespace.createElement(Icon, __assign$1({ iconName: "CheckMark" }, checkmarkIconProps, { className: _this._classNames.checkmark }))),
                 onRenderLabel(_this.props, _this._onRenderLabel)))); }));
     };
     Object.defineProperty(CheckboxBase.prototype, "checked", {
@@ -15906,7 +15906,7 @@ var LabelBase = /** @class */ (function (_super) {
             required: required,
             theme: theme
         });
-        return (React__namespace.createElement(RootType, __assign$2({}, getNativeProps(this.props, divProperties), { className: classNames.root }), children));
+        return (React__namespace.createElement(RootType, __assign$1({}, getNativeProps(this.props, divProperties), { className: classNames.root }), children));
     };
     return LabelBase;
 }(React__namespace.Component));
@@ -16146,7 +16146,7 @@ var TextFieldBase = /** @class */ (function (_super) {
                     (addonString !== undefined || this.props.onRenderAddon) && (React__namespace.createElement("div", { className: this._classNames.prefix }, onRenderAddon(this.props, this._onRenderAddon))),
                     (prefix !== undefined || this.props.onRenderPrefix) && (React__namespace.createElement("div", { className: this._classNames.prefix }, onRenderPrefix(this.props, this._onRenderPrefix))),
                     multiline ? this._renderTextArea() : this._renderInput(),
-                    (iconClass || iconProps) && React__namespace.createElement(Icon, __assign$2({ className: this._classNames.icon }, iconProps)),
+                    (iconClass || iconProps) && React__namespace.createElement(Icon, __assign$1({ className: this._classNames.icon }, iconProps)),
                     (suffix !== undefined || this.props.onRenderSuffix) && (React__namespace.createElement("div", { className: this._classNames.suffix }, onRenderSuffix(this.props, this._onRenderSuffix))))),
             this._isDescriptionAvailable && (React__namespace.createElement("span", { id: this._descriptionId },
                 onRenderDescription(this.props, this._onRenderDescription),
@@ -16273,12 +16273,12 @@ var TextFieldBase = /** @class */ (function (_super) {
     });
     TextFieldBase.prototype._renderTextArea = function () {
         var textAreaProps = getNativeProps(this.props, textAreaProperties, ['defaultValue']);
-        return (React__namespace.createElement("textarea", __assign$2({ id: this._id }, textAreaProps, { ref: this._textElement, value: this.state.value, onInput: this._onInputChange, onChange: this._onInputChange, className: this._classNames.field, "aria-describedby": this._isDescriptionAvailable ? this._descriptionId : this.props['aria-describedby'], "aria-invalid": !!this._errorMessage, "aria-label": this.props.ariaLabel, readOnly: this.props.readOnly, onFocus: this._onFocus, onBlur: this._onBlur })));
+        return (React__namespace.createElement("textarea", __assign$1({ id: this._id }, textAreaProps, { ref: this._textElement, value: this.state.value, onInput: this._onInputChange, onChange: this._onInputChange, className: this._classNames.field, "aria-describedby": this._isDescriptionAvailable ? this._descriptionId : this.props['aria-describedby'], "aria-invalid": !!this._errorMessage, "aria-label": this.props.ariaLabel, readOnly: this.props.readOnly, onFocus: this._onFocus, onBlur: this._onBlur })));
     };
     TextFieldBase.prototype._renderInput = function () {
         var inputProps = getNativeProps(this.props, inputProperties, ['defaultValue']);
         var ariaLabelledBy = this.props['aria-labelledby'] || (this.props.label ? this._labelId : undefined);
-        return (React__namespace.createElement("input", __assign$2({ type: 'text', id: this._id, "aria-labelledby": ariaLabelledBy }, inputProps, { ref: this._textElement, value: this.state.value, onInput: this._onInputChange, onChange: this._onInputChange, className: this._classNames.field, "aria-label": this.props.ariaLabel, "aria-describedby": this._isDescriptionAvailable ? this._descriptionId : this.props['aria-describedby'], "aria-invalid": !!this._errorMessage, readOnly: this.props.readOnly, onFocus: this._onFocus, onBlur: this._onBlur })));
+        return (React__namespace.createElement("input", __assign$1({ type: 'text', id: this._id, "aria-labelledby": ariaLabelledBy }, inputProps, { ref: this._textElement, value: this.state.value, onInput: this._onInputChange, onChange: this._onInputChange, className: this._classNames.field, "aria-label": this.props.ariaLabel, "aria-describedby": this._isDescriptionAvailable ? this._descriptionId : this.props['aria-describedby'], "aria-invalid": !!this._errorMessage, readOnly: this.props.readOnly, onFocus: this._onFocus, onBlur: this._onBlur })));
     };
     TextFieldBase.prototype._validate = function (value) {
         var _this = this;
@@ -16992,7 +16992,7 @@ var MaskedTextField = /** @class */ (function (_super) {
         }
     };
     MaskedTextField.prototype.render = function () {
-        return (React__namespace.createElement(TextField, __assign$2({}, this.props, { onFocus: this._onFocus, onBlur: this._onBlur, onMouseDown: this._onMouseDown, onMouseUp: this._onMouseUp, onChange: this._onInputChange, onBeforeChange: this._onBeforeChange, onKeyDown: this._onKeyDown, onPaste: this._onPaste, value: this.state.displayValue, componentRef: this._textField })));
+        return (React__namespace.createElement(TextField, __assign$1({}, this.props, { onFocus: this._onFocus, onBlur: this._onBlur, onMouseDown: this._onMouseDown, onMouseUp: this._onMouseUp, onChange: this._onInputChange, onBeforeChange: this._onBeforeChange, onKeyDown: this._onKeyDown, onPaste: this._onPaste, value: this.state.displayValue, componentRef: this._textField })));
     };
     Object.defineProperty(MaskedTextField.prototype, "value", {
         /**
@@ -17688,7 +17688,7 @@ var ComboBoxOptionWrapper = /** @class */ (function (_super) {
     };
     ComboBoxOptionWrapper.prototype.shouldComponentUpdate = function (newProps) {
         // The render function will always be different, so we ignore that prop
-        return !shallowCompare(__assign$2({}, this.props, { render: undefined }), __assign$2({}, newProps, { render: undefined }));
+        return !shallowCompare(__assign$1({}, this.props, { render: undefined }), __assign$1({}, newProps, { render: undefined }));
     };
     return ComboBoxOptionWrapper;
 }(React__namespace.Component));
@@ -17948,8 +17948,8 @@ var ComboBox = /** @class */ (function (_super) {
             var onRenderList = props.onRenderList, calloutProps = props.calloutProps, dropdownWidth = props.dropdownWidth, dropdownMaxWidth = props.dropdownMaxWidth, _a = props.onRenderLowerContent, onRenderLowerContent = _a === void 0 ? _this._onRenderLowerContent : _a, useComboBoxAsMenuWidth = props.useComboBoxAsMenuWidth, persistMenu = props.persistMenu, _b = props.shouldRestoreFocus, shouldRestoreFocus = _b === void 0 ? true : _b;
             var isOpen = _this.state.isOpen;
             var comboBoxMenuWidth = useComboBoxAsMenuWidth && _this._comboBoxWrapper.current ? _this._comboBoxWrapper.current.clientWidth + 2 : undefined;
-            return (React__namespace.createElement(Callout, __assign$2({ isBeakVisible: false, gapSpace: 0, doNotLayer: false, directionalHint: DirectionalHint.bottomLeftEdge, directionalHintFixed: false }, calloutProps, { onLayerMounted: _this._onLayerMounted, className: css$1(_this._classNames.callout, calloutProps ? calloutProps.className : undefined), target: _this._comboBoxWrapper.current, onDismiss: _this._onDismiss, onScroll: _this._onScroll, setInitialFocus: false, calloutWidth: useComboBoxAsMenuWidth && _this._comboBoxWrapper.current ? comboBoxMenuWidth && comboBoxMenuWidth : dropdownWidth, calloutMaxWidth: dropdownMaxWidth ? dropdownMaxWidth : comboBoxMenuWidth, hidden: persistMenu ? !isOpen : undefined, shouldRestoreFocus: shouldRestoreFocus }),
-                React__namespace.createElement("div", { className: _this._classNames.optionsContainerWrapper, ref: _this._comboBoxMenu }, onRenderList(__assign$2({}, props), _this._onRenderList)),
+            return (React__namespace.createElement(Callout, __assign$1({ isBeakVisible: false, gapSpace: 0, doNotLayer: false, directionalHint: DirectionalHint.bottomLeftEdge, directionalHintFixed: false }, calloutProps, { onLayerMounted: _this._onLayerMounted, className: css$1(_this._classNames.callout, calloutProps ? calloutProps.className : undefined), target: _this._comboBoxWrapper.current, onDismiss: _this._onDismiss, onScroll: _this._onScroll, setInitialFocus: false, calloutWidth: useComboBoxAsMenuWidth && _this._comboBoxWrapper.current ? comboBoxMenuWidth && comboBoxMenuWidth : dropdownWidth, calloutMaxWidth: dropdownMaxWidth ? dropdownMaxWidth : comboBoxMenuWidth, hidden: persistMenu ? !isOpen : undefined, shouldRestoreFocus: shouldRestoreFocus }),
+                React__namespace.createElement("div", { className: _this._classNames.optionsContainerWrapper, ref: _this._comboBoxMenu }, onRenderList(__assign$1({}, props), _this._onRenderList)),
                 onRenderLowerContent(_this.props, _this._onRenderLowerContent)));
         };
         _this._onLayerMounted = function () {
@@ -18414,15 +18414,15 @@ var ComboBox = /** @class */ (function (_super) {
         this._classNames = this.props.getClassNames
             ? this.props.getClassNames(theme, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage, className)
             : getClassNames$8(getStyles$7(theme, customStyles), className, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage);
-        return (React__namespace.createElement("div", __assign$2({}, divProps, { ref: this._root, className: this._classNames.container }),
+        return (React__namespace.createElement("div", __assign$1({}, divProps, { ref: this._root, className: this._classNames.container }),
             label && (React__namespace.createElement(Label, { id: id + '-label', disabled: disabled, required: required, htmlFor: id + '-input', className: this._classNames.label }, label)),
             React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: _this._comboBoxWrapper, id: id + 'wrapper', className: _this._classNames.root },
-                React__namespace.createElement(Autofill, __assign$2({ "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'], "data-is-interactable": !disabled, componentRef: _this._autofill, id: id + '-input', className: _this._classNames.input, type: "text", onFocus: _this._select, onBlur: _this._onBlur, onKeyDown: _this._onInputKeyDown, onKeyUp: _this._onInputKeyUp, onClick: _this._onAutofillClick, onTouchStart: _this._onTouchStart, onInputValueChange: _this._onInputChange, "aria-expanded": isOpen, "aria-autocomplete": _this._getAriaAutoCompleteValue(), role: "combobox", readOnly: disabled || !allowFreeform, "aria-labelledby": label && id + '-label', "aria-label": ariaLabel && !label ? ariaLabel : undefined, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), "aria-activedescendant": _this._getAriaActiveDescentValue(), "aria-required": required, "aria-disabled": disabled, "aria-owns": isOpen ? id + '-list' : undefined, spellCheck: false, defaultVisibleValue: _this._currentVisibleValue, suggestedDisplayValue: suggestedDisplayValue, updateValueInWillReceiveProps: _this._onUpdateValueInAutofillWillReceiveProps, shouldSelectFullInputValueInComponentDidUpdate: _this._onShouldSelectFullInputValueInAutofillComponentDidUpdate, title: title, preventValueSelection: !focused, placeholder: placeholder, tabIndex: tabIndex }, autofill)),
+                React__namespace.createElement(Autofill, __assign$1({ "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'], "data-is-interactable": !disabled, componentRef: _this._autofill, id: id + '-input', className: _this._classNames.input, type: "text", onFocus: _this._select, onBlur: _this._onBlur, onKeyDown: _this._onInputKeyDown, onKeyUp: _this._onInputKeyUp, onClick: _this._onAutofillClick, onTouchStart: _this._onTouchStart, onInputValueChange: _this._onInputChange, "aria-expanded": isOpen, "aria-autocomplete": _this._getAriaAutoCompleteValue(), role: "combobox", readOnly: disabled || !allowFreeform, "aria-labelledby": label && id + '-label', "aria-label": ariaLabel && !label ? ariaLabel : undefined, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), "aria-activedescendant": _this._getAriaActiveDescentValue(), "aria-required": required, "aria-disabled": disabled, "aria-owns": isOpen ? id + '-list' : undefined, spellCheck: false, defaultVisibleValue: _this._currentVisibleValue, suggestedDisplayValue: suggestedDisplayValue, updateValueInWillReceiveProps: _this._onUpdateValueInAutofillWillReceiveProps, shouldSelectFullInputValueInComponentDidUpdate: _this._onShouldSelectFullInputValueInAutofillComponentDidUpdate, title: title, preventValueSelection: !focused, placeholder: placeholder, tabIndex: tabIndex }, autofill)),
                 React__namespace.createElement(IconButton, { className: 'ms-ComboBox-CaretDown-button', styles: _this._getCaretButtonStyles(), role: "presentation", "aria-hidden": isButtonAriaHidden, "data-is-focusable": false, tabIndex: -1, onClick: _this._onComboBoxClick, onBlur: _this._onBlur, iconProps: buttonIconProps, disabled: disabled, checked: isOpen }))); }),
             (persistMenu || isOpen) &&
-                onRenderContainer(__assign$2({}, this.props, { onRenderList: onRenderList,
+                onRenderContainer(__assign$1({}, this.props, { onRenderList: onRenderList,
                     onRenderItem: onRenderItem,
-                    onRenderOption: onRenderOption, options: this.state.currentOptions.map(function (item, index) { return (__assign$2({}, item, { index: index })); }) }), this._onRenderContainer),
+                    onRenderOption: onRenderOption, options: this.state.currentOptions.map(function (item, index) { return (__assign$1({}, item, { index: index })); }) }), this._onRenderContainer),
             errorMessage && React__namespace.createElement("div", { className: this._classNames.errorMessage }, errorMessage)));
     };
     /**
@@ -18452,7 +18452,7 @@ var ComboBox = /** @class */ (function (_super) {
         if (updatedValue === '') {
             var items = currentOptions
                 .map(function (item, index) {
-                return __assign$2({}, item, { index: index });
+                return __assign$1({}, item, { index: index });
             })
                 .filter(function (option) { return option.itemType !== SelectableOptionMenuItemType.Header && option.itemType !== SelectableOptionMenuItemType.Divider; })
                 .filter(function (option) { return _this._getPreviewText(option) === updatedValue; });
@@ -18473,7 +18473,7 @@ var ComboBox = /** @class */ (function (_super) {
             // If autoComplete is on, attempt to find a match where the text of an option starts with the updated value
             var items = currentOptions
                 .map(function (item, index) {
-                return __assign$2({}, item, { index: index });
+                return __assign$1({}, item, { index: index });
             })
                 .filter(function (option) { return option.itemType !== SelectableOptionMenuItemType.Header && option.itemType !== SelectableOptionMenuItemType.Divider; })
                 .filter(function (option) {
@@ -18494,7 +18494,7 @@ var ComboBox = /** @class */ (function (_super) {
             // If autoComplete is off, attempt to find a match only when the value is exactly equal to the text of an option
             var items = currentOptions
                 .map(function (item, index) {
-                return __assign$2({}, item, { index: index });
+                return __assign$1({}, item, { index: index });
             })
                 .filter(function (option) { return option.itemType !== SelectableOptionMenuItemType.Header && option.itemType !== SelectableOptionMenuItemType.Divider; })
                 .filter(function (option) { return _this._getPreviewText(option).toLocaleLowerCase() === updatedValue; });
@@ -18536,7 +18536,7 @@ var ComboBox = /** @class */ (function (_super) {
                 // If autoComplete is on, attempt to find a match where the text of an option starts with the updated value
                 var items = currentOptions
                     .map(function (item, i) {
-                    return __assign$2({}, item, { index: i });
+                    return __assign$1({}, item, { index: i });
                 })
                     .filter(function (option) { return option.itemType !== SelectableOptionMenuItemType.Header && option.itemType !== SelectableOptionMenuItemType.Divider; })
                     .filter(function (option) { return option.text.toLocaleLowerCase().indexOf(updatedValue) === 0; });
@@ -19449,12 +19449,12 @@ var DatePickerBase = /** @class */ (function (_super) {
         var calloutId = getId('DatePicker-Callout');
         var nativeProps = getNativeProps(this.props, divProperties, ['value']);
         var iconProps = textFieldProps && textFieldProps.iconProps;
-        return (React__namespace.createElement("div", __assign$2({}, nativeProps, { className: classNames.root }),
+        return (React__namespace.createElement("div", __assign$1({}, nativeProps, { className: classNames.root }),
             React__namespace.createElement("div", { ref: this._datePickerDiv, role: "combobox", "aria-expanded": isDatePickerShown, "aria-haspopup": "true", "aria-owns": isDatePickerShown ? calloutId : undefined },
-                React__namespace.createElement(TextField, __assign$2({ label: label, ariaLabel: ariaLabel, "aria-controls": isDatePickerShown ? calloutId : undefined, required: isRequired, disabled: disabled, errorMessage: this._getErrorMessage(), placeholder: placeholder, borderless: borderless, value: formattedDate, componentRef: this._textField, underlined: underlined, tabIndex: tabIndex, readOnly: !allowTextInput }, textFieldProps, { id: this._id + '-label', className: css$1(classNames.textField, textFieldProps && textFieldProps.className), iconProps: __assign$2({ iconName: 'Calendar' }, iconProps, { className: css$1(classNames.icon, iconProps && iconProps.className), onClick: this._onIconClick }), onKeyDown: this._onTextFieldKeyDown, onFocus: this._onTextFieldFocus, onBlur: this._onTextFieldBlur, onClick: this._onTextFieldClick, onChange: this._onTextFieldChanged }))),
-            isDatePickerShown && (React__namespace.createElement(Callout, __assign$2({ id: calloutId, role: "dialog", ariaLabel: pickerAriaLabel, isBeakVisible: false, gapSpace: 0, doNotLayer: false, target: this._datePickerDiv.current, directionalHint: DirectionalHint.bottomLeftEdge }, calloutProps, { className: css$1(classNames.callout, calloutProps && calloutProps.className), onDismiss: this._calendarDismissed, onPositioned: this._onCalloutPositioned }),
+                React__namespace.createElement(TextField, __assign$1({ label: label, ariaLabel: ariaLabel, "aria-controls": isDatePickerShown ? calloutId : undefined, required: isRequired, disabled: disabled, errorMessage: this._getErrorMessage(), placeholder: placeholder, borderless: borderless, value: formattedDate, componentRef: this._textField, underlined: underlined, tabIndex: tabIndex, readOnly: !allowTextInput }, textFieldProps, { id: this._id + '-label', className: css$1(classNames.textField, textFieldProps && textFieldProps.className), iconProps: __assign$1({ iconName: 'Calendar' }, iconProps, { className: css$1(classNames.icon, iconProps && iconProps.className), onClick: this._onIconClick }), onKeyDown: this._onTextFieldKeyDown, onFocus: this._onTextFieldFocus, onBlur: this._onTextFieldBlur, onClick: this._onTextFieldClick, onChange: this._onTextFieldChanged }))),
+            isDatePickerShown && (React__namespace.createElement(Callout, __assign$1({ id: calloutId, role: "dialog", ariaLabel: pickerAriaLabel, isBeakVisible: false, gapSpace: 0, doNotLayer: false, target: this._datePickerDiv.current, directionalHint: DirectionalHint.bottomLeftEdge }, calloutProps, { className: css$1(classNames.callout, calloutProps && calloutProps.className), onDismiss: this._calendarDismissed, onPositioned: this._onCalloutPositioned }),
                 React__namespace.createElement(FocusTrapZone, { isClickableOutsideFocusTrap: true, disableFirstFocus: this.props.disableAutoFocus, forceFocusInsideTrap: false },
-                    React__namespace.createElement(CalendarType, __assign$2({}, calendarProps, { onSelectDate: this._onSelectDate, onDismiss: this._calendarDismissed, isMonthPickerVisible: this.props.isMonthPickerVisible, showMonthPickerAsOverlay: this.props.showMonthPickerAsOverlay, today: this.props.today, value: selectedDate || initialPickerDate, firstDayOfWeek: firstDayOfWeek, strings: strings, highlightCurrentMonth: this.props.highlightCurrentMonth, highlightSelectedMonth: this.props.highlightSelectedMonth, showWeekNumbers: this.props.showWeekNumbers, firstWeekOfYear: this.props.firstWeekOfYear, showGoToToday: this.props.showGoToToday, dateTimeFormatter: this.props.dateTimeFormatter, minDate: minDate, maxDate: maxDate, componentRef: this._calendar, showCloseButton: showCloseButton, allFocusable: allFocusable })))))));
+                    React__namespace.createElement(CalendarType, __assign$1({}, calendarProps, { onSelectDate: this._onSelectDate, onDismiss: this._calendarDismissed, isMonthPickerVisible: this.props.isMonthPickerVisible, showMonthPickerAsOverlay: this.props.showMonthPickerAsOverlay, today: this.props.today, value: selectedDate || initialPickerDate, firstDayOfWeek: firstDayOfWeek, strings: strings, highlightCurrentMonth: this.props.highlightCurrentMonth, highlightSelectedMonth: this.props.highlightSelectedMonth, showWeekNumbers: this.props.showWeekNumbers, firstWeekOfYear: this.props.firstWeekOfYear, showGoToToday: this.props.showGoToToday, dateTimeFormatter: this.props.dateTimeFormatter, minDate: minDate, maxDate: maxDate, componentRef: this._calendar, showCloseButton: showCloseButton, allFocusable: allFocusable })))))));
     };
     DatePickerBase.prototype.focus = function () {
         if (this._textField.current) {
@@ -19631,7 +19631,7 @@ var OverlayBase = /** @class */ (function (_super) {
             className: className,
             isDark: isDark
         });
-        return React__namespace.createElement("div", __assign$2({}, divProps, { className: classNames.root }));
+        return React__namespace.createElement("div", __assign$1({}, divProps, { className: classNames.root }));
     };
     return OverlayBase;
 }(BaseComponent));
@@ -20006,11 +20006,11 @@ var PanelBase = /** @class */ (function (_super) {
             overlay = React__namespace.createElement(Overlay, { className: _classNames.overlay, isDarkThemed: false, onClick: isLightDismiss ? onLightDismissClick : undefined });
         }
         var header = onRenderHeader(this.props, this._onRenderHeader, headerTextId);
-        return (React__namespace.createElement(Layer, __assign$2({}, layerProps),
+        return (React__namespace.createElement(Layer, __assign$1({}, layerProps),
             React__namespace.createElement(Popup, { role: "dialog", "aria-modal": "true", ariaLabelledBy: header ? headerTextId : undefined, onDismiss: this.dismiss, className: _classNames.hiddenPanel },
-                React__namespace.createElement("div", __assign$2({ "aria-hidden": !isOpen && isAnimating }, nativeProps, { ref: this._panel, className: _classNames.root }),
+                React__namespace.createElement("div", __assign$1({ "aria-hidden": !isOpen && isAnimating }, nativeProps, { ref: this._panel, className: _classNames.root }),
                     overlay,
-                    React__namespace.createElement(FocusTrapZone, __assign$2({ ignoreExternalFocusing: ignoreExternalFocusing, forceFocusInsideTrap: !isBlocking || (isHiddenOnDismiss && !isOpen) ? false : forceFocusInsideTrap, firstFocusableSelector: firstFocusableSelector, isClickableOutsideFocusTrap: true }, focusTrapZoneProps, { className: _classNames.main, style: customWidthStyles, elementToFocusOnDismiss: elementToFocusOnDismiss }),
+                    React__namespace.createElement(FocusTrapZone, __assign$1({ ignoreExternalFocusing: ignoreExternalFocusing, forceFocusInsideTrap: !isBlocking || (isHiddenOnDismiss && !isOpen) ? false : forceFocusInsideTrap, firstFocusableSelector: firstFocusableSelector, isClickableOutsideFocusTrap: true }, focusTrapZoneProps, { className: _classNames.main, style: customWidthStyles, elementToFocusOnDismiss: elementToFocusOnDismiss }),
                         React__namespace.createElement("div", { className: _classNames.commands, "data-is-visible": true }, onRenderNavigation(this.props, this._onRenderNavigation)),
                         React__namespace.createElement("div", { className: _classNames.contentInner },
                             header,
@@ -20156,19 +20156,19 @@ var getPanelBreakpoints = function (type) {
     // and have the checks done separately in the `getStyles` function below.
     switch (type) {
         case PanelType.smallFixedFar:
-            selectors = __assign$2({}, smallPanelSelectors);
+            selectors = __assign$1({}, smallPanelSelectors);
             break;
         case PanelType.medium:
-            selectors = __assign$2({}, smallPanelSelectors, mediumPanelSelectors);
+            selectors = __assign$1({}, smallPanelSelectors, mediumPanelSelectors);
             break;
         case PanelType.large:
-            selectors = __assign$2({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors);
+            selectors = __assign$1({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors);
             break;
         case PanelType.largeFixed:
-            selectors = __assign$2({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors, largeFixedPanelSelectors);
+            selectors = __assign$1({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors, largeFixedPanelSelectors);
             break;
         case PanelType.extraLarge:
-            selectors = __assign$2({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors, extraLargePanelSelectors);
+            selectors = __assign$1({}, smallPanelSelectors, mediumPanelSelectors, largePanelSelectors, extraLargePanelSelectors);
             break;
     }
     return selectors;
@@ -20259,7 +20259,7 @@ var getStyles$5 = function (props) {
                 left: panelMargin.auto,
                 right: panelMargin.none,
                 width: panelWidth.full,
-                selectors: __assign$2((_b = {}, _b[HighContrastSelector] = {
+                selectors: __assign$1((_b = {}, _b[HighContrastSelector] = {
                     borderLeft: "3px solid " + palette.neutralLight,
                     borderRight: "3px solid " + palette.neutralLight
                 }, _b), getPanelBreakpoints(type))
@@ -20398,13 +20398,13 @@ var DropdownBase = /** @class */ (function (_super) {
             if (onChange) {
                 // for single-select, option passed in will always be selected.
                 // for multi-select, flip the checked value
-                var changedOpt = multiSelect ? __assign$2({}, options[index], { selected: !checked }) : options[index];
-                onChange(__assign$2({}, event, { target: _this._dropDown.current }), changedOpt, index);
+                var changedOpt = multiSelect ? __assign$1({}, options[index], { selected: !checked }) : options[index];
+                onChange(__assign$1({}, event, { target: _this._dropDown.current }), changedOpt, index);
             }
             if (onChanged) {
                 // for single-select, option passed in will always be selected.
                 // for multi-select, flip the checked value
-                var changedOpt = multiSelect ? __assign$2({}, options[index], { selected: !checked }) : options[index];
+                var changedOpt = multiSelect ? __assign$1({}, options[index], { selected: !checked }) : options[index];
                 onChanged(changedOpt, index);
             }
         };
@@ -20429,7 +20429,7 @@ var DropdownBase = /** @class */ (function (_super) {
             var panelStyles = _this._classNames.subComponentStyles
                 ? _this._classNames.subComponentStyles.panel
                 : undefined;
-            return isSmall ? (React__namespace.createElement(Panel, __assign$2({ isOpen: true, isLightDismiss: true, onDismissed: _this._onDismiss, hasCloseButton: false, styles: panelStyles }, panelProps), _this._renderFocusableList(props))) : (React__namespace.createElement(Callout, __assign$2({ isBeakVisible: false, gapSpace: 0, doNotLayer: false, directionalHintFixed: false, directionalHint: DirectionalHint.bottomLeftEdge }, calloutProps, { className: _this._classNames.callout, target: _this._dropDown.current, onDismiss: _this._onDismiss, onScroll: _this._onScroll, onPositioned: _this._onPositioned, calloutWidth: dropdownWidth || (_this._dropDown.current ? _this._dropDown.current.clientWidth : 0) }), _this._renderFocusableList(props)));
+            return isSmall ? (React__namespace.createElement(Panel, __assign$1({ isOpen: true, isLightDismiss: true, onDismissed: _this._onDismiss, hasCloseButton: false, styles: panelStyles }, panelProps), _this._renderFocusableList(props))) : (React__namespace.createElement(Callout, __assign$1({ isBeakVisible: false, gapSpace: 0, doNotLayer: false, directionalHintFixed: false, directionalHint: DirectionalHint.bottomLeftEdge }, calloutProps, { className: _this._classNames.callout, target: _this._dropDown.current, onDismiss: _this._onDismiss, onScroll: _this._onScroll, onPositioned: _this._onPositioned, calloutWidth: dropdownWidth || (_this._dropDown.current ? _this._dropDown.current.clientWidth : 0) }), _this._renderFocusableList(props)));
         };
         /** Render Caret Down Icon */
         _this._onRenderCaretDown = function (props) {
@@ -20438,7 +20438,7 @@ var DropdownBase = /** @class */ (function (_super) {
         /** Render List of items */
         _this._onRenderList = function (props) {
             var _a = props.onRenderItem, onRenderItem = _a === void 0 ? _this._onRenderItem : _a;
-            return React__namespace.createElement(React__namespace.Fragment, null, props.options.map(function (item, index) { return onRenderItem(__assign$2({}, item, { index: index }), _this._onRenderItem); }));
+            return React__namespace.createElement(React__namespace.Fragment, null, props.options.map(function (item, index) { return onRenderItem(__assign$1({}, item, { index: index }), _this._onRenderItem); }));
         };
         _this._onRenderItem = function (item) {
             switch (item.itemType) {
@@ -20931,7 +20931,7 @@ var DropdownBase = /** @class */ (function (_super) {
         var hasErrorMessage = !!errorMessage && errorMessage.length > 0;
         return (React__namespace.createElement("div", { className: this._classNames.root },
             label && (React__namespace.createElement(Label, { className: this._classNames.label, id: id + '-label', htmlFor: id, required: required, styles: labelStyles }, label)),
-            React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", __assign$2({}, keytipAttributes, { "data-is-focusable": !disabled, ref: _this._dropDown, id: id, tabIndex: disabled ? -1 : 0, "aria-expanded": isOpen ? 'true' : 'false', role: ariaAttrs.role, "aria-label": ariaLabel, "aria-labelledby": label && !ariaLabel ? id + '-label' : undefined, "aria-describedby": mergeAriaAttributeValues(optionId, keytipAttributes['aria-describedby']), "aria-activedescendant": isOpen ? ariaAttrs.ariaActiveDescendant : undefined, "aria-required": required, "aria-disabled": disabled, "aria-owns": isOpen ? id + '-list' : undefined }, divProps, { className: _this._classNames.dropdown, onBlur: _this._onDropdownBlur, onKeyDown: _this._onDropdownKeyDown, onKeyUp: _this._onDropdownKeyUp, onClick: _this._onDropdownClick, onFocus: _this._onFocus, onMouseDown: _this._onDropdownMouseDown }),
+            React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", __assign$1({}, keytipAttributes, { "data-is-focusable": !disabled, ref: _this._dropDown, id: id, tabIndex: disabled ? -1 : 0, "aria-expanded": isOpen ? 'true' : 'false', role: ariaAttrs.role, "aria-label": ariaLabel, "aria-labelledby": label && !ariaLabel ? id + '-label' : undefined, "aria-describedby": mergeAriaAttributeValues(optionId, keytipAttributes['aria-describedby']), "aria-activedescendant": isOpen ? ariaAttrs.ariaActiveDescendant : undefined, "aria-required": required, "aria-disabled": disabled, "aria-owns": isOpen ? id + '-list' : undefined }, divProps, { className: _this._classNames.dropdown, onBlur: _this._onDropdownBlur, onKeyDown: _this._onDropdownKeyDown, onKeyUp: _this._onDropdownKeyUp, onClick: _this._onDropdownClick, onFocus: _this._onFocus, onMouseDown: _this._onDropdownMouseDown }),
                 React__namespace.createElement("span", { id: optionId, className: _this._classNames.title, "aria-atomic": true, role: ariaAttrs.childRole, "aria-live": !hasFocus || disabled || multiSelect || isOpen ? 'off' : 'assertive', "aria-label": selectedOptions.length ? selectedOptions[0].text : _this._placeholder, "aria-invalid": hasErrorMessage, "aria-setsize": ariaAttrs.ariaSetSize, "aria-posinset": ariaAttrs.ariaPosInSet, "aria-selected": ariaAttrs.ariaSelected, "aria-describedby": mergeAriaAttributeValues(hasErrorMessage && id + '-errorMessage') }, // If option is selected render title, otherwise render the placeholder text
                 selectedOptions.length
                     ? onRenderTitle(selectedOptions, _this._onRenderTitle)
@@ -21186,7 +21186,7 @@ var highContrastAdjustMixin = (_a = {},
     },
     _a);
 var highContrastItemAndTitleStateMixin = {
-    selectors: __assign$2((_b = {}, _b[HighContrastSelector] = {
+    selectors: __assign$1((_b = {}, _b[HighContrastSelector] = {
         backgroundColor: 'Highlight',
         borderColor: 'Highlight',
         color: 'HighlightText',
@@ -21259,7 +21259,7 @@ var getStyles$4 = function (props) {
         dropdown: [
             globalClassnames.dropdown,
             normalize,
-            __assign$2({}, theme.fonts.medium, { color: semanticColors.menuItemText, position: 'relative', outline: 0, userSelect: 'none', selectors: (_a = {},
+            __assign$1({}, theme.fonts.medium, { color: semanticColors.menuItemText, position: 'relative', outline: 0, userSelect: 'none', selectors: (_a = {},
                     _a['&:hover .' + globalClassnames.title] = [
                         !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
                         { borderColor: palette.neutralDark },
@@ -21280,7 +21280,7 @@ var getStyles$4 = function (props) {
                     _a['&:hover .' + globalClassnames.caretDown] = !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
                     _a['&:focus .' + globalClassnames.caretDown] = [
                         !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
-                        { selectors: __assign$2((_b = {}, _b[HighContrastSelector] = { color: 'HighlightText' }, _b), highContrastAdjustMixin) }
+                        { selectors: __assign$1((_b = {}, _b[HighContrastSelector] = { color: 'HighlightText' }, _b), highContrastAdjustMixin) }
                     ],
                     _a['&:active .' + globalClassnames.caretDown] = !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
                     _a['&:hover .' + globalClassnames.titleIsPlaceHolder] = rootHoverFocusActiveSelectorBodySubtextMixin,
@@ -21361,7 +21361,7 @@ var getStyles$4 = function (props) {
             { color: semanticColors.bodySubtext, fontSize: FontSizes.small, pointerEvents: 'none' },
             disabled && { color: semanticColors.disabledText, selectors: (_e = {}, _e[HighContrastSelector] = { color: 'GrayText' }, _e) }
         ],
-        errorMessage: __assign$2({ color: semanticColors.errorText }, theme.fonts.small, { paddingTop: 5 }),
+        errorMessage: __assign$1({ color: semanticColors.errorText }, theme.fonts.small, { paddingTop: 5 }),
         callout: [
             globalClassnames.callout,
             {
@@ -21411,7 +21411,7 @@ var getStyles$4 = function (props) {
         ],
         dropdownItemHeader: [
             globalClassnames.dropdownItemHeader,
-            __assign$2({}, theme.fonts.medium, { fontWeight: FontWeights.semibold, color: semanticColors.menuHeader, background: 'none', backgroundColor: 'transparent', border: 'none', height: DROPDOWN_ITEM_HEIGHT, lineHeight: DROPDOWN_ITEM_HEIGHT, cursor: 'default', padding: '0px 16px', userSelect: 'none', textAlign: 'left' })
+            __assign$1({}, theme.fonts.medium, { fontWeight: FontWeights.semibold, color: semanticColors.menuHeader, background: 'none', backgroundColor: 'transparent', border: 'none', height: DROPDOWN_ITEM_HEIGHT, lineHeight: DROPDOWN_ITEM_HEIGHT, cursor: 'default', padding: '0px 16px', userSelect: 'none', textAlign: 'left' })
         ],
         subComponentStyles: {
             label: { root: { display: 'inline-block' } },
@@ -21547,7 +21547,7 @@ var MessageBarBase = /** @class */ (function (_super) {
     MessageBarBase.prototype._renderInnerText = function () {
         var nativeProps = getNativeProps(this.props, htmlElementProperties, ['className']);
         return (React__namespace.createElement("div", { className: this._classNames.text, id: this.state.labelId },
-            React__namespace.createElement("span", __assign$2({ className: this._classNames.innerText, role: "status", "aria-live": this._getAnnouncementPriority() }, nativeProps),
+            React__namespace.createElement("span", __assign$1({ className: this._classNames.innerText, role: "status", "aria-live": this._getAnnouncementPriority() }, nativeProps),
                 React__namespace.createElement(DelayedRender, null,
                     React__namespace.createElement("span", null, this.props.children)))));
     };
@@ -21700,7 +21700,7 @@ var getStyles$3 = function (props) {
                 display: 'flex',
                 wordBreak: 'break-word',
                 selectors: (_c = {
-                        '& .ms-Link': __assign$2({ color: palette.themeDark }, fonts.small)
+                        '& .ms-Link': __assign$1({ color: palette.themeDark }, fonts.small)
                     },
                     _c[HighContrastSelector] = {
                         background: 'windowText',
@@ -21774,7 +21774,7 @@ var getStyles$3 = function (props) {
         },
         text: [
             classNames.text,
-            __assign$2({ minWidth: 0, display: 'flex', flexGrow: 1, margin: '16px 8px' }, fonts.small, { selectors: (_h = {},
+            __assign$1({ minWidth: 0, display: 'flex', flexGrow: 1, margin: '16px 8px' }, fonts.small, { selectors: (_h = {},
                     _h[SmallScreenSelector] = {
                         margin: '8px 0px 8px 8px'
                     },
@@ -21997,10 +21997,10 @@ var SearchBoxBase = /** @class */ (function (_super) {
         var nativeProps = getNativeProps(this.props, inputProperties, ['id', 'className', 'placeholder', 'onFocus', 'onBlur', 'value']);
         return (React__namespace.createElement("div", { ref: this._rootElement, className: classNames.root, onFocusCapture: this._onFocusCapture },
             React__namespace.createElement("div", { className: classNames.iconContainer, onClick: this._onClickFocus, "aria-hidden": true },
-                React__namespace.createElement(Icon, __assign$2({ iconName: "Search" }, iconProps, { className: classNames.icon }))),
-            React__namespace.createElement("input", __assign$2({}, nativeProps, { id: id, className: classNames.field, placeholder: placeholderValue, onChange: this._onInputChange, onInput: this._onInputChange, onKeyDown: this._onKeyDown, value: value, disabled: disabled, "aria-label": ariaLabel ? ariaLabel : placeholder, ref: this._inputElement })),
+                React__namespace.createElement(Icon, __assign$1({ iconName: "Search" }, iconProps, { className: classNames.icon }))),
+            React__namespace.createElement("input", __assign$1({}, nativeProps, { id: id, className: classNames.field, placeholder: placeholderValue, onChange: this._onInputChange, onInput: this._onInputChange, onKeyDown: this._onKeyDown, value: value, disabled: disabled, "aria-label": ariaLabel ? ariaLabel : placeholder, ref: this._inputElement })),
             value.length > 0 && (React__namespace.createElement("div", { className: classNames.clearButton },
-                React__namespace.createElement(IconButton, __assign$2({ styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } }, iconProps: { iconName: 'Clear' } }, clearButtonProps, { onClick: this._onClearClick }))))));
+                React__namespace.createElement(IconButton, __assign$1({ styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } }, iconProps: { iconName: 'Clear' } }, clearButtonProps, { onClick: this._onClearClick }))))));
     };
     /**
      * Sets focus to the search box input field
@@ -22745,7 +22745,7 @@ var SpinButton = /** @class */ (function (_super) {
             : getClassNames$1(getStyles$1(theme, customStyles), !!disabled, !!isFocused, keyboardSpinDirection, labelPosition, className);
         return (React__namespace.createElement("div", { className: classNames.root },
             labelPosition !== Position.bottom && (React__namespace.createElement("div", { className: classNames.labelWrapper },
-                iconProps && React__namespace.createElement(Icon, __assign$2({}, iconProps, { className: classNames.icon, "aria-hidden": "true" })),
+                iconProps && React__namespace.createElement(Icon, __assign$1({}, iconProps, { className: classNames.icon, "aria-hidden": "true" })),
                 label && (React__namespace.createElement(Label, { id: this._labelId, htmlFor: this._inputId, className: classNames.label }, label)))),
             React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", { className: classNames.spinButtonWrapper, title: title && title, "aria-label": ariaLabel && ariaLabel, "aria-posinset": ariaPositionInSet, "aria-setsize": ariaSetSize, "data-ktp-target": keytipAttributes['data-ktp-target'] },
                 React__namespace.createElement("input", { value: value, id: _this._inputId, onChange: _this._onChange, onInput: _this._onInputChange, className: classNames.input, type: "text", autoComplete: "off", role: "spinbutton", "aria-labelledby": label && _this._labelId, "aria-valuenow": !isNaN(Number(ariaValueNow)) ? ariaValueNow : !isNaN(Number(value)) ? Number(value) : undefined, "aria-valuetext": ariaValueText ? ariaValueText : isNaN(Number(value)) ? value : undefined, "aria-valuemin": min, "aria-valuemax": max, "aria-describedby": mergeAriaAttributeValues(ariaDescribedBy, keytipAttributes['aria-describedby']), onBlur: _this._onBlur, ref: _this._input, onFocus: _this._onFocus, onKeyDown: _this._handleKeyDown, onKeyUp: _this._handleKeyUp, readOnly: disabled, "aria-disabled": disabled, "data-lpignore": true, "data-ktp-execute-target": keytipAttributes['data-ktp-execute-target'] }),
@@ -22889,7 +22889,7 @@ var ToggleBase = /** @class */ (function (_super) {
         return (React__namespace.createElement(RootType, { className: classNames.root, hidden: toggleNativeProps.hidden },
             label && (React__namespace.createElement(Label, { htmlFor: this._id, className: classNames.label, id: labelId }, label)),
             React__namespace.createElement("div", { className: classNames.container },
-                React__namespace.createElement(KeytipData, { keytipProps: keytipProps, ariaDescribedBy: toggleNativeProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("button", __assign$2({}, toggleNativeProps, keytipAttributes, { className: classNames.pill, disabled: disabled, id: _this._id, type: "button", role: ariaRole, ref: _this._toggleButton, "aria-disabled": disabled, "aria-checked": checked, "aria-label": ariaLabel ? ariaLabel : badAriaLabel, "data-is-focusable": true, onChange: _this._noop, onClick: _this._onClick, "aria-labelledby": labelledById }),
+                React__namespace.createElement(KeytipData, { keytipProps: keytipProps, ariaDescribedBy: toggleNativeProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("button", __assign$1({}, toggleNativeProps, keytipAttributes, { className: classNames.pill, disabled: disabled, id: _this._id, type: "button", role: ariaRole, ref: _this._toggleButton, "aria-disabled": disabled, "aria-checked": checked, "aria-label": ariaLabel ? ariaLabel : badAriaLabel, "data-is-focusable": true, onChange: _this._noop, onClick: _this._onClick, "aria-labelledby": labelledById }),
                     React__namespace.createElement("div", { className: classNames.thumb }))); }),
                 stateText && (React__namespace.createElement(Label, { htmlFor: this._id, className: classNames.text, id: stateTextId }, stateText)))));
     };
@@ -23126,11 +23126,11 @@ var getStyles = function (props) {
 
 var Toggle = styled(ToggleBase, getStyles, undefined, { scope: 'Toggle' });
 
-var InfoMark = function (props) {
-    var iconName = 'AlertSolid';
+const InfoMark = (props) => {
+    let iconName = 'AlertSolid';
     if (props.iconName != null && props.iconName != '')
         iconName = props.iconName;
-    var size = 'larger';
+    let size = 'larger';
     if (props.size != null && props.size != '')
         size = props.size;
     return (React__namespace.createElement("span", { style: { cursor: 'help', fontSize: size } },
@@ -23167,91 +23167,61 @@ var EInputType;
     EInputType["PhoneNumber"] = "PhoneNumber";
 })(EInputType || (EInputType = {}));
 
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-  __assign = Object.assign || function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-  };
-  return __assign.apply(this, arguments);
-};
-
-/** @deprecated */
-function __spreadArrays() {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-  for (var r = Array(s), k = 0, i = 0; i < il; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-          r[k] = a[j];
-  return r;
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-  var e = new Error(message);
-  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
 /* --- Update Input Methods --- */
 function updateInputData(evt, currentObject, setter, dataType) {
-    var _a, _b, _c;
     if (dataType === 'string') {
-        setter(__assign(__assign({}, currentObject), (_a = {}, _a[evt.currentTarget.name] = evt.currentTarget.value, _a)));
+        setter(Object.assign(Object.assign({}, currentObject), { [evt.currentTarget.name]: evt.currentTarget.value }));
     }
     else if (dataType === 'date') {
-        var convertValue = evt.currentTarget.value.replace(/\s/g, '');
+        let convertValue = evt.currentTarget.value.replace(/\s/g, '');
         convertValue = convertValue.replace(/_/g, '');
         if (convertValue.match(/^\d\d\/\d\d\/\d\d\d\d$/)) {
-            var date = new Date(convertValue.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
-            setter(__assign(__assign({}, currentObject), (_b = {}, _b[evt.currentTarget.name] = date, _b)));
+            const date = new Date(convertValue.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
+            setter(Object.assign(Object.assign({}, currentObject), { [evt.currentTarget.name]: date }));
         }
     }
     else if (dataType === 'number') {
-        var value = 0;
+        let value = 0;
         if (evt.currentTarget.value === '' || evt.currentTarget.value === null) {
             value = 0;
         }
         else {
             value = parseInt(evt.currentTarget.value);
         }
-        setter(__assign(__assign({}, currentObject), (_c = {}, _c[evt.currentTarget.name] = value, _c)));
+        setter(Object.assign(Object.assign({}, currentObject), { [evt.currentTarget.name]: value }));
     }
 }
 function updateInputDatePickers(currentObject, setter, date, propertyName) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[propertyName] = date, _a)));
+    setter(Object.assign(Object.assign({}, currentObject), { [propertyName]: date }));
 }
 function updateBoolInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
+    setter(Object.assign(Object.assign({}, currentObject), { [name]: value }));
 }
 function updateNumberInputData(value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value, _a)));
+    setter(Object.assign(Object.assign({}, currentObject), { [name]: value }));
 }
 function updateComboboxInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
+    setter(Object.assign(Object.assign({}, currentObject), { [name]: value.key }));
 }
 function updateDropdownInputData(ev, value, currentObject, setter, name) {
-    var _a;
-    setter(__assign(__assign({}, currentObject), (_a = {}, _a[name] = value.key, _a)));
+    setter(Object.assign(Object.assign({}, currentObject), { [name]: value.key }));
 }
+
+var ESuffixType;
+(function (ESuffixType) {
+    ESuffixType["S"] = "s";
+    ESuffixType["X"] = "x";
+    ESuffixType["None"] = "";
+})(ESuffixType || (ESuffixType = {}));
+var ENumberInputSuffix;
+(function (ENumberInputSuffix) {
+    ENumberInputSuffix["Euro"] = "Euro";
+    ENumberInputSuffix["Percent"] = "Percent";
+    ENumberInputSuffix["Month"] = "Month";
+    ENumberInputSuffix["M2"] = "M2";
+    ENumberInputSuffix["Level"] = "Level";
+    ENumberInputSuffix["KM"] = "KM";
+})(ENumberInputSuffix || (ENumberInputSuffix = {}));
 
 // these aren't really private, but nor are they really useful to document
 
@@ -30957,7 +30927,7 @@ function capitalize$1(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 function extractUserInfo(brutUser) {
-    var labels = brutUser.split(/\\+/);
+    const labels = brutUser.split(/\\+/);
     return labels[1];
 }
 function tableLineCount(nbLine) {
@@ -30968,7 +30938,7 @@ function tableLineCount(nbLine) {
 }
 /* --- Shared numeric methods --- */
 function round$1(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
+    const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
 }
 /* --- Shared Date/Time format --- */
@@ -31000,7 +30970,7 @@ function dateAndTimeFormatToDisplay(date) {
         ('0' + date.getMinutes()).slice(-2));
 }
 function datetimeToStringForFile() {
-    var date = DateTime.now().toLocaleString(DateTime.DATETIME_SHORT);
+    let date = DateTime.now().toLocaleString(DateTime.DATETIME_SHORT);
     date = date.replace(/\//g, '-');
     date = date.replace(/\s/g, '_');
     date = date.replace(/:/g, '-');
@@ -31008,7 +30978,7 @@ function datetimeToStringForFile() {
 }
 // Create date time with date string
 function stringToDateTime(dateString, secToAdd) {
-    var dateInSec = DateTime.fromFormat(dateString, 'DD/MM/YYYY').toSeconds();
+    const dateInSec = DateTime.fromFormat(dateString, 'DD/MM/YYYY').toSeconds();
     return DateTime.fromSeconds(dateInSec + secToAdd);
 }
 // export function stringToDate(dateString: string, lang: string): Date {
@@ -31021,59 +30991,116 @@ function stringToDateTime(dateString, secToAdd) {
 //   }
 // }
 function msToTime(s) {
-    var ms = s % 1000;
+    const ms = s % 1000;
     s = (s - ms) / 1000;
-    var secs = s % 60;
+    const secs = s % 60;
     s = (s - secs) / 60;
-    var mins = s % 60;
-    var hrs = (s - mins) / 60;
+    const mins = s % 60;
+    const hrs = (s - mins) / 60;
     return hrs + ' h ' + mins + ' min ' + secs + ' sec';
 }
 /* --- Shared custom string format --- */
 function checkEmailString(email) {
-    var isValid = true;
+    let isValid = true;
     if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
         isValid = false;
     }
     return isValid;
 }
 
-var styles$8 = "";
+/* tslint:disable */
+require('./numberInput.module.css');
+const styles$8 = {
+    noWidthInput: 'noWidthInput_2d2af0a6',
+};
+/* tslint:enable */
 
-var NumberInput = function (props) {
+var suffix = [
+	{
+		label: "Euro",
+		suffix: "€",
+		pluralType: ""
+	},
+	{
+		label: "Percent",
+		suffix: "%",
+		pluralType: ""
+	},
+	{
+		label: "Month",
+		suffix: "mois",
+		pluralType: ""
+	},
+	{
+		label: "M2",
+		suffix: "m²",
+		pluralType: ""
+	},
+	{
+		label: "Level",
+		suffix: "niveau",
+		pluralType: "x"
+	},
+	{
+		label: "KM",
+		suffix: "km",
+		pluralType: ""
+	}
+];
+var InputSuffix = {
+	suffix: suffix
+};
+
+const NumberInput = (props) => {
     // testing suffix that not require a 's'
-    var internalSuffix = 's';
-    var isNotPluralWord = props.suffix === '' || props.suffix === ' %' || props.suffix === ' mois' || props.suffix === ' m²' || props.suffix === ' €' ? true : false;
-    var isWordX = props.suffix === ' niveau' ? true : false;
+    let internalSuffix = ESuffixType.S;
+    let isNotPluralWord = false;
+    let isWordX = false;
+    let suffix = props.suffix;
+    // testing input without suffi
+    if (suffix == '')
+        isNotPluralWord = true;
+    else {
+        InputSuffix.suffix.forEach((customSuffix) => {
+            // put right suffix instead of ENumberInputSuffix
+            if (suffix == customSuffix.label)
+                suffix = customSuffix.suffix;
+            // checking plural requirement
+            if (suffix == customSuffix.suffix && customSuffix.pluralType == ESuffixType.None)
+                isNotPluralWord = true;
+            if (suffix == customSuffix.suffix && customSuffix.pluralType == ESuffixType.X)
+                isWordX = true;
+        });
+    }
     // input prevent error
-    var inputValue = 0;
+    let inputValue = 0;
     if (props.defaultValue != null)
         inputValue = props.defaultValue;
-    var defaultValue = inputValue.toString() + ' ' + props.suffix;
+    let defaultValue = inputValue.toString() + ' ' + suffix;
     if (inputValue > 1 && !isNotPluralWord && !isWordX) {
         defaultValue = defaultValue + internalSuffix;
     }
     else if (inputValue > 1 && !isNotPluralWord && isWordX) {
-        internalSuffix = 'x';
+        internalSuffix = ESuffixType.X;
         defaultValue = defaultValue + internalSuffix;
     }
     // min/max value
-    var minValue = -1; // if props.min = -1 --> no min value
+    let minValue = -1; // if props.min = -1 --> no min value
     if (props.min != null && props.min != undefined)
         minValue = props.min;
-    var maxValue = 0; // if props.max = 0 --> no max value
+    let maxValue = 0; // if props.max = 0 --> no max value
     if (props.max != null && props.max != undefined)
         maxValue = props.max;
     function convertValueToFloat(stringValue) {
-        var rem = stringValue.replace(/,/g, '.');
-        var remvalue = rem.replace(/[^0-9.]/g, '');
-        var intValue = parseFloat(remvalue);
+        const rem = stringValue.replace(/,/g, '.');
+        const remvalue = rem.replace(/[^0-9.]/g, '');
+        const intValue = parseFloat(remvalue);
         return intValue;
     }
     function _hasSuffix(value, suffix) {
-        var suffixP = suffix + internalSuffix;
-        var subString = value.substr(value.length - suffix.length);
-        var subStringPuriel = value.substr(value.length - suffixP.length);
+        const suffixP = suffix + internalSuffix;
+        const subString = value.substr(value.length - suffix.length);
+        const subStringPuriel = value.substr(value.length - suffixP.length);
         if (subString === suffix || subStringPuriel === suffixP) {
             return true;
         }
@@ -31087,17 +31114,17 @@ var NumberInput = function (props) {
         }
         return value.substr(0, value.length - suffix.length);
     }
-    return (React__namespace.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$8.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: function (value) {
-            value = _removeSuffix(value, props.suffix);
-            var intValue = convertValueToFloat(value);
-            var newIntValue = round$1(intValue, 2);
+    return (React__namespace.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$8.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: (value) => {
+            value = _removeSuffix(value, suffix);
+            const intValue = convertValueToFloat(value);
+            let newIntValue = round$1(intValue, 2);
             // checking min value
             if (newIntValue < minValue && minValue > -1)
                 newIntValue = minValue;
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            var result = newIntValue + ' ' + props.suffix;
+            let result = newIntValue + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31106,17 +31133,17 @@ var NumberInput = function (props) {
                 updateNumberInputData(newIntValue, props.currentObject, props.setter, props.propertyName);
                 return result;
             }
-        }, onIncrement: function (value) {
-            value = _removeSuffix(value, props.suffix);
-            var intValue = convertValueToFloat(value);
-            var newIntValue = round$1(intValue + props.increment, 2);
+        }, onIncrement: (value) => {
+            value = _removeSuffix(value, suffix);
+            const intValue = convertValueToFloat(value);
+            let newIntValue = round$1(intValue + props.increment, 2);
             // checking min value
             if (newIntValue < minValue && minValue > -1)
                 newIntValue = minValue;
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            var result = newIntValue + ' ' + props.suffix;
+            let result = newIntValue + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31125,17 +31152,17 @@ var NumberInput = function (props) {
                 updateNumberInputData(newIntValue, props.currentObject, props.setter, props.propertyName);
                 return result;
             }
-        }, onDecrement: function (value) {
-            value = _removeSuffix(value, props.suffix);
-            var intValue = convertValueToFloat(value);
-            var newIntValue = round$1(intValue - props.increment, 2);
+        }, onDecrement: (value) => {
+            value = _removeSuffix(value, suffix);
+            const intValue = convertValueToFloat(value);
+            let newIntValue = round$1(intValue - props.increment, 2);
             // checking min value
             if (newIntValue < minValue && minValue > -1)
                 newIntValue = minValue;
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            var result = newIntValue + ' ' + props.suffix;
+            let result = newIntValue + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31154,9 +31181,9 @@ var NumberInput = function (props) {
         } }));
 };
 
-var OneLineDatePicker = function (props) {
+const OneLineDatePicker = (props) => {
     function datepickerTranslation() {
-        var DayPickerStrings = {
+        const DayPickerStrings = {
             months: ['Janvier', 'Février', 'mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
             shortMonths: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Déc'],
             days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
@@ -31170,7 +31197,7 @@ var OneLineDatePicker = function (props) {
         };
         return DayPickerStrings;
     }
-    return (React__namespace.createElement(DatePicker, { firstDayOfWeek: DayOfWeek.Monday, showMonthPickerAsOverlay: true, showWeekNumbers: true, strings: datepickerTranslation(), placeholder: 'Séletionnez une date', ariaLabel: 'Séletionnez une date', formatDate: dateFormatToDisplay, value: props.date, onSelectDate: function (date) {
+    return (React__namespace.createElement(DatePicker, { firstDayOfWeek: DayOfWeek.Monday, showMonthPickerAsOverlay: true, showWeekNumbers: true, strings: datepickerTranslation(), placeholder: 'Séletionnez une date', ariaLabel: 'Séletionnez une date', formatDate: dateFormatToDisplay, value: props.date, onSelectDate: (date) => {
             if (date != null && date != undefined)
                 updateInputDatePickers(props.currentObject, props.setter, date, props.propertyName);
         } }));
@@ -31178,8 +31205,8 @@ var OneLineDatePicker = function (props) {
 
 var styles$7 = "";
 
-var SelectChoice = function (props) {
-    return (React__namespace.createElement(ComboBox, { className: styles$7.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: function (e, option) {
+const SelectChoice = (props) => {
+    return (React__namespace.createElement(ComboBox, { className: styles$7.comboboxBackground, autoComplete: 'on', options: props.options, selectedKey: props.value, disabled: props.isReadOnly, onChange: (e, option) => {
             updateComboboxInputData(e, option, props.currentObject, props.setter, props.propertieName);
         } }));
 };
@@ -39958,78 +39985,79 @@ var ETripleToogleColor;
 
 var styles$2 = "";
 
-var TrippleChoiceToggle = function (props) {
+const TrippleChoiceToggle = (props) => {
     // Methods
     function setNewValue(ev, value) {
         updateBoolInputData(ev, value, props.currentObject, props.setter, props.propertyName);
     }
     // Load view
-    return (React__namespace.createElement(ToggleButtonGroup$1, { className: styles$2.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: function (ev, value) {
+    return (React__namespace.createElement(ToggleButtonGroup$1, { className: styles$2.trippleToggle, size: 'small', value: props.defaultValue, exclusive: true, onChange: (ev, value) => {
             setNewValue(ev, value);
         } },
-        React__namespace.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.yesBgColor) : '') }, 'Oui'),
+        React__namespace.createElement(ToggleButton$1, { value: true, disabled: props.isReadOnly, className: `${props.defaultValue != null && props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.yesBgColor) : ''}` }, 'Oui'),
         React__namespace.createElement(ToggleButton$1, { value: null, disabled: true }),
-        React__namespace.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: "" + (props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.noBgColor) : '') }, 'Non')));
+        React__namespace.createElement(ToggleButton$1, { value: false, disabled: props.isReadOnly, className: `${props.defaultValue != null && !props.defaultValue ? (props.isPrimaryColor == ETripleToogleColor.default ? styles$2.defaultBgColor : styles$2.noBgColor) : ''}` }, 'Non')));
 };
 
-var dropdownStyles = {
+const dropdownStyles = {
     dropdownItems: { maxHeight: 300, overflowY: 'auto' }
 };
-var SearchableDropdown = function (props) {
-    var _a = React__namespace.useState(''), searchText = _a[0], setSearchText = _a[1];
+const SearchableDropdown = (props) => {
+    const [searchText, setSearchText] = React__namespace.useState('');
     function renderOption(option) {
-        return option.itemType === SelectableOptionMenuItemType.Header && option.key === 'FilterHeader' ? (React__namespace.createElement(SearchBox, { onChange: function (newValue) { return setSearchText(newValue); }, underlined: true, placeholder: 'Rechercher...' })) : (React__namespace.createElement(React__namespace.Fragment, null, option.text));
+        return option.itemType === SelectableOptionMenuItemType.Header && option.key === 'FilterHeader' ? (React__namespace.createElement(SearchBox, { onChange: (newValue) => setSearchText(newValue), underlined: true, placeholder: 'Rechercher...' })) : (React__namespace.createElement(React__namespace.Fragment, null, option.text));
     }
-    return (React__namespace.createElement(Dropdown, __assign({}, props, { options: __spreadArrays([
+    return (React__namespace.createElement(Dropdown, Object.assign({}, props, { options: [
             { key: 'FilterHeader', text: '-', itemType: SelectableOptionMenuItemType.Header },
-            { key: 'dividerHeader', text: '-', itemType: SelectableOptionMenuItemType.Divider }
-        ], props.options.map(function (option) { return (!option.disabled && option.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ? option : __assign(__assign({}, option), { hidden: true })); })), calloutProps: { shouldRestoreFocus: false, setInitialFocus: false }, onRenderOption: renderOption, onDismiss: function () { return setSearchText(''); }, onChange: function (e, option) {
+            { key: 'dividerHeader', text: '-', itemType: SelectableOptionMenuItemType.Divider },
+            ...props.options.map((option) => (!option.disabled && option.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ? option : Object.assign(Object.assign({}, option), { hidden: true })))
+        ], calloutProps: { shouldRestoreFocus: false, setInitialFocus: false }, onRenderOption: renderOption, onDismiss: () => setSearchText(''), onChange: (e, option) => {
             if (option != null && option != undefined)
                 updateDropdownInputData(e, option, props.currentObject, props.setter, props.propertieName);
         }, multiSelect: false, selectedKey: props.value, styles: dropdownStyles })));
 };
 
-var InputComponentView = function (props) {
+const InputComponentView = (props) => {
     return (React__namespace.createElement(React__namespace.Fragment, null,
         props.component === EInputType.NumberInput ? (React__namespace.createElement(NumberInput, { label: '', isReadOnly: props.isReadOnly, suffix: props.suffix || '', increment: props.increment || 1, defaultValue: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName, min: props.min, max: props.max })) : (React__namespace.createElement(React__namespace.Fragment, null)),
         props.component === EInputType.DatePicker ? (React__namespace.createElement(OneLineDatePicker, { label: '', isReadOnly: props.isReadOnly, date: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName })) : (React__namespace.createElement(React__namespace.Fragment, null)),
         props.component === EInputType.SearchedDropdown ? (React__namespace.createElement(SearchableDropdown, { label: '', isReadOnly: props.isReadOnly, value: props.objValue, options: props.selectOptions || [], currentObject: props.currentObj, setter: props.objSetter, propertieName: props.objPropertyName })) : (React__namespace.createElement(React__namespace.Fragment, null)),
         props.component === EInputType.SelectChoice ? (React__namespace.createElement(SelectChoice, { label: '', isReadOnly: props.isReadOnly, value: props.objValue, options: props.selectOptions || [], currentObject: props.currentObj, setter: props.objSetter, propertieName: props.objPropertyName })) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.component === EInputType.TextField ? (React__namespace.createElement(TextField, { label: '', value: props.objValue, name: props.objPropertyName, onChange: function (e) {
+        props.component === EInputType.TextField ? (React__namespace.createElement(TextField, { label: '', value: props.objValue, name: props.objPropertyName, onChange: (e) => {
                 updateInputData(e, props.currentObj, props.objSetter, 'string');
             }, underlined: true, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.component === EInputType.PhoneNumber ? (React__namespace.createElement(MaskedTextField, { label: '', underlined: true, mask: '99 99 99 99 99', className: layoutStyles.inputNoBorder, name: props.objPropertyName, onChange: function (e) {
+        props.component === EInputType.PhoneNumber ? (React__namespace.createElement(MaskedTextField, { label: '', underlined: true, mask: '99 99 99 99 99', className: layoutStyles.inputNoBorder, name: props.objPropertyName, onChange: (e) => {
                 updateInputData(e, props.currentObj, props.objSetter, 'string');
             }, value: props.objValue, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.component === EInputType.Toogle ? (React__namespace.createElement(Toggle, { className: layoutStyles.inputShift, label: '', inlineLabel: true, onText: props.onTextToogle, offText: props.offTextToogle, onChange: function (ev, checked) {
+        props.component === EInputType.Toogle ? (React__namespace.createElement(Toggle, { className: layoutStyles.inputShift, label: '', inlineLabel: true, onText: props.onTextToogle, offText: props.offTextToogle, onChange: (ev, checked) => {
                 updateBoolInputData(ev, checked, props.currentObj, props.objSetter, props.objPropertyName);
             }, checked: props.objValue, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
         props.component === EInputType.TrippleToggle ? (React__namespace.createElement(TrippleChoiceToggle, { isReadOnly: props.isReadOnly, defaultValue: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName, isPrimaryColor: props.isPrimaryColor })) : (React__namespace.createElement(React__namespace.Fragment, null))));
 };
 
-var InputLayout = function (props) {
+const InputLayout = (props) => {
     // required input
-    var required = false;
+    let required = false;
     if ('isRequired' in props)
         required = props.isRequired;
     // hasIconMark input
-    var hasIconMark = false;
+    let hasIconMark = false;
     if ('hasIconMark' in props)
         hasIconMark = props.hasIconMark;
     // label html
-    var label = props.label;
+    let label = props.label;
     if (required) {
         label = label + ' <span style="color: #c52e3d; font-weight: bold;">*</span>';
     }
     // label className adder
-    var addLabelClassName = false;
+    let addLabelClassName = false;
     if (props.component === EInputType.TextField || props.component === EInputType.PhoneNumber) {
         addLabelClassName = true;
     }
-    var minValue = -1; // if props.min = -1 --> no min value
+    let minValue = -1; // if props.min = -1 --> no min value
     if (props.min != null && props.min != undefined)
         minValue = props.min;
-    var maxValue = 0; // if props.max = 0 --> no max value
+    let maxValue = 0; // if props.max = 0 --> no max value
     if (props.max != null && props.max != undefined)
         maxValue = props.max;
     return (React__namespace.createElement(React__namespace.Fragment, null,
@@ -40170,9 +40198,9 @@ var InputLayout = function (props) {
 
 var styles$1 = "";
 
-var MessageBarComp = function (props) {
-    var _a = React__namespace.useState(true), showMessageBar = _a[0], setShowMessageBar = _a[1];
-    return (React__namespace.createElement(React__namespace.Fragment, null, showMessageBar ? (React__namespace.createElement(React__namespace.Fragment, null, props.messageBarComp.showDismissButton ? (React__namespace.createElement(MessageBar, { messageBarType: props.messageBarComp.messageType, isMultiline: false, onDismiss: function () {
+const MessageBarComp = (props) => {
+    const [showMessageBar, setShowMessageBar] = React__namespace.useState(true);
+    return (React__namespace.createElement(React__namespace.Fragment, null, showMessageBar ? (React__namespace.createElement(React__namespace.Fragment, null, props.messageBarComp.showDismissButton ? (React__namespace.createElement(MessageBar, { messageBarType: props.messageBarComp.messageType, isMultiline: false, onDismiss: () => {
             if (!props.messageBarComp.isDimissInternal) {
                 props.messageBarComp.objSetter(false);
             }
@@ -40184,8 +40212,8 @@ var styles = "";
 
 var animations = "";
 
-var NotificationMessage = function (props) {
-    var title = 'Notification';
+const NotificationMessage = (props) => {
+    let title = 'Notification';
     if (props.notificationPopup.title != null && props.notificationPopup.title != '') {
         title = props.notificationPopup.title;
     }
@@ -40197,23 +40225,23 @@ var NotificationMessage = function (props) {
         React__namespace.createElement("div", { className: styles.popupMessage }, props.notificationPopup.message)));
 };
 
-var NotificationPopup = function (props) {
+const NotificationPopup = (props) => {
     return (React__namespace.createElement(React__namespace.Fragment, null,
         React__namespace.createElement(CSSTransition$1, { unmountOnExit: true, in: props.notificationPopupConfig.activator, timeout: 1000, classNames: animations },
             React__namespace.createElement(React__namespace.Fragment, null,
-                props.notificationPopup.messageType === MessageBarType.success ? (React__namespace.createElement("span", { className: styles.topcorner + " " + styles.successNotification, onClick: function () {
+                props.notificationPopup.messageType === MessageBarType.success ? (React__namespace.createElement("span", { className: `${styles.topcorner} ${styles.successNotification}`, onClick: () => {
                         props.notificationPopupConfig.activatorSetter(false);
                     } },
                     React__namespace.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.error ? (React__namespace.createElement("span", { className: styles.topcorner + " " + styles.dangerNotification, onClick: function () {
+                props.notificationPopup.messageType === MessageBarType.error ? (React__namespace.createElement("span", { className: `${styles.topcorner} ${styles.dangerNotification}`, onClick: () => {
                         props.notificationPopupConfig.activatorSetter(false);
                     } },
                     React__namespace.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.warning ? (React__namespace.createElement("span", { className: styles.topcorner + " " + styles.warningNotification, onClick: function () {
+                props.notificationPopup.messageType === MessageBarType.warning ? (React__namespace.createElement("span", { className: `${styles.topcorner} ${styles.warningNotification}`, onClick: () => {
                         props.notificationPopupConfig.activatorSetter(false);
                     } },
                     React__namespace.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-                props.notificationPopup.messageType === MessageBarType.info ? (React__namespace.createElement("span", { className: styles.topcorner + " " + styles.infoNotification, onClick: function () {
+                props.notificationPopup.messageType === MessageBarType.info ? (React__namespace.createElement("span", { className: `${styles.topcorner} ${styles.infoNotification}`, onClick: () => {
                         props.notificationPopupConfig.activatorSetter(false);
                     } },
                     React__namespace.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React__namespace.createElement(React__namespace.Fragment, null))))));
