@@ -2,7 +2,7 @@ import * as React from 'react';
 import { EInputType, PropsInputLayout } from './IInputLayoutProps';
 import { MaskedTextField, TextField, Toggle } from 'office-ui-fabric-react';
 import { updateBoolInputData, updateInputData } from '../../services/inputService';
-import layoutStyles from './inputayout.module.scss';
+import layoutStyles from './inputLayout.module.scss';
 import NumberInput from '../numberInput/numberInput';
 import OneLineDatePicker from '../oneLineDatePicker/oneLineDatePicker';
 import SelectChoice from '../selectChoice/selectChoice';

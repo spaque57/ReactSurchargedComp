@@ -26,11 +26,25 @@ const OneLineDatePicker = <T,>(props: IOneLineDatePickerProps<T>) => {
     return DayPickerStrings;
   }
 
+  function _onParseDateFromString(value: string): Date {
+    const date = new Date();
+    const values = (value || '').trim().split('/');
+    const day = values.length > 0 ? Math.max(1, Math.min(31, parseInt(values[0], 10))) : date.getDate();
+    const month = values.length > 1 ? Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1 : date.getMonth();
+    let year = values.length > 2 ? parseInt(values[2], 10) : date.getFullYear();
+    if (year < 100) {
+      year += date.getFullYear() - (date.getFullYear() % 100);
+    }
+    return new Date(year, month, day);
+  }
+
   return (
     <DatePicker
+      allowTextInput={true}
       firstDayOfWeek={DayOfWeek.Monday}
       showMonthPickerAsOverlay={true}
-      showWeekNumbers={true}
+      showWeekNumbers={false}
+      showGoToToday={false}
       strings={datepickerTranslation()}
       placeholder={'Séletionnez une date'}
       ariaLabel={'Séletionnez une date'}
@@ -39,6 +53,8 @@ const OneLineDatePicker = <T,>(props: IOneLineDatePickerProps<T>) => {
       onSelectDate={(date: Date | null | undefined) => {
         if (date != null && date != undefined) updateInputDatePickers(props.currentObject, props.setter, date, props.propertyName);
       }}
+      disabled={props.isReadOnly}
+      parseDateFromString={_onParseDateFromString}
     />
   );
 };

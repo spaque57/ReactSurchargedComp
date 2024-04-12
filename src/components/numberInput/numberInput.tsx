@@ -13,7 +13,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
   let isWordX = false;
   let suffix = props.suffix;
 
-  // testing input without suffi
+  // testing input without suffix
   if (suffix == '') isNotPluralWord = true;
   else {
     InputSuffix.suffix.forEach((customSuffix: ICustomSuffix) => {
@@ -30,7 +30,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
   let inputValue = 0;
   if (props.defaultValue != null) inputValue = props.defaultValue;
 
-  let defaultValue = inputValue.toString() + ' ' + suffix;
+  let defaultValue = numberWithSpaces(inputValue) + ' ' + suffix;
   if (inputValue > 1 && !isNotPluralWord && !isWordX) {
     defaultValue = defaultValue + internalSuffix;
   } else if (inputValue > 1 && !isNotPluralWord && isWordX) {
@@ -70,6 +70,12 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
     return value.substr(0, value.length - suffix.length);
   }
 
+  function numberWithSpaces(num: number): string {
+    const parts = num.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return parts.join('.');
+  }
+
   return (
     <SpinButton
       disabled={props.isReadOnly}
@@ -88,7 +94,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + suffix;
+        let result = numberWithSpaces(newIntValue) + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }
@@ -109,7 +115,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + suffix;
+        let result = numberWithSpaces(newIntValue) + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }
@@ -130,7 +136,7 @@ const NumberInput = <T,>(props: INumberInputProps<T>) => {
         // checking max value
         if (newIntValue > maxValue && maxValue > 0) newIntValue = maxValue;
 
-        let result = newIntValue + ' ' + suffix;
+        let result = numberWithSpaces(newIntValue) + ' ' + suffix;
         if (!isNotPluralWord && newIntValue > 1) {
           result = result + internalSuffix;
         }

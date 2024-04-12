@@ -23153,6 +23153,9 @@ var EInputLayoutType;
     EInputLayoutType["quarterLine"] = "QL";
     EInputLayoutType["smallLabel"] = "SL";
     EInputLayoutType["noLabel"] = "NL";
+    EInputLayoutType["twoLineInputLeft"] = "2LIL";
+    EInputLayoutType["twoLineInputCenter"] = "2LIC";
+    EInputLayoutType["twoLineInputRight"] = "2LIR";
 })(EInputLayoutType || (EInputLayoutType = {}));
 var EInputType;
 (function (EInputType) {
@@ -31008,12 +31011,7 @@ function checkEmailString(email) {
     return isValid;
 }
 
-/* tslint:disable */
-require('./numberInput.module.css');
-const styles$8 = {
-    noWidthInput: 'noWidthInput_2d2af0a6',
-};
-/* tslint:enable */
+var styles$8 = "";
 
 var suffix = [
 	{
@@ -31057,7 +31055,7 @@ const NumberInput = (props) => {
     let isNotPluralWord = false;
     let isWordX = false;
     let suffix = props.suffix;
-    // testing input without suffi
+    // testing input without suffix
     if (suffix == '')
         isNotPluralWord = true;
     else {
@@ -31076,7 +31074,7 @@ const NumberInput = (props) => {
     let inputValue = 0;
     if (props.defaultValue != null)
         inputValue = props.defaultValue;
-    let defaultValue = inputValue.toString() + ' ' + suffix;
+    let defaultValue = numberWithSpaces(inputValue) + ' ' + suffix;
     if (inputValue > 1 && !isNotPluralWord && !isWordX) {
         defaultValue = defaultValue + internalSuffix;
     }
@@ -31114,6 +31112,11 @@ const NumberInput = (props) => {
         }
         return value.substr(0, value.length - suffix.length);
     }
+    function numberWithSpaces(num) {
+        const parts = num.toString().split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return parts.join('.');
+    }
     return (React__namespace.createElement(SpinButton, { disabled: props.isReadOnly, className: styles$8.noWidthInput, step: props.increment, min: minValue, max: maxValue, value: defaultValue, onValidate: (value) => {
             value = _removeSuffix(value, suffix);
             const intValue = convertValueToFloat(value);
@@ -31124,7 +31127,7 @@ const NumberInput = (props) => {
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            let result = newIntValue + ' ' + suffix;
+            let result = numberWithSpaces(newIntValue) + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31143,7 +31146,7 @@ const NumberInput = (props) => {
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            let result = newIntValue + ' ' + suffix;
+            let result = numberWithSpaces(newIntValue) + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31162,7 +31165,7 @@ const NumberInput = (props) => {
             // checking max value
             if (newIntValue > maxValue && maxValue > 0)
                 newIntValue = maxValue;
-            let result = newIntValue + ' ' + suffix;
+            let result = numberWithSpaces(newIntValue) + ' ' + suffix;
             if (!isNotPluralWord && newIntValue > 1) {
                 result = result + internalSuffix;
             }
@@ -31197,10 +31200,21 @@ const OneLineDatePicker = (props) => {
         };
         return DayPickerStrings;
     }
-    return (React__namespace.createElement(DatePicker, { firstDayOfWeek: DayOfWeek.Monday, showMonthPickerAsOverlay: true, showWeekNumbers: true, strings: datepickerTranslation(), placeholder: 'Séletionnez une date', ariaLabel: 'Séletionnez une date', formatDate: dateFormatToDisplay, value: props.date, onSelectDate: (date) => {
+    function _onParseDateFromString(value) {
+        const date = new Date();
+        const values = (value || '').trim().split('/');
+        const day = values.length > 0 ? Math.max(1, Math.min(31, parseInt(values[0], 10))) : date.getDate();
+        const month = values.length > 1 ? Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1 : date.getMonth();
+        let year = values.length > 2 ? parseInt(values[2], 10) : date.getFullYear();
+        if (year < 100) {
+            year += date.getFullYear() - (date.getFullYear() % 100);
+        }
+        return new Date(year, month, day);
+    }
+    return (React__namespace.createElement(DatePicker, { allowTextInput: true, firstDayOfWeek: DayOfWeek.Monday, showMonthPickerAsOverlay: true, showWeekNumbers: false, showGoToToday: false, strings: datepickerTranslation(), placeholder: 'Séletionnez une date', ariaLabel: 'Séletionnez une date', formatDate: dateFormatToDisplay, value: props.date, onSelectDate: (date) => {
             if (date != null && date != undefined)
                 updateInputDatePickers(props.currentObject, props.setter, date, props.propertyName);
-        } }));
+        }, disabled: props.isReadOnly, parseDateFromString: _onParseDateFromString }));
 };
 
 var styles$7 = "";
@@ -40193,7 +40207,52 @@ const InputLayout = (props) => {
                     // obj
                     objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })),
             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
-                React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))) : (React__namespace.createElement(React__namespace.Fragment, null))));
+                React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))) : (React__namespace.createElement(React__namespace.Fragment, null)),
+        props.layoutType === EInputLayoutType.twoLineInputLeft ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+            React__namespace.createElement("div", { className: 'ms-Grid' },
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
+                                React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
+        props.layoutType === EInputLayoutType.twoLineInputCenter ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput, style: { textAlign: 'center' } },
+            React__namespace.createElement("div", { className: 'ms-Grid' },
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
+                                React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
+        props.layoutType === EInputLayoutType.twoLineInputRight ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput, style: { textAlign: 'right' } },
+            React__namespace.createElement("div", { className: 'ms-Grid' },
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                            React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
+                            hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
+                                React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
+                React__namespace.createElement("div", { className: 'ms-Grid-row' },
+                    React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
+                        React__namespace.createElement(InputComponentView, { component: props.component, layoutType: props.layoutType, label: props.label, isReadOnly: props.isReadOnly, 
+                            // input spe
+                            increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
+                            // obj
+                            objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null))));
 };
 
 var styles$1 = "";

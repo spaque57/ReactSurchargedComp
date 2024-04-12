@@ -1,5 +1,5 @@
 import * as React from 'react';
-import layoutStyles from './inputayout.module.scss';
+import layoutStyles from './inputLayout.module.scss';
 import { EInputLayoutType, EInputType, PropsInputLayout } from './IInputLayoutProps';
 import InputComponentView from './inputComponentView';
 import InfoMark from '../infoMark/infoMark';
@@ -430,6 +430,7 @@ const InputLayout = <T,>(props: PropsInputLayout<T>) => {
         <></>
       )}
 
+      {/* --- VERY CUSTOM VIEW OPTIONS --- */}
       {props.layoutType === EInputLayoutType.noLabel ? (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span style={{ flexGrow: 1 }}>
@@ -461,6 +462,144 @@ const InputLayout = <T,>(props: PropsInputLayout<T>) => {
           ) : (
             <></>
           )}
+        </div>
+      ) : (
+        <></>
+      )}
+      {props.layoutType === EInputLayoutType.twoLineInputLeft ? (
+        <div className={layoutStyles.surchargeOnlineFormInput}>
+          <div className='ms-Grid'>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <div className={addLabelClassName ? layoutStyles.inputLabelTextFieldValign : ''} style={{ display: 'flex', alignItems: 'center' }}>
+                  <span dangerouslySetInnerHTML={{ __html: label }} style={{ flexGrow: 1 }}></span>
+                  {hasIconMark ? (
+                    <span style={{ marginLeft: '5px' }}>
+                      <InfoMark label={props.infoMarkLabel!} iconName={props.infoMarkIconName} size={props.infoMarkSize} />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <InputComponentView
+                  component={props.component}
+                  layoutType={props.layoutType}
+                  label={props.label}
+                  isReadOnly={props.isReadOnly}
+                  // input spe
+                  increment={props.increment}
+                  suffix={props.suffix}
+                  selectOptions={props.selectOptions}
+                  onTextToogle={props.onTextToogle}
+                  offTextToogle={props.offTextToogle}
+                  isPrimaryColor={props.isPrimaryColor}
+                  min={minValue}
+                  max={maxValue}
+                  // obj
+                  objValue={props.objValue}
+                  currentObj={props.currentObj}
+                  objSetter={props.objSetter}
+                  objPropertyName={props.objPropertyName}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {props.layoutType === EInputLayoutType.twoLineInputCenter ? (
+        <div className={layoutStyles.surchargeOnlineFormInput} style={{ textAlign: 'center' }}>
+          <div className='ms-Grid'>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <div className={addLabelClassName ? layoutStyles.inputLabelTextFieldValign : ''} style={{ display: 'flex', alignItems: 'center' }}>
+                  <span dangerouslySetInnerHTML={{ __html: label }} style={{ flexGrow: 1 }}></span>
+                  {hasIconMark ? (
+                    <span style={{ marginLeft: '5px' }}>
+                      <InfoMark label={props.infoMarkLabel!} iconName={props.infoMarkIconName} size={props.infoMarkSize} />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <InputComponentView
+                  component={props.component}
+                  layoutType={props.layoutType}
+                  label={props.label}
+                  isReadOnly={props.isReadOnly}
+                  // input spe
+                  increment={props.increment}
+                  suffix={props.suffix}
+                  selectOptions={props.selectOptions}
+                  onTextToogle={props.onTextToogle}
+                  offTextToogle={props.offTextToogle}
+                  isPrimaryColor={props.isPrimaryColor}
+                  min={minValue}
+                  max={maxValue}
+                  // obj
+                  objValue={props.objValue}
+                  currentObj={props.currentObj}
+                  objSetter={props.objSetter}
+                  objPropertyName={props.objPropertyName}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {props.layoutType === EInputLayoutType.twoLineInputRight ? (
+        <div className={layoutStyles.surchargeOnlineFormInput} style={{ textAlign: 'right' }}>
+          <div className='ms-Grid'>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <div className={addLabelClassName ? layoutStyles.inputLabelTextFieldValign : ''} style={{ display: 'flex', alignItems: 'center' }}>
+                  <span dangerouslySetInnerHTML={{ __html: label }} style={{ flexGrow: 1 }}></span>
+                  {hasIconMark ? (
+                    <span style={{ marginLeft: '5px' }}>
+                      <InfoMark label={props.infoMarkLabel!} iconName={props.infoMarkIconName} size={props.infoMarkSize} />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className='ms-Grid-row'>
+              <div className='ms-Grid-col ms-sm12 ms-md12'>
+                <InputComponentView
+                  component={props.component}
+                  layoutType={props.layoutType}
+                  label={props.label}
+                  isReadOnly={props.isReadOnly}
+                  // input spe
+                  increment={props.increment}
+                  suffix={props.suffix}
+                  selectOptions={props.selectOptions}
+                  onTextToogle={props.onTextToogle}
+                  offTextToogle={props.offTextToogle}
+                  isPrimaryColor={props.isPrimaryColor}
+                  min={minValue}
+                  max={maxValue}
+                  // obj
+                  objValue={props.objValue}
+                  currentObj={props.currentObj}
+                  objSetter={props.objSetter}
+                  objPropertyName={props.objPropertyName}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <></>

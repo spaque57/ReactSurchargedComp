@@ -44,7 +44,10 @@ export enum EInputLayoutType {
   tierLine = 'TL',
   quarterLine = 'QL',
   smallLabel = 'SL',
-  noLabel = 'NL'
+  noLabel = 'NL',
+  twoLineInputLeft = '2LIL',
+  twoLineInputCenter = '2LIC',
+  twoLineInputRight = '2LIR'
 }
 export enum EInputType {
   NumberInput = 'NumberInput',
