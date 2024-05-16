@@ -6579,7 +6579,7 @@ var ANIMATIONS = (_a$2 = {},
     _a$2[RectangleEdge.left] = AnimationClassNames.slideLeftIn10,
     _a$2[RectangleEdge.right] = AnimationClassNames.slideRightIn10,
     _a$2);
-var getClassNames$l = classNamesFunction({
+var getClassNames$m = classNamesFunction({
     disableCaching: true
 });
 var BORDER_WIDTH = 1;
@@ -6724,7 +6724,7 @@ var CalloutContentBase = /** @class */ (function (_super) {
         var contentMaxHeight = calloutMaxHeight && getContentMaxHeight && calloutMaxHeight < getContentMaxHeight ? calloutMaxHeight : getContentMaxHeight;
         var overflowYHidden = hideOverflow;
         var beakVisible = isBeakVisible && !!target;
-        this._classNames = getClassNames$l(styles, {
+        this._classNames = getClassNames$m(styles, {
             theme: this.props.theme,
             className: className,
             overflowYHidden: overflowYHidden,
@@ -6964,16 +6964,16 @@ function getBeakStyle(beakWidth) {
         width: beakWidth
     };
 }
-var GlobalClassNames$b = {
+var GlobalClassNames$c = {
     container: 'ms-Callout-container',
     root: 'ms-Callout',
     beak: 'ms-Callout-beak',
     beakCurtain: 'ms-Callout-beakCurtain',
     calloutMain: 'ms-Callout-main'
 };
-var getStyles$n = function (props) {
+var getStyles$o = function (props) {
     var theme = props.theme, className = props.className, overflowYHidden = props.overflowYHidden, calloutWidth = props.calloutWidth, beakWidth = props.beakWidth, backgroundColor = props.backgroundColor, calloutMaxWidth = props.calloutMaxWidth;
-    var classNames = getGlobalClassNames(GlobalClassNames$b, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$c, theme);
     var palette = theme.palette;
     return {
         container: [
@@ -7050,15 +7050,15 @@ var getStyles$n = function (props) {
     var _a;
 };
 
-var CalloutContent = styled(CalloutContentBase, getStyles$n, undefined, { scope: 'CalloutContent' });
+var CalloutContent = styled(CalloutContentBase, getStyles$o, undefined, { scope: 'CalloutContent' });
 
 var inheritFont = { fontFamily: 'inherit' };
-var GlobalClassNames$a = {
+var GlobalClassNames$b = {
     root: 'ms-Fabric'
 };
-var getStyles$m = function (props) {
+var getStyles$n = function (props) {
     var theme = props.theme, className = props.className, isFocusVisible = props.isFocusVisible;
-    var classNames = getGlobalClassNames(GlobalClassNames$a, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$b, theme);
     return {
         root: [
             classNames.root,
@@ -7077,7 +7077,7 @@ var getStyles$m = function (props) {
     };
 };
 
-var getClassNames$k = classNamesFunction();
+var getClassNames$l = classNamesFunction();
 var FabricBase = /** @class */ (function (_super) {
     __extends(FabricBase, _super);
     function FabricBase(props) {
@@ -7097,7 +7097,7 @@ var FabricBase = /** @class */ (function (_super) {
     }
     FabricBase.prototype.render = function () {
         var _a = this.props, className = _a.className, rest = __rest(_a, ["className"]);
-        var classNames = getClassNames$k(getStyles$m, {
+        var classNames = getClassNames$l(getStyles$n, {
             theme: this.props.theme,
             className: className,
             isFocusVisible: this.state.isFocusVisible
@@ -7117,7 +7117,7 @@ var FabricBase = /** @class */ (function (_super) {
     return FabricBase;
 }(React__namespace.Component));
 
-var Fabric = styled(FabricBase, getStyles$m, undefined, {
+var Fabric = styled(FabricBase, getStyles$n, undefined, {
     scope: 'Fabric'
 });
 
@@ -7157,7 +7157,7 @@ function getDefaultTarget() {
     return _defaultHostSelector;
 }
 
-var getClassNames$j = classNamesFunction();
+var getClassNames$k = classNamesFunction();
 var LayerBase = /** @class */ (function (_super) {
     __extends(LayerBase, _super);
     function LayerBase(props) {
@@ -7240,7 +7240,7 @@ var LayerBase = /** @class */ (function (_super) {
     };
     LayerBase.prototype._getClassNames = function () {
         var _a = this.props, className = _a.className, styles = _a.styles, theme = _a.theme;
-        var classNames = getClassNames$j(styles, {
+        var classNames = getClassNames$k(styles, {
             theme: theme,
             className: className,
             isNotHost: !this.props.hostId
@@ -7314,14 +7314,14 @@ function _getFilteredEvents() {
     return _filteredEventProps;
 }
 
-var GlobalClassNames$9 = {
+var GlobalClassNames$a = {
     root: 'ms-Layer',
     rootNoHost: 'ms-Layer--fixed',
     content: 'ms-Layer-content'
 };
-var getStyles$l = function (props) {
+var getStyles$m = function (props) {
     var className = props.className, isNotHost = props.isNotHost, theme = props.theme;
-    var classNames = getGlobalClassNames(GlobalClassNames$9, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$a, theme);
     return {
         root: [
             classNames.root,
@@ -7349,7 +7349,7 @@ var getStyles$l = function (props) {
     };
 };
 
-var Layer = styled(LayerBase, getStyles$l, undefined, {
+var Layer = styled(LayerBase, getStyles$m, undefined, {
     scope: 'Layer',
     fields: ['hostId', 'theme', 'styles']
 });
@@ -7596,7 +7596,7 @@ var FocusTrapZone = /** @class */ (function (_super) {
     return FocusTrapZone;
 }(React__namespace.Component));
 
-var getClassNames$i = classNamesFunction();
+var getClassNames$j = classNamesFunction();
 var TooltipBase = /** @class */ (function (_super) {
     __extends(TooltipBase, _super);
     function TooltipBase() {
@@ -7608,7 +7608,7 @@ var TooltipBase = /** @class */ (function (_super) {
     }
     TooltipBase.prototype.render = function () {
         var _a = this.props, className = _a.className, calloutProps = _a.calloutProps, delay = _a.delay, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, styles = _a.styles, id = _a.id, maxWidth = _a.maxWidth, _b = _a.onRenderContent, onRenderContent = _b === void 0 ? this._onRenderContent : _b, targetElement = _a.targetElement, theme = _a.theme;
-        this._classNames = getClassNames$i(styles, {
+        this._classNames = getClassNames$j(styles, {
             theme: theme,
             className: className || (calloutProps && calloutProps.className),
             delay: delay,
@@ -7635,7 +7635,7 @@ var TooltipBase = /** @class */ (function (_super) {
     return TooltipBase;
 }(React__namespace.Component));
 
-var getStyles$k = function (props) {
+var getStyles$l = function (props) {
     var className = props.className, delay = props.delay, _a = props.beakWidth, beakWidth = _a === void 0 ? 16 : _a, _b = props.gapSpace, gapSpace = _b === void 0 ? 0 : _b, maxWidth = props.maxWidth, theme = props.theme;
     var palette = theme.palette, fonts = theme.fonts;
     // The math here is done to account for the 45 degree rotation of the beak
@@ -7695,7 +7695,7 @@ var getStyles$k = function (props) {
     };
 };
 
-var Tooltip = styled(TooltipBase, getStyles$k, undefined, {
+var Tooltip = styled(TooltipBase, getStyles$l, undefined, {
     scope: 'Tooltip'
 });
 
@@ -7710,7 +7710,7 @@ var TooltipOverflowMode;
     TooltipOverflowMode[TooltipOverflowMode["Self"] = 1] = "Self";
 })(TooltipOverflowMode || (TooltipOverflowMode = {}));
 
-var getClassNames$h = classNamesFunction();
+var getClassNames$i = classNamesFunction();
 var TooltipHostBase = /** @class */ (function (_super) {
     __extends(TooltipHostBase, _super);
     // Constructor
@@ -7782,7 +7782,7 @@ var TooltipHostBase = /** @class */ (function (_super) {
     // Render
     TooltipHostBase.prototype.render = function () {
         var _a = this.props, calloutProps = _a.calloutProps, children = _a.children, content = _a.content, delay = _a.delay, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, className = _a.hostClassName, id = _a.id, _b = _a.setAriaDescribedBy, setAriaDescribedBy = _b === void 0 ? true : _b, tooltipProps = _a.tooltipProps, styles = _a.styles, theme = _a.theme;
-        this._classNames = getClassNames$h(styles, {
+        this._classNames = getClassNames$i(styles, {
             theme: theme,
             className: className
         });
@@ -7832,12 +7832,12 @@ var TooltipHostBase = /** @class */ (function (_super) {
     return TooltipHostBase;
 }(BaseComponent));
 
-var GlobalClassNames$8 = {
+var GlobalClassNames$9 = {
     root: 'ms-TooltipHost'
 };
-var getStyles$j = function (props) {
+var getStyles$k = function (props) {
     var className = props.className, theme = props.theme;
-    var classNames = getGlobalClassNames(GlobalClassNames$8, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$9, theme);
     return {
         root: [
             classNames.root,
@@ -7849,7 +7849,7 @@ var getStyles$j = function (props) {
     };
 };
 
-var TooltipHost = styled(TooltipHostBase, getStyles$j, undefined, {
+var TooltipHost = styled(TooltipHostBase, getStyles$k, undefined, {
     scope: 'TooltipHost'
 });
 
@@ -7960,7 +7960,7 @@ var ImageLoadState;
     ImageLoadState[ImageLoadState["errorLoaded"] = 3] = "errorLoaded";
 })(ImageLoadState || (ImageLoadState = {}));
 
-var getClassNames$g = classNamesFunction();
+var getClassNames$h = classNamesFunction();
 var KEY_PREFIX = 'fabricImage';
 var ImageBase = /** @class */ (function (_super) {
     __extends(ImageBase, _super);
@@ -8018,7 +8018,7 @@ var ImageBase = /** @class */ (function (_super) {
         var _a = this.props, src = _a.src, alt = _a.alt, width = _a.width, height = _a.height, shouldFadeIn = _a.shouldFadeIn, shouldStartVisible = _a.shouldStartVisible, className = _a.className, imageFit = _a.imageFit, role = _a.role, maximizeFrame = _a.maximizeFrame, styles = _a.styles, theme = _a.theme;
         var loadState = this.state.loadState;
         var coverStyle = this.props.coverStyle !== undefined ? this.props.coverStyle : this._coverStyle;
-        var classNames = getClassNames$g(styles, {
+        var classNames = getClassNames$h(styles, {
             theme: theme,
             className: className,
             width: width,
@@ -8098,7 +8098,7 @@ var ImageBase = /** @class */ (function (_super) {
     return ImageBase;
 }(React__namespace.Component));
 
-var GlobalClassNames$7 = {
+var GlobalClassNames$8 = {
     root: 'ms-Image',
     rootMaximizeFrame: 'ms-Image--maximizeFrame',
     image: 'ms-Image-image',
@@ -8111,9 +8111,9 @@ var GlobalClassNames$7 = {
     imageLandscape: 'ms-Image-image--landscape',
     imagePortrait: 'ms-Image-image--portrait'
 };
-var getStyles$i = function (props) {
+var getStyles$j = function (props) {
     var className = props.className, width = props.width, height = props.height, maximizeFrame = props.maximizeFrame, isLoaded = props.isLoaded, shouldFadeIn = props.shouldFadeIn, shouldStartVisible = props.shouldStartVisible, isLandscape = props.isLandscape, isCenter = props.isCenter, isContain = props.isContain, isCover = props.isCover, isCenterContain = props.isCenterContain, isCenterCover = props.isCenterCover, isNone = props.isNone, isError = props.isError, isNotImageFit = props.isNotImageFit, theme = props.theme;
-    var classNames = getGlobalClassNames(GlobalClassNames$7, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$8, theme);
     var ImageFitStyles = {
         position: 'absolute',
         left: '50% /* @noflip */',
@@ -8230,7 +8230,7 @@ var getStyles$i = function (props) {
     };
 };
 
-var Image = styled(ImageBase, getStyles$i, undefined, {
+var Image = styled(ImageBase, getStyles$j, undefined, {
     scope: 'Image'
 }, true);
 
@@ -8254,7 +8254,7 @@ var classNames = mergeStyleSets({
 });
 /** Class name used only in non-themeable Icon components */
 var MS_ICON = 'ms-Icon';
-var getStyles$h = function (props) {
+var getStyles$i = function (props) {
     var className = props.className, iconClassName = props.iconClassName, isPlaceholder = props.isPlaceholder, isImage = props.isImage, styles = props.styles;
     return {
         root: [
@@ -8307,7 +8307,7 @@ memoizeFunction(function (iconName, className, ariaLabel) {
     return FontIcon({ iconName: iconName, className: className, 'aria-label': ariaLabel });
 });
 
-var getClassNames$f = classNamesFunction({
+var getClassNames$g = classNamesFunction({
     disableCaching: true
 });
 var IconBase = /** @class */ (function (_super) {
@@ -8332,7 +8332,7 @@ var IconBase = /** @class */ (function (_super) {
         var isPlaceholder = typeof iconName === 'string' && iconName.length === 0;
         var isImage = this.props.iconType === IconType.image || this.props.iconType === IconType.Image || !!this.props.imageProps;
         var _b = getIconContent(iconName), iconClassName = _b.iconClassName, children = _b.children;
-        var classNames = getClassNames$f(styles, {
+        var classNames = getClassNames$g(styles, {
             theme: theme,
             className: className,
             iconClassName: iconClassName,
@@ -8362,7 +8362,7 @@ var IconBase = /** @class */ (function (_super) {
  * Icons are used for rendering an individual's avatar, presence and details.
  * They are used within the PeoplePicker components.
  */
-var Icon = styled(IconBase, getStyles$h, undefined, {
+var Icon = styled(IconBase, getStyles$i, undefined, {
     scope: 'Icon'
 }, true);
 
@@ -10302,7 +10302,7 @@ var getSplitButtonVerticalDividerClassNames = memoizeFunction(function (theme) {
     });
     var _a;
 });
-var GlobalClassNames$6 = {
+var GlobalClassNames$7 = {
     item: 'ms-ContextualMenu-item',
     divider: 'ms-ContextualMenu-divider',
     root: 'ms-ContextualMenu-link',
@@ -10330,7 +10330,7 @@ var GlobalClassNames$6 = {
  */
 var getItemClassNames = memoizeFunction(function (theme, disabled, expanded, checked, isAnchorLink, knownIcon, itemClassName, dividerClassName, iconClassName, subMenuClassName, primaryDisabled, className) {
     var styles = getMenuItemStyles(theme);
-    var classNames = getGlobalClassNames(GlobalClassNames$6, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$7, theme);
     return mergeStyleSets({
         item: [classNames.item, styles.item, itemClassName],
         divider: [classNames.divider, styles.divider, dividerClassName],
@@ -10593,7 +10593,7 @@ var ContextualMenuButton = /** @class */ (function (_super) {
     return ContextualMenuButton;
 }(ContextualMenuItemWrapper));
 
-var getStyles$g = function (props) {
+var getStyles$h = function (props) {
     var theme = props.theme, getClassNames = props.getClassNames, className = props.className;
     if (!theme) {
         throw new Error('Theme is undefined or null.');
@@ -10624,15 +10624,15 @@ var getStyles$g = function (props) {
     };
 };
 
-var getClassNames$e = classNamesFunction();
+var getClassNames$f = classNamesFunction();
 var VerticalDividerBase = function (props) {
     var styles = props.styles, theme = props.theme, deprecatedGetClassNames = props.getClassNames, className = props.className;
-    var classNames = getClassNames$e(styles, { theme: theme, getClassNames: deprecatedGetClassNames, className: className });
+    var classNames = getClassNames$f(styles, { theme: theme, getClassNames: deprecatedGetClassNames, className: className });
     return (React__namespace.createElement("span", { className: classNames.wrapper },
         React__namespace.createElement("span", { className: classNames.divider })));
 };
 
-var VerticalDivider = styled(VerticalDividerBase, getStyles$g, undefined, {
+var VerticalDivider = styled(VerticalDividerBase, getStyles$h, undefined, {
     scope: 'VerticalDivider'
 });
 
@@ -10797,7 +10797,7 @@ var ContextualMenuSplitButton = /** @class */ (function (_super) {
     return ContextualMenuSplitButton;
 }(ContextualMenuItemWrapper));
 
-var getClassNames$d = classNamesFunction({
+var getClassNames$e = classNamesFunction({
     disableCaching: true
 });
 var getContextualMenuItemClassNames = classNamesFunction({
@@ -11182,7 +11182,7 @@ var ContextualMenuBase = /** @class */ (function (_super) {
         var _a = this.props, items = _a.items, labelElementId = _a.labelElementId, id = _a.id, className = _a.className, beakWidth = _a.beakWidth, directionalHint = _a.directionalHint, directionalHintForRTL = _a.directionalHintForRTL, alignTargetEdge = _a.alignTargetEdge, gapSpace = _a.gapSpace, coverTarget = _a.coverTarget, ariaLabel = _a.ariaLabel, doNotLayer = _a.doNotLayer, target = _a.target, bounds = _a.bounds, useTargetWidth = _a.useTargetWidth, useTargetAsMinWidth = _a.useTargetAsMinWidth, directionalHintFixed = _a.directionalHintFixed, shouldFocusOnMount = _a.shouldFocusOnMount, shouldFocusOnContainer = _a.shouldFocusOnContainer, title = _a.title, styles = _a.styles, theme = _a.theme, calloutProps = _a.calloutProps, _b = _a.onRenderSubMenu, onRenderSubMenu = _b === void 0 ? this._onRenderSubMenu : _b, _c = _a.onRenderMenuList, onRenderMenuList = _c === void 0 ? this._onRenderMenuList : _c, focusZoneProps = _a.focusZoneProps, getMenuClassNames = _a.getMenuClassNames;
         this._classNames = getMenuClassNames
             ? getMenuClassNames(theme, className)
-            : getClassNames$d(styles, {
+            : getClassNames$e(styles, {
                 theme: theme,
                 className: className
             });
@@ -11563,7 +11563,7 @@ var ContextualMenuBase = /** @class */ (function (_super) {
     return ContextualMenuBase;
 }(BaseComponent));
 
-var GlobalClassNames$5 = {
+var GlobalClassNames$6 = {
     root: 'ms-ContextualMenu',
     container: 'ms-ContextualMenu-container',
     list: 'ms-ContextualMenu-list',
@@ -11571,9 +11571,9 @@ var GlobalClassNames$5 = {
     title: 'ms-ContextualMenu-title',
     isopen: 'is-open'
 };
-var getStyles$f = function (props) {
+var getStyles$g = function (props) {
     var className = props.className, theme = props.theme;
-    var classNames = getGlobalClassNames(GlobalClassNames$5, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$6, theme);
     var palette = theme.palette, fonts = theme.fonts, semanticColors = theme.semanticColors;
     return {
         root: [
@@ -11640,7 +11640,7 @@ var LocalContextualMenu;
 function onRenderSubMenu(subMenuProps) {
     return React__namespace.createElement(LocalContextualMenu, __assign$1({}, subMenuProps));
 }
-LocalContextualMenu = styled(ContextualMenuBase, getStyles$f, function () {
+LocalContextualMenu = styled(ContextualMenuBase, getStyles$g, function () {
     return {
         onRenderSubMenu: onRenderSubMenu
     };
@@ -11747,7 +11747,7 @@ var getBaseButtonClassNames = memoizeFunction(function (theme, styles, className
     var _a, _b;
 });
 
-var getClassNames$c = memoizeFunction(function (styles, disabled, expanded, checked, primaryDisabled) {
+var getClassNames$d = memoizeFunction(function (styles, disabled, expanded, checked, primaryDisabled) {
     return {
         root: mergeStyles(styles.splitButtonMenuButton, expanded && [styles.splitButtonMenuButtonExpanded], disabled && [styles.splitButtonMenuButtonDisabled], checked && !disabled && [styles.splitButtonMenuButtonChecked]),
         splitButtonContainer: mergeStyles(styles.splitButtonContainer, checked &&
@@ -12199,7 +12199,7 @@ var BaseButton = /** @class */ (function (_super) {
         var keytipProps = this.props.keytipProps;
         var classNames = getSplitButtonClassNames
             ? getSplitButtonClassNames(!!disabled, this._isExpanded, !!checked, !!allowDisabledFocus)
-            : styles && getClassNames$c(styles, !!disabled, this._isExpanded, !!checked, !!primaryDisabled);
+            : styles && getClassNames$d(styles, !!disabled, this._isExpanded, !!checked, !!primaryDisabled);
         assign$1(buttonProps, {
             onClick: undefined,
             tabIndex: -1,
@@ -12309,7 +12309,7 @@ var iconStyle = {
  * helper, it should have values for all class names in the interface. This let `mergeRules` optimize
  * mixing class names together.
  */
-var getStyles$e = memoizeFunction(function (theme) {
+var getStyles$f = memoizeFunction(function (theme) {
     var semanticColors = theme.semanticColors;
     var border = semanticColors.buttonBorder;
     var disabledBackground = semanticColors.disabledBackground;
@@ -12398,7 +12398,7 @@ var getStyles$e = memoizeFunction(function (theme) {
     var _a;
 });
 
-var getStyles$d = memoizeFunction(function (theme, customStyles) {
+var getStyles$e = memoizeFunction(function (theme, customStyles) {
     var buttonHighContrastFocus = {
         left: -2,
         top: -2,
@@ -12499,8 +12499,8 @@ var getStyles$d = memoizeFunction(function (theme, customStyles) {
 
 var DEFAULT_BUTTON_HEIGHT = '40px';
 var DEFAULT_PADDING = '0 4px';
-var getStyles$c = memoizeFunction(function (theme, customStyles) {
-    var baseButtonStyles = getStyles$e(theme);
+var getStyles$d = memoizeFunction(function (theme, customStyles) {
+    var baseButtonStyles = getStyles$f(theme);
     var actionButtonStyles = {
         root: {
             padding: DEFAULT_PADDING,
@@ -12575,7 +12575,7 @@ var ActionButton = /** @class */ (function (_super) {
     }
     ActionButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$c(theme, styles), onRenderDescription: nullRender })));
+        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--action ms-Button--command", styles: getStyles$d(theme, styles), onRenderDescription: nullRender })));
     };
     ActionButton = __decorate([
         customizable('ActionButton', ['theme', 'styles'], true)
@@ -12583,9 +12583,9 @@ var ActionButton = /** @class */ (function (_super) {
     return ActionButton;
 }(BaseComponent));
 
-var getStyles$b = memoizeFunction(function (theme, customStyles) {
-    var baseButtonStyles = getStyles$e(theme);
-    var splitButtonStyles = getStyles$d(theme);
+var getStyles$c = memoizeFunction(function (theme, customStyles) {
+    var baseButtonStyles = getStyles$f(theme);
+    var splitButtonStyles = getStyles$e(theme);
     var palette = theme.palette, semanticColors = theme.semanticColors;
     var iconButtonStyles = {
         root: {
@@ -12640,7 +12640,7 @@ var IconButton = /** @class */ (function (_super) {
     }
     IconButton.prototype.render = function () {
         var _a = this.props, styles = _a.styles, theme = _a.theme;
-        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$b(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
+        return (React__namespace.createElement(BaseButton, __assign$1({}, this.props, { variantClassName: "ms-Button--icon", styles: getStyles$c(theme, styles), onRenderText: nullRender, onRenderDescription: nullRender })));
     };
     IconButton = __decorate([
         customizable('IconButton', ['theme', 'styles'], true)
@@ -15562,7 +15562,7 @@ var Calendar = /** @class */ (function (_super) {
     return Calendar;
 }(BaseComponent));
 
-var getClassNames$b = classNamesFunction();
+var getClassNames$c = classNamesFunction();
 var CheckboxBase = /** @class */ (function (_super) {
     __extends(CheckboxBase, _super);
     /**
@@ -15629,7 +15629,7 @@ var CheckboxBase = /** @class */ (function (_super) {
         var _a = this.props, checked = _a.checked, className = _a.className, defaultChecked = _a.defaultChecked, disabled = _a.disabled, inputProps = _a.inputProps, name = _a.name, boxSide = _a.boxSide, theme = _a.theme, ariaLabel = _a.ariaLabel, ariaLabelledBy = _a.ariaLabelledBy, ariaDescribedBy = _a.ariaDescribedBy, styles = _a.styles, _b = _a.onRenderLabel, onRenderLabel = _b === void 0 ? this._onRenderLabel : _b, checkmarkIconProps = _a.checkmarkIconProps, ariaPositionInSet = _a.ariaPositionInSet, ariaSetSize = _a.ariaSetSize, keytipProps = _a.keytipProps, title = _a.title, label = _a.label;
         var isChecked = checked === undefined ? this.state.isChecked : checked;
         var isReversed = boxSide !== 'start' ? true : false;
-        this._classNames = getClassNames$b(styles, {
+        this._classNames = getClassNames$c(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -15665,7 +15665,7 @@ var CheckboxBase = /** @class */ (function (_super) {
 var MS_CHECKBOX_LABEL_SIZE = '20px';
 var MS_CHECKBOX_TRANSITION_DURATION = '200ms';
 var MS_CHECKBOX_TRANSITION_TIMING = 'cubic-bezier(.4, 0, .23, 1)';
-var getStyles$a = function (props) {
+var getStyles$b = function (props) {
     var className = props.className, theme = props.theme, reversed = props.reversed, checked = props.checked, disabled = props.disabled, isUsingCustomLabelRender = props.isUsingCustomLabelRender;
     var semanticColors = theme.semanticColors;
     var checkmarkFontColor = semanticColors.inputForegroundChecked;
@@ -15888,9 +15888,9 @@ var getStyles$a = function (props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 };
 
-var Checkbox = styled(CheckboxBase, getStyles$a, undefined, { scope: 'Checkbox' });
+var Checkbox = styled(CheckboxBase, getStyles$b, undefined, { scope: 'Checkbox' });
 
-var getClassNames$a = classNamesFunction({
+var getClassNames$b = classNamesFunction({
     disableCaching: true
 });
 var LabelBase = /** @class */ (function (_super) {
@@ -15900,7 +15900,7 @@ var LabelBase = /** @class */ (function (_super) {
     }
     LabelBase.prototype.render = function () {
         var _a = this.props, _b = _a.as, RootType = _b === void 0 ? 'label' : _b, children = _a.children, className = _a.className, disabled = _a.disabled, styles = _a.styles, required = _a.required, theme = _a.theme;
-        var classNames = getClassNames$a(styles, {
+        var classNames = getClassNames$b(styles, {
             className: className,
             disabled: disabled,
             required: required,
@@ -15911,7 +15911,7 @@ var LabelBase = /** @class */ (function (_super) {
     return LabelBase;
 }(React__namespace.Component));
 
-var getStyles$9 = function (props) {
+var getStyles$a = function (props) {
     var theme = props.theme, className = props.className, disabled = props.disabled, required = props.required;
     return {
         root: [
@@ -15950,11 +15950,11 @@ var getStyles$9 = function (props) {
     var _a;
 };
 
-var Label = styled(LabelBase, getStyles$9, undefined, {
+var Label = styled(LabelBase, getStyles$a, undefined, {
     scope: 'Label'
 });
 
-var getClassNames$9 = classNamesFunction();
+var getClassNames$a = classNamesFunction();
 var DEFAULT_STATE_VALUE = '';
 var TextFieldBase = /** @class */ (function (_super) {
     __extends(TextFieldBase, _super);
@@ -16122,7 +16122,7 @@ var TextFieldBase = /** @class */ (function (_super) {
         onRenderPrefix = _c === void 0 ? this._onRenderPrefix : _c, _d = _a.onRenderSuffix, onRenderSuffix = _d === void 0 ? this._onRenderSuffix : _d, _e = _a.onRenderLabel, onRenderLabel = _e === void 0 ? this._onRenderLabel : _e, _f = _a.onRenderDescription, onRenderDescription = _f === void 0 ? this._onRenderDescription : _f;
         var isFocused = this.state.isFocused;
         var errorMessage = this._errorMessage;
-        this._classNames = getClassNames$9(styles, {
+        this._classNames = getClassNames$a(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -16399,7 +16399,7 @@ function getLabelStyles(props) {
         var _a;
     };
 }
-function getStyles$8(props) {
+function getStyles$9(props) {
     var theme = props.theme, className = props.className, disabled = props.disabled, focused = props.focused, required = props.required, multiline = props.multiline, hasLabel = props.hasLabel, borderless = props.borderless, underlined = props.underlined, hasIcon = props.hasIcon, resizable = props.resizable, hasErrorMessage = props.hasErrorMessage, iconClass = props.iconClass, inputClassName = props.inputClassName, autoAdjustHeight = props.autoAdjustHeight;
     var semanticColors = theme.semanticColors;
     var classNames = getGlobalClassNames(globalClassNames, theme);
@@ -16725,7 +16725,7 @@ function getStyles$8(props) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }
 
-var TextField = styled(TextFieldBase, getStyles$8, undefined, {
+var TextField = styled(TextFieldBase, getStyles$9, undefined, {
     scope: 'TextField'
 });
 
@@ -17435,7 +17435,7 @@ var getCaretDownButtonStyles = memoizeFunction(function (theme, customStyles) {
     return concatStyleSets(styles, customStyles);
     var _a;
 });
-var getStyles$7 = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
+var getStyles$8 = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
     var semanticColors = theme.semanticColors, fonts = theme.fonts, palette = theme.palette;
     var ComboBoxRootBackground = semanticColors.bodyBackground;
     var ComboBoxRootTextColor = semanticColors.bodyText;
@@ -17607,7 +17607,7 @@ var getStyles$7 = memoizeFunction(function (theme, customStyles, comboBoxOptionW
     var _a, _b, _c, _d;
 });
 
-var getClassNames$8 = memoizeFunction(function (styles, className, isOpen, disabled, required, focused, allowFreeForm, hasErrorMessage) {
+var getClassNames$9 = memoizeFunction(function (styles, className, isOpen, disabled, required, focused, allowFreeForm, hasErrorMessage) {
     return {
         container: mergeStyles('ms-ComboBox-container', className, styles.container),
         label: mergeStyles(styles.label, disabled && styles.labelDisabled),
@@ -18413,7 +18413,7 @@ var ComboBox = /** @class */ (function (_super) {
         var hasErrorMessage = errorMessage && errorMessage.length > 0 ? true : false;
         this._classNames = this.props.getClassNames
             ? this.props.getClassNames(theme, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage, className)
-            : getClassNames$8(getStyles$7(theme, customStyles), className, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage);
+            : getClassNames$9(getStyles$8(theme, customStyles), className, !!isOpen, !!disabled, !!required, !!focused, !!allowFreeform, !!hasErrorMessage);
         return (React__namespace.createElement("div", __assign$1({}, divProps, { ref: this._root, className: this._classNames.container }),
             label && (React__namespace.createElement(Label, { id: id + '-label', disabled: disabled, required: required, htmlFor: id + '-input', className: this._classNames.label }, label)),
             React__namespace.createElement(KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return (React__namespace.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: _this._comboBoxWrapper, id: id + 'wrapper', className: _this._classNames.root },
@@ -19182,7 +19182,7 @@ var ComboBox = /** @class */ (function (_super) {
     return ComboBox;
 }(BaseComponent));
 
-var getClassNames$7 = classNamesFunction();
+var getClassNames$8 = classNamesFunction();
 var DEFAULT_STRINGS = {
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -19439,7 +19439,7 @@ var DatePickerBase = /** @class */ (function (_super) {
     DatePickerBase.prototype.render = function () {
         var _a = this.props, firstDayOfWeek = _a.firstDayOfWeek, strings = _a.strings, label = _a.label, theme = _a.theme, className = _a.className, styles = _a.styles, initialPickerDate = _a.initialPickerDate, isRequired = _a.isRequired, disabled = _a.disabled, ariaLabel = _a.ariaLabel, pickerAriaLabel = _a.pickerAriaLabel, placeholder = _a.placeholder, allowTextInput = _a.allowTextInput, borderless = _a.borderless, minDate = _a.minDate, maxDate = _a.maxDate, showCloseButton = _a.showCloseButton, calendarProps = _a.calendarProps, calloutProps = _a.calloutProps, textFieldProps = _a.textField, underlined = _a.underlined, allFocusable = _a.allFocusable, _b = _a.calendarAs, CalendarType = _b === void 0 ? Calendar : _b, tabIndex = _a.tabIndex;
         var _c = this.state, isDatePickerShown = _c.isDatePickerShown, formattedDate = _c.formattedDate, selectedDate = _c.selectedDate;
-        var classNames = getClassNames$7(styles, {
+        var classNames = getClassNames$8(styles, {
             theme: theme,
             className: className,
             disabled: disabled,
@@ -19539,7 +19539,7 @@ var DatePickerBase = /** @class */ (function (_super) {
     return DatePickerBase;
 }(BaseComponent));
 
-var GlobalClassNames$4 = {
+var GlobalClassNames$5 = {
     root: 'ms-DatePicker',
     callout: 'ms-DatePicker-callout',
     withLabel: 'ms-DatePicker-event--with-label',
@@ -19549,7 +19549,7 @@ var GlobalClassNames$4 = {
 var styles$9 = function (props) {
     var className = props.className, theme = props.theme, disabled = props.disabled, label = props.label, isDatePickerShown = props.isDatePickerShown;
     var palette = theme.palette, semanticColors = theme.semanticColors;
-    var classNames = getGlobalClassNames(GlobalClassNames$4, theme);
+    var classNames = getGlobalClassNames(GlobalClassNames$5, theme);
     var DatePickerEvent = {
         color: palette.neutralSecondary,
         fontSize: FontSizes.icon,
@@ -19610,6 +19610,192 @@ var styles$9 = function (props) {
 var DatePicker = styled(DatePickerBase, styles$9, undefined, {
     scope: 'DatePicker'
 });
+
+/**
+ * Possible variations of the spinner circle size.
+ * {@docCategory Spinner}
+ */
+var SpinnerSize;
+(function (SpinnerSize) {
+    /**
+     * 12px Spinner diameter
+     */
+    SpinnerSize[SpinnerSize["xSmall"] = 0] = "xSmall";
+    /**
+     * 16px Spinner diameter
+     */
+    SpinnerSize[SpinnerSize["small"] = 1] = "small";
+    /**
+     * 20px Spinner diameter
+     */
+    SpinnerSize[SpinnerSize["medium"] = 2] = "medium";
+    /**
+     * 28px Spinner diameter
+     */
+    SpinnerSize[SpinnerSize["large"] = 3] = "large";
+})(SpinnerSize || (SpinnerSize = {}));
+/**
+ * Deprecated at v2.0.0, use `SpinnerSize` instead.
+ * @deprecated Use `SpinnerSize` instead.
+ * {@docCategory Spinner}
+ */
+var SpinnerType;
+(function (SpinnerType) {
+    /**
+     * Deprecated and will be removed at \>= 2.0.0. Use `SpinnerSize.medium` instead.
+     * @deprecated Use `SpinnerSize.medium` instead.
+     */
+    SpinnerType[SpinnerType["normal"] = 0] = "normal";
+    /**
+     * Deprecated and will be removed at \>= 2.0.0. Use `SpinnerSize.large` instead.
+     * @deprecated Use `SpinnerSize.large` instead.
+     */
+    SpinnerType[SpinnerType["large"] = 1] = "large";
+})(SpinnerType || (SpinnerType = {}));
+
+var getClassNames$7 = classNamesFunction();
+var SpinnerBase = /** @class */ (function (_super) {
+    __extends(SpinnerBase, _super);
+    function SpinnerBase() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    SpinnerBase.prototype.render = function () {
+        var _a = this.props, type = _a.type, size = _a.size, ariaLabel = _a.ariaLabel, ariaLive = _a.ariaLive, styles = _a.styles, label = _a.label, theme = _a.theme, className = _a.className, labelPosition = _a.labelPosition;
+        var statusMessage = ariaLabel;
+        var nativeProps = getNativeProps(this.props, divProperties, ['size']);
+        // SpinnerType is deprecated. If someone is still using this property, rather than putting the SpinnerType into the ISpinnerStyleProps,
+        // we'll map SpinnerType to its equivalent SpinnerSize and pass that in. Once SpinnerType finally goes away we should delete this.
+        var styleSize = size;
+        if (styleSize === undefined && type !== undefined) {
+            styleSize = type === SpinnerType.large ? SpinnerSize.large : SpinnerSize.medium;
+        }
+        var classNames = getClassNames$7(styles, {
+            theme: theme,
+            size: styleSize,
+            className: className,
+            labelPosition: labelPosition
+        });
+        return (React__namespace.createElement("div", __assign$1({}, nativeProps, { className: classNames.root }),
+            React__namespace.createElement("div", { className: classNames.circle }),
+            label && React__namespace.createElement("div", { className: classNames.label }, label),
+            statusMessage && (React__namespace.createElement("div", { role: "status", "aria-live": ariaLive },
+                React__namespace.createElement(DelayedRender, null,
+                    React__namespace.createElement("div", { className: classNames.screenReaderText }, statusMessage))))));
+    };
+    SpinnerBase.defaultProps = {
+        size: SpinnerSize.medium,
+        ariaLive: 'polite',
+        labelPosition: 'bottom'
+    };
+    return SpinnerBase;
+}(BaseComponent));
+
+var GlobalClassNames$4 = {
+    root: 'ms-Spinner',
+    circle: 'ms-Spinner-circle',
+    label: 'ms-Spinner-label'
+};
+var spinAnimation = keyframes({
+    '0%': {
+        transform: 'rotate(0deg)'
+    },
+    '100%': {
+        transform: 'rotate(360deg)'
+    }
+});
+var getStyles$7 = function (props) {
+    var theme = props.theme, size = props.size, className = props.className, labelPosition = props.labelPosition;
+    var palette = theme.palette;
+    var classNames = getGlobalClassNames(GlobalClassNames$4, theme);
+    return {
+        root: [
+            classNames.root,
+            {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            },
+            labelPosition === 'top' && {
+                flexDirection: 'column-reverse'
+            },
+            labelPosition === 'right' && {
+                flexDirection: 'row'
+            },
+            labelPosition === 'left' && {
+                flexDirection: 'row-reverse'
+            },
+            className
+        ],
+        circle: [
+            classNames.circle,
+            {
+                boxSizing: 'border-box',
+                borderRadius: '50%',
+                border: '1.5px solid ' + palette.themeLight,
+                borderTopColor: palette.themePrimary,
+                animationName: spinAnimation,
+                animationDuration: '1.3s',
+                animationIterationCount: 'infinite',
+                animationTimingFunction: 'cubic-bezier(.53,.21,.29,.67)',
+                selectors: (_a = {},
+                    _a[HighContrastSelector] = {
+                        borderTopColor: 'Highlight'
+                    },
+                    _a)
+            },
+            size === SpinnerSize.xSmall && [
+                'ms-Spinner--xSmall',
+                {
+                    width: 12,
+                    height: 12
+                }
+            ],
+            size === SpinnerSize.small && [
+                'ms-Spinner--small',
+                {
+                    width: 16,
+                    height: 16
+                }
+            ],
+            size === SpinnerSize.medium && [
+                'ms-Spinner--medium',
+                {
+                    width: 20,
+                    height: 20
+                }
+            ],
+            size === SpinnerSize.large && [
+                'ms-Spinner--large',
+                {
+                    width: 28,
+                    height: 28
+                }
+            ]
+        ],
+        label: [
+            classNames.label,
+            {
+                color: palette.themePrimary,
+                margin: '10px 0 0',
+                textAlign: 'center'
+            },
+            labelPosition === 'top' && {
+                margin: '0 0 10px'
+            },
+            labelPosition === 'right' && {
+                margin: '0 0 0 10px'
+            },
+            labelPosition === 'left' && {
+                margin: '0 10px 0 0'
+            }
+        ],
+        screenReaderText: hiddenContentStyle
+    };
+    var _a;
+};
+
+var Spinner = styled(SpinnerBase, getStyles$7, undefined, { scope: 'Spinner' });
 
 var getClassNames$6 = classNamesFunction();
 var OverlayBase = /** @class */ (function (_super) {
@@ -23138,7 +23324,7 @@ const InfoMark = (props) => {
             React__namespace.createElement(Icon, { iconName: iconName }))));
 };
 
-var layoutStyles = "";
+var layoutStyles$1 = "";
 
 // Inputlayout
 var EInputLayoutType;
@@ -40040,10 +40226,10 @@ const InputComponentView = (props) => {
         props.component === EInputType.TextField ? (React__namespace.createElement(TextField, { label: '', value: props.objValue, name: props.objPropertyName, onChange: (e) => {
                 updateInputData(e, props.currentObj, props.objSetter, 'string');
             }, underlined: true, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.component === EInputType.PhoneNumber ? (React__namespace.createElement(MaskedTextField, { label: '', underlined: true, mask: '99 99 99 99 99', className: layoutStyles.inputNoBorder, name: props.objPropertyName, onChange: (e) => {
+        props.component === EInputType.PhoneNumber ? (React__namespace.createElement(MaskedTextField, { label: '', underlined: true, mask: '99 99 99 99 99', className: layoutStyles$1.inputNoBorder, name: props.objPropertyName, onChange: (e) => {
                 updateInputData(e, props.currentObj, props.objSetter, 'string');
             }, value: props.objValue, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.component === EInputType.Toogle ? (React__namespace.createElement(Toggle, { className: layoutStyles.inputShift, label: '', inlineLabel: true, onText: props.onTextToogle, offText: props.offTextToogle, onChange: (ev, checked) => {
+        props.component === EInputType.Toogle ? (React__namespace.createElement(Toggle, { className: layoutStyles$1.inputShift, label: '', inlineLabel: true, onText: props.onTextToogle, offText: props.offTextToogle, onChange: (ev, checked) => {
                 updateBoolInputData(ev, checked, props.currentObj, props.objSetter, props.objPropertyName);
             }, checked: props.objValue, disabled: props.isReadOnly })) : (React__namespace.createElement(React__namespace.Fragment, null)),
         props.component === EInputType.TrippleToggle ? (React__namespace.createElement(TrippleChoiceToggle, { isReadOnly: props.isReadOnly, defaultValue: props.objValue, currentObject: props.currentObj, setter: props.objSetter, propertyName: props.objPropertyName, isPrimaryColor: props.isPrimaryColor })) : (React__namespace.createElement(React__namespace.Fragment, null))));
@@ -40075,7 +40261,7 @@ const InputLayout = (props) => {
     if (props.max != null && props.max != undefined)
         maxValue = props.max;
     return (React__namespace.createElement(React__namespace.Fragment, null,
-        props.layoutType === EInputLayoutType.oneLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.oneLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("span", { style: { display: 'flex', alignItems: 'baseline' } },
                 React__namespace.createElement("span", { style: { flexGrow: 0.2 }, dangerouslySetInnerHTML: { __html: label } }),
                 React__namespace.createElement("div", { style: { display: 'flex', alignItems: 'center' } },
@@ -40087,11 +40273,11 @@ const InputLayout = (props) => {
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })),
                     hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                         React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.veryVerySmallInputLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.veryVerySmallInputLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm10 ms-md10' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40101,11 +40287,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.verySmallInputLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.verySmallInputLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm8 ms-md8' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40115,11 +40301,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.smallInputLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.smallInputLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm7 ms-md7' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40129,11 +40315,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.middleLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.middleLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm6 ms-md6' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40143,11 +40329,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.smallMiddleLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.smallMiddleLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm5 ms-md5' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40157,11 +40343,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.tierLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.tierLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm4 ms-md4' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40171,11 +40357,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.quarterLine ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.quarterLine ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm3 ms-md3' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40185,11 +40371,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.smallLabel ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.smallLabel ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm2 ms-md2' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))),
@@ -40208,11 +40394,11 @@ const InputLayout = (props) => {
                     objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })),
             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null)))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.twoLineInputLeft ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput },
+        props.layoutType === EInputLayoutType.twoLineInputLeft ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
@@ -40223,11 +40409,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.twoLineInputCenter ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput, style: { textAlign: 'center' } },
+        props.layoutType === EInputLayoutType.twoLineInputCenter ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput, style: { textAlign: 'center' } },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
@@ -40238,11 +40424,11 @@ const InputLayout = (props) => {
                             increment: props.increment, suffix: props.suffix, selectOptions: props.selectOptions, onTextToogle: props.onTextToogle, offTextToogle: props.offTextToogle, isPrimaryColor: props.isPrimaryColor, min: minValue, max: maxValue, 
                             // obj
                             objValue: props.objValue, currentObj: props.currentObj, objSetter: props.objSetter, objPropertyName: props.objPropertyName })))))) : (React__namespace.createElement(React__namespace.Fragment, null)),
-        props.layoutType === EInputLayoutType.twoLineInputRight ? (React__namespace.createElement("div", { className: layoutStyles.surchargeOnlineFormInput, style: { textAlign: 'right' } },
+        props.layoutType === EInputLayoutType.twoLineInputRight ? (React__namespace.createElement("div", { className: layoutStyles$1.surchargeOnlineFormInput, style: { textAlign: 'right' } },
             React__namespace.createElement("div", { className: 'ms-Grid' },
                 React__namespace.createElement("div", { className: 'ms-Grid-row' },
                     React__namespace.createElement("div", { className: 'ms-Grid-col ms-sm12 ms-md12' },
-                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
+                        React__namespace.createElement("div", { className: addLabelClassName ? layoutStyles$1.inputLabelTextFieldValign : '', style: { display: 'flex', alignItems: 'center' } },
                             React__namespace.createElement("span", { dangerouslySetInnerHTML: { __html: label }, style: { flexGrow: 1 } }),
                             hasIconMark ? (React__namespace.createElement("span", { style: { marginLeft: '5px' } },
                                 React__namespace.createElement(InfoMark, { label: props.infoMarkLabel, iconName: props.infoMarkIconName, size: props.infoMarkSize }))) : (React__namespace.createElement(React__namespace.Fragment, null))))),
@@ -40306,6 +40492,56 @@ const NotificationPopup = (props) => {
                     React__namespace.createElement(NotificationMessage, { notificationPopup: props.notificationPopup }))) : (React__namespace.createElement(React__namespace.Fragment, null))))));
 };
 
+var ECustomSpinnerPosition;
+(function (ECustomSpinnerPosition) {
+    ECustomSpinnerPosition["top"] = "top";
+    ECustomSpinnerPosition["center"] = "center";
+    ECustomSpinnerPosition["bottom"] = "bottom";
+})(ECustomSpinnerPosition || (ECustomSpinnerPosition = {}));
+var ECustomSpinnerSize;
+(function (ECustomSpinnerSize) {
+    ECustomSpinnerSize[ECustomSpinnerSize["small"] = 0] = "small";
+    ECustomSpinnerSize[ECustomSpinnerSize["medium"] = 1] = "medium";
+    ECustomSpinnerSize[ECustomSpinnerSize["large"] = 2] = "large";
+    ECustomSpinnerSize[ECustomSpinnerSize["larger"] = 3] = "larger";
+})(ECustomSpinnerSize || (ECustomSpinnerSize = {}));
+var ECustomSpinnerLabelPosition;
+(function (ECustomSpinnerLabelPosition) {
+    ECustomSpinnerLabelPosition["right"] = "right";
+    ECustomSpinnerLabelPosition["left"] = "left";
+    ECustomSpinnerLabelPosition["top"] = "top";
+    ECustomSpinnerLabelPosition["bottom"] = "bottom";
+})(ECustomSpinnerLabelPosition || (ECustomSpinnerLabelPosition = {}));
+
+var layoutStyles = "";
+
+const spinnerStyle = {
+    label: {
+        color: 'black'
+    }
+};
+const CustomSpinner = (props) => {
+    // Position
+    let position = '5px';
+    if (props.spinnerOptions.position != null && props.spinnerOptions.position != '') {
+        if (props.spinnerOptions.position == ECustomSpinnerPosition.center)
+            position = '125px';
+        if (props.spinnerOptions.position == ECustomSpinnerPosition.bottom)
+            position = '450px';
+    }
+    // Labe position
+    let labelPosition = ECustomSpinnerLabelPosition.bottom;
+    if (props.spinnerOptions.labelPosition != null && props.spinnerOptions.labelPosition != '')
+        labelPosition = ECustomSpinnerLabelPosition[props.spinnerOptions.labelPosition];
+    // Spinner size
+    let size = 2;
+    if (props.spinnerOptions.size != null && props.spinnerOptions.size >= 0 && props.spinnerOptions.size <= 3)
+        size = props.spinnerOptions.size;
+    return (React__namespace.createElement(React__namespace.Fragment, null, props.spinnerOptions.showSpinner ? (React__namespace.createElement("div", { className: layoutStyles.loadingSpinner, style: { top: position } },
+        React__namespace.createElement(Spinner, { label: props.spinnerOptions.label, size: size, labelPosition: labelPosition, style: { padding: '10px' }, styles: spinnerStyle }))) : (React__namespace.createElement(React__namespace.Fragment, null))));
+};
+
+exports.CustomSpinner = CustomSpinner;
 exports.InfoMark = InfoMark;
 exports.InputLayout = InputLayout;
 exports.MessageBarComp = MessageBarComp;

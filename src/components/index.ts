@@ -7,3 +7,4 @@ export { default as OneLineDatePicker } from './oneLineDatePicker/oneLineDatePic
 export { default as SearchableDropdown } from './searchableDropdown/searchableDropdown';
 export { default as SelectedChoice } from './selectChoice/selectChoice';
 export { default as TrippleChoiceToggle } from './tripleChoiceToggle/trippleChoiceToggle';
+export { default as CustomSpinner } from './customSpinner/customSpinner';
