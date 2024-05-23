@@ -178,7 +178,7 @@ This component display a input box for number with arrow to add or remove the am
 The NumberInput automatically add an 's' for suffix for number upper than 1, like : 1 file --> 2 files.
 There is a JSON file with custom suffix. This file gives you the possibility of exclude some sufix for automatic plural concat or use custom plural type like 'x' instead of 's'.
 
-### Custo Spinner Loader
+### Custom Spinner Loader
 This component display a spinner in the front of the screen. There are posibilities of layout, spinner size, label..
 
       <CustomSpinner
